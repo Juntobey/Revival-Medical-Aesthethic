@@ -5,6 +5,7 @@ to clone the repository: git clone "URL"
 
 ## to save your changes on localhost:
 git add .
+
 git commit -m "the change you made"
 
 ## to push your changes back to the repository:
