@@ -1,25 +1,88 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/AestheticsClinic";
 
-function App() {
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import AestheticsClinic from "./pages/AestheticsClinic";
+import VirtualClinic from "./pages/VirtualClinic";
+import MoreInformation from "./pages/MoreInformation.jsx";
+import ContactUs from "./pages/ContactUs";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
+import DoctorRoute from "./components/DoctorRoute";
+import { AuthProvider } from "./context/AuthContext";
+import ViewTreatments from "./pages/ViewTreatments";
+import BackgroundWrapper from "./components/BackgroundWrapper";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route
+            path="/"
+            element={
+              <BackgroundWrapper>
+                <Home />
+              </BackgroundWrapper>
+            }
+          />
+          <Route path="/view-treatments" element={<ViewTreatments />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/aesthetics-clinic" element={<AestheticsClinic />} />
+          <Route path="/virtual-clinic" element={<VirtualClinic />} />
+          <Route path="/more-information" element={<MoreInformation />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin-dashboard"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+
+          {/* Doctor Routes (Includes Admin Dashboard for Doctor Access) */}
+          <Route
+            path="/doctor-dashboard"
+            element={
+              <DoctorRoute>
+                <DoctorDashboard />
+              </DoctorRoute>
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <DoctorRoute>
+                <AdminDashboard />
+              </DoctorRoute>
+            }
+          />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
-}
+};
 
 export default App;
