@@ -1,12 +1,20 @@
 # this document contains instructions on how to run the backend
 
-# navigate into the authentication folder
+# STEP 1:
 
-open folder authentication in terminal
 type 'npm install' to install packages
 
-to run project
-type npm run start
+# STEP 2: 
+
+run commnand 'npx sequelize-cli db:migrate'
+
+to intialise the database locally (will use sqlite)
+
+# STEP 3
+
+type 'npm run start'
 
 
-this will activate the authentication api and the user will be able to login and register from the frontend
+the project will be available on port 3000 , make sure to adjust the port the frontend is running on in entrypoint.sh
+
+to allow connections from frontend to reach the backend

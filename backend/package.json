@@ -1,11 +1,11 @@
 {
-  "name": "appointments",
+  "name": "revival-medical-aesthethic",
   "version": "1.0.0",
-  "description": "and other functions for updating user profile will come here as well",
-  "main": "app.js",
+  "description": "appointments and bookings and other services",
+  "main": "entrypoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node entrypoint.js"
   },
   "keywords": [],
   "author": "",
