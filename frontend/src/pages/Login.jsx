@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import Footer from "../components/Footer"; // Import Footer
 import Header from "../components/Header"; // Import Header
 import { FaGoogle, FaFacebook } from "react-icons/fa";
@@ -8,34 +9,29 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [token, setToken] = useState("");
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const formData = {
-        email: email,
-        password: password,
-      };
-
-      // Log formData to ensure it's correct
-      console.log("FormData: ", formData);
+      const formData = { email, password };
 
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Ensure body is correctly formatted
+        body: JSON.stringify(formData),
       });
 
       const result = await response.json();
       if (response.ok) {
-        setToken(result.token); // Save the token in state
-        console.log("Login successful:", result.token);
-        localStorage.setItem("token", result.token); // Optionally store the token
+        console.log(response) // @tafara you can see the data returned from the backend after success login ,this is where 
+        // you can see data such as response.data.role then if admin navigate to admin dashboard etc
+        localStorage.setItem("token", result.token); // Store the token
+        navigate("/dashboard"); // Redirect to the dashboard or desired route
       } else {
-        setError(result.error);
+        setError(result.error || "Login failed, please try again.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -73,7 +69,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border-[#7A5547] border-opacity-60 p-3 rounded-lg focus:border-opacity-100 focus:ring-[#7A5547] transition-opacity duration-300"
-                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }} // Make border visible
+                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }}
               />
             </div>
 
@@ -85,15 +81,18 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border-[#7A5547] border-opacity-60 p-3 rounded-lg focus:border-opacity-100 focus:ring-[#7A5547] transition-opacity duration-300"
-                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }} // Make border visible
+                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }}
               />
               <span
                 onClick={togglePasswordVisibility}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#7A5547] opacity-70"
               >
-                {showPassword ? "👁️" : "🙈"} {/* Simple eye icon toggle */}
+                {showPassword ? "👁️" : "🙈"}
               </span>
             </div>
+
+            {/* Error Message */}
+            {error && <p className="text-red-500">{error}</p>}
 
             {/* Login Button */}
             <button
@@ -137,7 +136,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer /> {/* Add Footer */}
+      <Footer />
     </div>
   );
 };

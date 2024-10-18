@@ -6,6 +6,7 @@ import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -18,9 +19,11 @@ const Register = () => {
     },
     nationality: "",
     gender: "",
+    emergencyContactName: "",
+    emergencyContactNumber: "",
   });
 
-  const { auth, setAuth } = useContext(AuthContext); // Accessing context
+  const { setAuth } = useContext(AuthContext); // Accessing context
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,18 +36,46 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { password, confirmPassword, email } = formData;
 
     if (password === confirmPassword) {
-      // Simulate successful registration by updating auth state
-      setAuth({
-        isAuthenticated: true,
-        user: { name: email },
-        role: "user", // Default role after registration
-      });
-      console.log("User registered:", email);
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email,
+            password,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            nationality: formData.nationality,
+            birthday: `${formData.birthday.year}-${formData.birthday.month}-${formData.birthday.day}`,
+            gender: formData.gender,
+            emergencyContactName: formData.emergencyContactName,
+            emergencyContactNumber: formData.emergencyContactNumber,
+            role: "patient", // Default role
+          }),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          setAuth({
+            isAuthenticated: true,
+            user: { name: email },
+            role: "patient",
+          });
+          console.log("User registered:", email);
+        } else {
+          console.error("Registration error:", result.error);
+        }
+      } catch (error) {
+        console.error("Error registering:", error);
+      }
     } else {
       console.log("Passwords do not match!");
     }
@@ -66,6 +97,17 @@ const Register = () => {
         <div className="flex flex-col items-center justify-center w-1/2 py-12 px-16">
           <h2 className="text-4xl font-bold mb-8 text-[#1B2E22]">Register</h2>
           <form className="w-full max-w-md space-y-4" onSubmit={handleSubmit}>
+            {/* Username */}
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              className="w-full border-[#1B2E22] p-3 rounded-lg"
+              required
+            />
+
             {/* First Name and Last Name */}
             <div className="flex space-x-4">
               <input
@@ -75,6 +117,7 @@ const Register = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 className="w-1/2 border-[#1B2E22] p-3 rounded-lg"
+                required
               />
               <input
                 type="text"
@@ -83,6 +126,7 @@ const Register = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 className="w-1/2 border-[#1B2E22] p-3 rounded-lg"
+                required
               />
             </div>
 
@@ -108,42 +152,16 @@ const Register = () => {
               required
             />
 
-            {/* Birthday */}
-            <div className="flex space-x-4">
-              <select
-                name="month"
-                value={formData.birthday.month}
-                onChange={handleBirthdayChange}
-                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
-              >
-                <option value="" disabled>
-                  Month
-                </option>
-                {/* Add more months */}
-              </select>
-              <select
-                name="day"
-                value={formData.birthday.day}
-                onChange={handleBirthdayChange}
-                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
-              >
-                <option value="" disabled>
-                  Day
-                </option>
-                {/* Add days */}
-              </select>
-              <select
-                name="year"
-                value={formData.birthday.year}
-                onChange={handleBirthdayChange}
-                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
-              >
-                <option value="" disabled>
-                  Year
-                </option>
-                {/* Add years */}
-              </select>
-            </div>
+            {/* Confirm Password */}
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full border-[#1B2E22] p-3 rounded-lg"
+              required
+            />
 
             {/* Nationality */}
             <input
@@ -153,7 +171,63 @@ const Register = () => {
               value={formData.nationality}
               onChange={handleChange}
               className="w-full border-[#1B2E22] p-3 rounded-lg"
+              required
             />
+
+            {/* Birthday */}
+            <div className="flex space-x-4">
+              <select
+                name="month"
+                value={formData.birthday.month}
+                onChange={handleBirthdayChange}
+                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
+                required
+              >
+                <option value="" disabled>
+                  Month
+                </option>
+                {/* Add month options */}
+                {Array.from({ length: 12 }, (_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="day"
+                value={formData.birthday.day}
+                onChange={handleBirthdayChange}
+                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
+                required
+              >
+                <option value="" disabled>
+                  Day
+                </option>
+                {/* Add day options */}
+                {Array.from({ length: 31 }, (_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="year"
+                value={formData.birthday.year}
+                onChange={handleBirthdayChange}
+                className="w-1/3 border-[#1B2E22] p-3 rounded-lg"
+                required
+              >
+                <option value="" disabled>
+                  Year
+                </option>
+                {/* Add year options */}
+                {Array.from({ length: 100 }, (_, i) => (
+                  <option key={i} value={new Date().getFullYear() - i}>
+                    {new Date().getFullYear() - i}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* Gender */}
             <div className="flex space-x-4">
@@ -189,12 +263,22 @@ const Register = () => {
               </label>
             </div>
 
-            {/* Confirm Password */}
+            {/* Emergency Contact */}
             <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              type="text"
+              name="emergencyContactName"
+              placeholder="Emergency Contact Name"
+              value={formData.emergencyContactName}
+              onChange={handleChange}
+              className="w-full border-[#1B2E22] p-3 rounded-lg"
+              required
+            />
+
+            <input
+              type="tel"
+              name="emergencyContactNumber"
+              placeholder="Emergency Contact Number"
+              value={formData.emergencyContactNumber}
               onChange={handleChange}
               className="w-full border-[#1B2E22] p-3 rounded-lg"
               required
