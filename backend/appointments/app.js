@@ -5,20 +5,18 @@ const cors = require('cors');
 
 const app = express();
 
-// for localhost frontend
+
 app.use(cors({
   origin: 'http://localhost:3001',
   methods: ['GET', 'POST']
 })); 
-
-
 app.use(bodyParser.json());
 
 // Routes
 app.post("/register", register);
 app.post("/login", login);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

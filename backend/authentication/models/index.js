@@ -1,6 +1,5 @@
-const sequelize = require("../config/config");
-const User = require("./user");
-const UserProfile = require("./userProfile");
+const sequelize = require("../config/sequelize")
+
 
 // Sync models with database
 const initializeDatabase = async () => {
@@ -10,4 +9,3 @@ const initializeDatabase = async () => {
 
 initializeDatabase();
 
-module.exports = { User, UserProfile };

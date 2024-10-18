@@ -1,1 +1,4 @@
 /authentication/node_modules/
+/authentication/database.sqlite
+/authentication/package-lock.json
+/appointments/node_modules/
