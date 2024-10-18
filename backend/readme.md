@@ -1,20 +1,50 @@
-# this document contains instructions on how to run the backend
+# Backend for Medical Appointment System
 
-# STEP 1:
+This document contains instructions on how to run the backend for the Medical Appointment System, along with details about its features and functionalities.
 
-type 'npm install' to install packages
+## Table of Contents
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [Features](#features)
+- [Progress](#progress)
+- [Models](#models)
+- [Controllers](#controllers)
+- [Additional Information](#additional-information)
 
-# STEP 2: 
+## Installation
 
-run commnand 'npx sequelize-cli db:migrate'
-
-to intialise the database locally (will use sqlite)
-
-# STEP 3
-
-type 'npm run start'
+1. **Install Packages**  
+   Run the following command to install the necessary packages:
+   ```bash
+   npm install
 
 
-the project will be available on port 3000 , make sure to adjust the port the frontend is running on in entrypoint.sh
+2. **Intialize local Database**  
+   Run the following command to install the necessary packages:
+   ```bash
+  npx sequelize-cli db:migrate
 
-to allow connections from frontend to reach the backend
+
+2. **Start the App**  
+   Run the following command to install the necessary packages:
+   ```bash
+  npm run start
+
+
+
+# Progress
+Progress
+ User Registration
+ User Login
+ Update User Profile
+ Update User Role
+ Reset Password
+ Create Appointments
+ Update Appointments
+ List Appointments
+ Delete Appointments
+ Create Bookings
+ Update Bookings
+ List Bookings
+ Delete Bookings
+ Define Appointment Types
