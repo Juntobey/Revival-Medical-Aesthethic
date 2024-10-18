@@ -25,18 +25,18 @@ const App = () => {
       <AuthProvider>
         <Routes>
           {/* Public Routes */}
-          <Route
-            path="/"
-            element={
-              <BackgroundWrapper>
-                <Home />
-              </BackgroundWrapper>
-            }
-          />
+
           <Route path="/view-treatments" element={<ViewTreatments />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/aesthetics-clinic" element={<AestheticsClinic />} />
+          <Route
+            path="/aesthetics-clinic"
+            element={
+              <BackgroundWrapper>
+                <AestheticsClinic />
+              </BackgroundWrapper>
+            }
+          />
           <Route path="/virtual-clinic" element={<VirtualClinic />} />
           <Route path="/more-information" element={<MoreInformation />} />
           <Route path="/contact" element={<ContactUs />} />
