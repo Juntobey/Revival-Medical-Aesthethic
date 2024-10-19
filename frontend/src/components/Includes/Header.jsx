@@ -7,6 +7,14 @@ const Header = () => {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown
 
+  // Function to handle scroll to the top when a link is clicked
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   const handleLogout = () => {
     signOut();
     navigate("/"); // Redirect to home page after logging out
@@ -18,11 +26,15 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md fixed top-0 w-full z-50 h-19">
-      <nav className="container mx-auto flex justify-between items-center py-2 px-16">
+    <header className="bg-white shadow-md fixed top-0 w-full z-50 h-19.5">
+      <nav className="container mx-auto flex justify-between items-center py-5 px-16">
         {/* Left: Logo */}
         <div className="ml-10">
-          <NavLink to="/" className="text-darkgreen font-semibold font-headers">
+          <NavLink
+            to="/"
+            className="text-darkgreen font-semibold font-headers"
+            onClick={scrollToTop}
+          >
             revival
           </NavLink>
         </div>
@@ -38,6 +50,7 @@ const Header = () => {
                   : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
               }`
             }
+            onClick={scrollToTop}
           >
             Aesthetics Clinic
           </NavLink>
@@ -50,6 +63,7 @@ const Header = () => {
                   : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
               }`
             }
+            onClick={scrollToTop}
           >
             Virtual Clinic
           </NavLink>
@@ -62,6 +76,7 @@ const Header = () => {
                   : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
               }`
             }
+            onClick={scrollToTop}
           >
             More Information
           </NavLink>
@@ -74,6 +89,7 @@ const Header = () => {
                   : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
               }`
             }
+            onClick={scrollToTop}
           >
             Contact Us
           </NavLink>
@@ -92,6 +108,7 @@ const Header = () => {
                         : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
                     }`
                   }
+                  onClick={scrollToTop}
                 >
                   Dashboard
                 </NavLink>
@@ -108,6 +125,7 @@ const Header = () => {
                         : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
                     }`
                   }
+                  onClick={scrollToTop}
                 >
                   Dashboard
                 </NavLink>
@@ -129,14 +147,20 @@ const Header = () => {
                       <NavLink
                         to="/doctor-dashboard"
                         className="block px-4 py-2 text-[#1B2E22] hover:bg-gray-100"
-                        onClick={() => setDropdownOpen(false)} // Close dropdown on click
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          scrollToTop();
+                        }} // Close dropdown on click and scroll
                       >
                         Doctor Dashboard
                       </NavLink>
                       <NavLink
                         to="/admin-dashboard"
                         className="block px-4 py-2 text-[#1B2E22] hover:bg-gray-100"
-                        onClick={() => setDropdownOpen(false)} // Close dropdown on click
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          scrollToTop();
+                        }} // Close dropdown on click and scroll
                       >
                         Admin Dashboard
                       </NavLink>
@@ -161,12 +185,14 @@ const Header = () => {
               <NavLink
                 to="/login"
                 className="px-4 py-2 bg-[#1B2E22] text-[#EDE1D2] hover:bg-[#EDE1D2] hover:text-[#1B2E22] transition-all duration-300"
+                onClick={scrollToTop}
               >
                 Log In
               </NavLink>
               <NavLink
                 to="/register"
                 className="px-4 py-2 bg-[#1B2E22] text-[#EDE1D2] hover:bg-[#EDE1D2] hover:text-[#1B2E22] transition-all duration-300"
+                onClick={scrollToTop}
               >
                 Register
               </NavLink>

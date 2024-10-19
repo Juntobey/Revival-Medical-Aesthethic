@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/config");
+const Role = require("./role");
+const sequelize = require("../../config/sequelize");
 
-// to add more fields according to the eerd diagram
 const User = sequelize.define("User", {
   username: {
     type: DataTypes.STRING,
@@ -17,6 +17,16 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  roleId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Role,
+      key: "id",
+    },
+    defaultValue: 2,
+  },
 });
+
+User.belongsTo(Role, { foreignKey: "roleId" });
 
 module.exports = User;
