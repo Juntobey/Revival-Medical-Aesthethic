@@ -1,8 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleBookingClick = () => {
+    navigate("/booking"); // Navigate to booking page
+  };
+
   return (
-    <section className="bg-[#F5E6D9] py-16 px-8 h-screen flex justify-center items-center mt-12">
+    <section className="py-16 px-8 pt-19 h-screen flex justify-center items-center mt-12">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Left: Image */}
         <div className="md:w-1/2 w-full flex justify-center">
@@ -15,18 +22,21 @@ const HeroSection = () => {
 
         {/* Right: Text and Button */}
         <div className="mt-8 md:mt-0 md:w-1/2 text-center md:text-left md:pl-12">
-          <h1 className="text-[55px] lg:text-[65px] xl:text-[70px] font-bold font-cormorant text-[#2E2E2D] leading-tight mb-4">
+          <h1 className="text-h1 font-headers text-darkgreen lg:text-[65px] xl:text-[70px] font-bold leading-tight mb-4">
             Natural beauty <br />
             protected, <br />
             Natural beauty <br /> restored.
           </h1>
-          <p className="text-[16px] lg:text-[18px] font-lato text-[#2E2E2D] mb-8">
+          <p className="text-p font-paragraph text-darkgreen lg:text-[18px] mb-8">
             Conservative aesthetic enhancements to honour and maintain the
             natural canvas.
           </p>
 
           {/* Button */}
-          <button className="bg-[#1B2E22] text-[#EDE1D2] py-2 px-6 rounded-md font-semibold font-raleway transition-opacity duration-300 hover:opacity-80 focus:outline-none">
+          <button
+            onClick={handleBookingClick} // Trigger navigation on click
+            className="bg-darkgreen text-almond py-2 px-6 rounded-md font-semibold font-cta transition-opacity duration-300 hover:opacity-80 focus:outline-none"
+          >
             Book Now
           </button>
         </div>

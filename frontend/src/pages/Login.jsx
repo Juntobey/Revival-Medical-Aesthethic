@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import Footer from "../components/Footer"; // Import Footer
-import Header from "../components/Header"; // Import Header
+import Footer from "../components/Includes/Footer"; // Import Footer
+import Header from "../components/Includes/Header"; // Import Header
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const Login = () => {
@@ -26,7 +26,7 @@ const Login = () => {
 
       const result = await response.json();
       if (response.ok) {
-        console.log(response) // @tafara you can see the data returned from the backend after success login ,this is where 
+        console.log(response); // @tafara you can see the data returned from the backend after success login ,this is where
         // you can see data such as response.data.role then if admin navigate to admin dashboard etc
         localStorage.setItem("token", result.token); // Store the token
         navigate("/dashboard"); // Redirect to the dashboard or desired route

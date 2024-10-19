@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const { auth, signOut } = useContext(AuthContext);
@@ -18,67 +18,99 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md fixed top-0 w-full z-50">
-      <nav className="container mx-auto flex justify-between items-center py-4 px-16">
+    <header className="bg-white shadow-md fixed top-0 w-full z-50 h-19">
+      <nav className="container mx-auto flex justify-between items-center py-2 px-16">
         {/* Left: Logo */}
         <div className="ml-10">
-          <Link to="/">
-            <img
-              src={`${process.env.PUBLIC_URL}/Dark Green - Transparent.png`} // Update this with the actual logo path
-              alt="Revival Aesthetics"
-              className="w-12 h-auto"
-            />
-          </Link>
+          <NavLink to="/" className="text-darkgreen font-semibold font-headers">
+            revival
+          </NavLink>
         </div>
 
         {/* Right: Navigation Links */}
         <div className="flex items-center space-x-10">
-          <Link
+          <NavLink
             to="/aesthetics-clinic"
-            className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+            className={({ isActive }) =>
+              `text-[#1B2E22] transition-all duration-300 transform ${
+                isActive
+                  ? "opacity-100 font-semibold translate-y-[-2px]"
+                  : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+              }`
+            }
           >
             Aesthetics Clinic
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/virtual-clinic"
-            className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+            className={({ isActive }) =>
+              `text-[#1B2E22] transition-all duration-300 transform ${
+                isActive
+                  ? "opacity-100 font-semibold translate-y-[-2px]"
+                  : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+              }`
+            }
           >
             Virtual Clinic
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/more-information"
-            className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+            className={({ isActive }) =>
+              `text-[#1B2E22] transition-all duration-300 transform ${
+                isActive
+                  ? "opacity-100 font-semibold translate-y-[-2px]"
+                  : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+              }`
+            }
           >
             More Information
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/contact"
-            className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+            className={({ isActive }) =>
+              `text-[#1B2E22] transition-all duration-300 transform ${
+                isActive
+                  ? "opacity-100 font-semibold translate-y-[-2px]"
+                  : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+              }`
+            }
           >
             Contact Us
-          </Link>
+          </NavLink>
 
           {/* Show Dashboard link for logged-in users */}
           {auth.isAuthenticated && (
             <>
               {/* Admin Dashboard */}
               {auth.role === "admin" && (
-                <Link
+                <NavLink
                   to="/admin-dashboard"
-                  className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                  className={({ isActive }) =>
+                    `text-[#1B2E22] transition-all duration-300 transform ${
+                      isActive
+                        ? "opacity-100 font-semibold translate-y-[-2px]"
+                        : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+                    }`
+                  }
                 >
                   Dashboard
-                </Link>
+                </NavLink>
               )}
 
               {/* Normal User Dashboard */}
               {auth.role === "user" && (
-                <Link
+                <NavLink
                   to="/dashboard"
-                  className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                  className={({ isActive }) =>
+                    `text-[#1B2E22] transition-all duration-300 transform ${
+                      isActive
+                        ? "opacity-100 font-semibold translate-y-[-2px]"
+                        : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+                    }`
+                  }
                 >
                   Dashboard
-                </Link>
+                </NavLink>
               )}
 
               {/* Doctor Dashboard with Dropdown */}
@@ -94,20 +126,20 @@ const Header = () => {
                   {/* Dropdown Menu */}
                   {dropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md">
-                      <Link
+                      <NavLink
                         to="/doctor-dashboard"
                         className="block px-4 py-2 text-[#1B2E22] hover:bg-gray-100"
                         onClick={() => setDropdownOpen(false)} // Close dropdown on click
                       >
                         Doctor Dashboard
-                      </Link>
-                      <Link
+                      </NavLink>
+                      <NavLink
                         to="/admin-dashboard"
                         className="block px-4 py-2 text-[#1B2E22] hover:bg-gray-100"
                         onClick={() => setDropdownOpen(false)} // Close dropdown on click
                       >
                         Admin Dashboard
-                      </Link>
+                      </NavLink>
                     </div>
                   )}
                 </div>
@@ -126,18 +158,18 @@ const Header = () => {
           {/* Show Log In and Register buttons for logged-out users */}
           {!auth.isAuthenticated && (
             <>
-              <Link
+              <NavLink
                 to="/login"
                 className="px-4 py-2 bg-[#1B2E22] text-[#EDE1D2] hover:bg-[#EDE1D2] hover:text-[#1B2E22] transition-all duration-300"
               >
                 Log In
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/register"
                 className="px-4 py-2 bg-[#1B2E22] text-[#EDE1D2] hover:bg-[#EDE1D2] hover:text-[#1B2E22] transition-all duration-300"
               >
                 Register
-              </Link>
+              </NavLink>
             </>
           )}
         </div>

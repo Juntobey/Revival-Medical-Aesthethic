@@ -1,30 +1,79 @@
-// src/components/FAQ.jsx
-import React from "react";
+import React, { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Icons for expand/collapse
+
+const faqs = [
+  {
+    question: "Header 1",
+    answer:
+      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+  },
+  {
+    question: "Header 2",
+    answer:
+      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+  },
+  {
+    question: "Header 3",
+    answer:
+      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+  },
+  {
+    question: "Header 4",
+    answer:
+      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+  },
+];
 
 const FAQ = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   return (
-    <section className="py-16 px-8 bg-gray-100">
-      <div className="container mx-auto max-w-3xl">
-        <h2 className="text-4xl font-bold mb-8">Frequently Asked Questions</h2>
-        <div className="space-y-4">
-          <div>
-            <h4 className="text-xl font-semibold">
-              What services do you offer?
-            </h4>
-            <p className="text-gray-700">
-              We offer a range of aesthetic treatments including facials, body
-              contouring, and more.
-            </p>
-          </div>
-          <div>
-            <h4 className="text-xl font-semibold">
-              How do I book an appointment?
-            </h4>
-            <p className="text-gray-700">
-              You can book an appointment online through our booking page or
-              call our clinic directly.
-            </p>
-          </div>
+    <section className="relative py-16 shadow-lg">
+      {/* This div contains the background with 50% opacity */}
+      <div className="absolute inset-0 bg-[#FAFAFA] opacity-50"></div>
+
+      {/* Content of FAQ (fully opaque) */}
+      <div className="container mx-auto relative z-10">
+        <h2 className="text-center text-5xl font-bold text-darkgreen font-cormorant mb-12">
+          Frequently Asked Questions (FAQs)
+        </h2>
+
+        <div className=" p-8 rounded-lg  shadow-inner">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="border-b border-gray-300 mb-4"
+              onClick={() => toggleFAQ(index)}
+            >
+              <div className="flex justify-between items-center cursor-pointer p-4 rounded-lg bg-fafafa shadow-sm">
+                <h3
+                  className={`text-xl font-bold text-darkgreen font-cormorant ${
+                    activeIndex === index ? "" : ""
+                  }`}
+                >
+                  {faq.question}
+                </h3>
+                <span>
+                  {activeIndex === index ? (
+                    <FaChevronUp className="text-darkgreen text-2xl" />
+                  ) : (
+                    <FaChevronDown className="text-darkgreen text-2xl" />
+                  )}
+                </span>
+              </div>
+              {activeIndex === index && (
+                <div className="p-4">
+                  <p className="text-lg text-gray-600 font-lato">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

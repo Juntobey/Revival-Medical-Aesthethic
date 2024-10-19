@@ -16,36 +16,69 @@ const latestTransformations = transformations.slice(-3);
 
 const TreatmentGallery = () => {
   return (
-    <section className="py-16 px-8">
-      <h2 className="text-4xl font-bold text-gray-800">Treatment Gallery</h2>
-      <p className="text-lg mt-4 text-gray-600">
-        Explore stunning transformations from our satisfied patients.
-      </p>
+    <section className="py-16 px-8 bg-[#f5eadf] shadow-lg">
+      <div className="text-center">
+        <h2 className="text-5xl font-bold font-cormorant text-darkgreen">
+          Treatment Gallery
+        </h2>
+        <p className="text-lg mt-2 font-lato text-gray-600">
+          Explore The Past Treatments
+        </p>
+      </div>
 
       {/* Display the three latest transformations */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {latestTransformations.map((transformation) => (
-          <div key={transformation.id} className="flex flex-col">
-            <img
-              src={transformation.before}
-              alt={`Before treatment ${transformation.id}`}
-              className="w-full h-64 object-cover"
-            />
-            <img
-              src={transformation.after}
-              alt={`After treatment ${transformation.id}`}
-              className="w-full h-64 object-cover mt-2"
-            />
+          <div
+            key={transformation.id}
+            className="bg-white rounded-lg shadow-lg p-6"
+          >
+            <div className="flex flex-col space-y-4">
+              {/* Before treatment */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <img
+                  src={transformation.before}
+                  alt={`Before Treatment ${transformation.id}`}
+                  className="w-full h-40 object-cover rounded-lg"
+                />
+                <h3 className="text-2xl font-bold font-cormorant text-darkgreen mt-4">
+                  Before Treatment {transformation.id}
+                </h3>
+                <p className="text-gray-600 font-lato mt-2">
+                  Body text for whatever you'd like to say. Add main takeaway
+                  points, quotes, anecdotes, or even a very short story.
+                </p>
+              </div>
+
+              {/* After treatment */}
+              <div className="border border-gray-200 rounded-lg p-4">
+                <img
+                  src={transformation.after}
+                  alt={`After Treatment ${transformation.id}`}
+                  className="w-full h-40 object-cover rounded-lg"
+                />
+                <h3 className="text-2xl font-bold font-cormorant text-darkgreen mt-4">
+                  After Treatment {transformation.id}
+                </h3>
+                <p className="text-gray-600 font-lato mt-2">
+                  Body text for whatever you'd like to say. Add main takeaway
+                  points, quotes, anecdotes, or even a very short story.
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      <Link
-        to="/view-treatments"
-        className="mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 inline-block"
-      >
-        View the transformations
-      </Link>
+      {/* View All Treatments Button */}
+      <div className="text-center mt-12">
+        <Link
+          to="/view-treatments"
+          className="mt-6 bg-darkgreen text-white px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
+        >
+          View All Treatments
+        </Link>
+      </div>
     </section>
   );
 };

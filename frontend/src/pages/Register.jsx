@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/Includes/Header";
+import Footer from "../components/Includes/Footer";
 import { AuthContext } from "../context/AuthContext"; // Import AuthContext
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 
@@ -82,7 +82,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen pt-15">
       <Header />
       <div className="flex-grow flex">
         {/* Left Section */}
