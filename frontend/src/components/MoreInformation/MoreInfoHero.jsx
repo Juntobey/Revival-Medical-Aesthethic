@@ -11,12 +11,12 @@ const MoreInfoHero = () => {
         height: "650px",
       }}
     >
-      <div className="absolute inset-0 bg-darkgreen opacity-40"></div>
+      <div className="absolute inset-0 bg-darkgreen opacity-60"></div>
       <div className="relative z-10 text-almond">
-        <h1 className="text-h1 font-cormorant mb-4">
+        <h1 className="text-h1 font-headers mb-4">
           Learn More About Our Treatments
         </h1>
-        <p className="text-lg">
+        <p className="text-lg font-paragraph">
           Discover the services we offer and how they can improve your health
           and well-being.
         </p>

@@ -10,87 +10,96 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic for handling form submission
     console.log("Form submitted", { firstName, lastName, email, message });
   };
 
   return (
     <>
       <Header />
-      <div className="flex flex-col min-h-screen">
-        <div className="flex-grow flex justify-center items-center bg-gray-100">
-          <div className="flex max-w-4xl mx-auto w-full">
-            {/* Left Section - Image */}
-            <div className="w-1/2 hidden lg:block">
-              <img
-                src={`${process.env.PUBLIC_URL}/contact-form.jpg`}
-                alt="Contact us"
-                className="w-full h-full object-cover"
-              />
-            </div>
+      {/* Main Section */}
+      <div
+        className="relative flex flex-col justify-center items-center min-h-screen bg-cover bg-center pt-24" // Added pt-24 for padding from top
+        style={{
+          backgroundImage: `url('${process.env.PUBLIC_URL}/contact-form.jg')`,
+        }}
+      >
+        {/* Background Overlay */}
+        <div className="absolute inset-0 bg-black opacity-30"></div>
 
-            {/* Right Section - Contact Form */}
-            <div className="w-full lg:w-1/2 bg-white p-12 shadow-lg">
-              <h2 className="text-4xl font-bold mb-8 text-[#123524]">
-                Contact Us
-              </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="flex space-x-4">
-                  <div className="w-1/2">
-                    <label className="block text-[#123524]">First Name</label>
-                    <input
-                      type="text"
-                      className="border-[#123524] w-full p-2 rounded border-opacity-50"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="w-1/2">
-                    <label className="block text-[#123524]">Last Name</label>
-                    <input
-                      type="text"
-                      className="border-[#123524] w-full p-2 rounded border-opacity-50"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
+        {/* Contact Form with Image */}
+        <div className="relative z-10 bg-white max-w-6xl w-full flex rounded-lg shadow-lg overflow-hidden h-[500px]">
+          {/* Left Section - Image */}
+          <div className="w-1/2 hidden lg:block">
+            <img
+              src={`${process.env.PUBLIC_URL}/contact-form.jpg`} // Replace with the actual image path
+              alt="Contact us"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-                <div>
-                  <label className="block text-[#123524]">Email</label>
+          {/* Right Section - Contact Form */}
+          <div className="w-full lg:w-1/2 p-12 flex flex-col justify-center">
+            <h2 className="text-h2 font-headers text-center mb-8 text-[#123524]">
+              Contact Us
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="flex space-x-4">
+                <div className="w-1/2">
                   <input
-                    type="email"
-                    className="border-[#123524] w-full p-2 rounded border-opacity-50"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                    value={firstName}
+                    placeholder="First Name" // Placeholder inside the field
+                    onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
                 </div>
-
-                <div>
-                  <label className="block text-[#123524]">Message</label>
-                  <textarea
-                    className="border-[#123524] w-full p-2 rounded border-opacity-50 h-32 resize-none"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                <div className="w-1/2">
+                  <input
+                    type="text"
+                    className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                    value={lastName}
+                    placeholder="Last Name" // Placeholder inside the field
+                    onChange={(e) => setLastName(e.target.value)}
                     required
                   />
                 </div>
+              </div>
 
+              <div>
+                <input
+                  type="email"
+                  className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                  value={email}
+                  placeholder="Email" // Placeholder inside the field
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <textarea
+                  className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                  value={message}
+                  placeholder="Message" // Placeholder inside the field
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="w-full bg-[#123524] text-white py-3 rounded-lg hover:bg-opacity-80 active:bg-opacity-60 transition-all duration-300"
+                  className="w-full lg:w-1/3 bg-[#123524] text-white font-cta py-3 rounded-lg hover:bg-opacity-80 active:bg-opacity-60 transition-all duration-300"
                 >
                   Send
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

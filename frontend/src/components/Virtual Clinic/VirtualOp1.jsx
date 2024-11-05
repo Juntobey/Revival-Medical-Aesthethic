@@ -9,17 +9,17 @@ const VirtualOp1 = () => {
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left Side: Text Content */}
           <div className="w-full lg:w-1/2 lg:pr-8">
-            <h2 className="text-h2 font-cormorant text-darkgreen mb-6">
+            <h2 className="text-h2 font-headers text-darkgreen mb-6">
               Horizontal Card
             </h2>
-            <p className="text-p font-lato text-gray-700 mb-6">
+            <p className="text-p font-paragraph text-gray-700 mb-6">
               Horizs cdc svsvrrhjuio m scsef sefefcc asas sc drgjukumuilkkxses v
               da wd dw wdx cerfcer fr acffrt gcfcrrr fref we ftyuus
             </p>
             {/* Call to Action Button */}
             <a
               href="/booking"
-              className="inline-block bg-lightbrown text-luxwhite font-cta font px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
+              className="inline-block bg-lightbrown text-luxwhite font-cta px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
             >
               Book Now
             </a>

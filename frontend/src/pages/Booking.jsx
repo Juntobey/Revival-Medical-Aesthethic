@@ -1,16 +1,17 @@
+// src/pages/Booking.jsx
 import React from "react";
 import Header from "../components/Includes/Header";
-import BookingHero from "../components/Booking/BookingHero";
+import Footer from "../components/Includes/Footer";
 import BookingForm from "../components/Booking/BookingForm";
-import BookingSummary from "../components/Booking/BookingSummary";
 
 const Booking = () => {
   return (
     <>
       <Header />
-      <BookingHero />
-      <BookingForm />
-      <BookingSummary />
+      <main className="pt-[80px]">
+        <BookingForm />
+      </main>
+      <Footer />
     </>
   );
 };

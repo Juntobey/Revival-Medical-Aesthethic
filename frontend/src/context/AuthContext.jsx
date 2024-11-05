@@ -1,53 +1,81 @@
 // src/context/AuthContext.jsx
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Create the AuthContext
 const AuthContext = createContext();
 
-// Create the AuthProvider component
 const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [auth, setAuth] = useState({
     isAuthenticated: false,
     user: null,
     role: null,
   });
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null);
 
-  const navigate = useNavigate(); // To handle redirects
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = localStorage.getItem("role");
 
-  // Sign in function
-  const signIn = (user, role) => {
-    setAuth({
-      isAuthenticated: true,
-      user: user,
-      role: role,
-    });
-
-    // Redirect based on role after login
-    if (role === "admin") {
-      navigate("/admin-dashboard");
-    } else if (role === "doctor") {
-      navigate("/doctor-dashboard");
+    if (token && user && role) {
+      setAuth({
+        isAuthenticated: true,
+        user,
+        role,
+      });
     } else {
-      navigate("/dashboard");
+      localStorage.clear();
+      setAuth({ isAuthenticated: false, user: null, role: null });
+    }
+
+    setLoading(false); // Set loading to false after verifying
+  }, []);
+
+  const signIn = async (email, password) => {
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("user", JSON.stringify(result.user));
+        localStorage.setItem("role", result.user.role);
+
+        setAuth({
+          isAuthenticated: true,
+          user: result.user,
+          role: result.user.role,
+        });
+
+        return { success: true, role: result.user.role };
+      } else {
+        setError(result.error || "Login failed, please try again.");
+        return { success: false };
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      setError("Login failed, please try again.");
+      return { success: false };
     }
   };
 
-  // Sign out function
   const signOut = () => {
-    setAuth({
-      isAuthenticated: false,
-      user: null,
-      role: null,
-    });
-    navigate("/"); // Redirect to home after sign-out
+    setAuth({ isAuthenticated: false, user: null, role: null });
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
-    <AuthContext.Provider value={{ auth, signIn, signOut }}>
+    <AuthContext.Provider value={{ auth, signIn, signOut, loading, error }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthContext, AuthProvider }; // Named exports
+export { AuthContext, AuthProvider };

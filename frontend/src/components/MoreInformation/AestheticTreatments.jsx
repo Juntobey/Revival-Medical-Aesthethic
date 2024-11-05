@@ -4,54 +4,59 @@ const AestheticTreatments = () => {
   const treatments = [
     {
       title: "Hair Loss / Alopecia Treatment",
-      description:
-        "We offer advanced hair restoration treatments to help combat hair loss and promote natural growth.",
-      imageUrl: "/images/treatment-hairloss.jpg",
+      description: "Advanced hair restoration treatments to combat hair loss.",
+      imageUrl: `${process.env.PUBLIC_URL}/treatment-hairloss.jpeg`,
     },
     {
       title: "Skincare Rejuvenation",
-      description:
-        "Our skincare treatments are customized for your skin type to rejuvenate and bring back your natural glow.",
-      imageUrl: "/images/treatment-skincare.jpg",
+      description: "Customized skincare treatments to bring back your glow.",
+      imageUrl: `${process.env.PUBLIC_URL}/treatment-skincare.jpg`,
     },
     {
       title: "PRP (Platelet Rich Plasma)",
       description:
-        "PRP therapy uses your body’s own healing mechanisms to reduce signs of aging and boost skin vitality.",
-      imageUrl: "/images/treatment-prp.jpg",
+        "Boost skin vitality with PRP therapy using your body’s healing.",
+      imageUrl: `${process.env.PUBLIC_URL}/prp.jpg`,
     },
   ];
 
   return (
-    <section className="py-16 px-8" id="aesthetics-treatments">
-      <h2 className="text-h2 font-cormorant text-darkgreen mb-6 text-center">
+    <section
+      className="py-16 px-8 bg-almond animate-fade-in"
+      id="aesthetic-treatments"
+    >
+      <h2 className="text-h2 font-headers text-darkgreen mb-6 text-center">
         Aesthetic Treatments
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
         {treatments.map((treatment, index) => (
-          <div key={index} className="rounded-lg shadow-lg overflow-hidden">
+          <div
+            key={index}
+            className="shadow-lg bg-luxwhite overflow-hidden transform transition hover:scale-105"
+          >
             <img
               src={treatment.imageUrl}
               alt={treatment.title}
               className="w-full h-[300px] object-cover"
             />
             <div className="p-4">
-              <h3 className="text-h3 font-cormorant text-darkgreen mb-2">
+              <h3 className="text-3xl font-headers font-semibold text-darkgreen mb-2">
                 {treatment.title}
               </h3>
-              <p className="text-p text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 font-paragraph">
                 {treatment.description}
               </p>
-              {/* Book Now Button */}
-              <a
-                href="/booking"
-                className="inline-block bg-darkgreen text-luxwhite px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
-              >
-                Book Now
-              </a>
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <a
+          href="/booking"
+          className="bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg transition hover:bg-opacity-80"
+        >
+          Schedule an Appointment
+        </a>
       </div>
     </section>
   );

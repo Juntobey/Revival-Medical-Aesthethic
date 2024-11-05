@@ -11,13 +11,14 @@ import ContactUs from "./pages/ContactUs";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import DoctorRoute from "./components/DoctorRoute.jsx";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import ViewTreatments from "./pages/ViewTreatments";
 import BackgroundWrapper from "./components/Style/BackgroundWrapper.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import MainClinic from "./pages/MainClinic.jsx";
 import Booking from "./pages/Booking.jsx";
 import PaymentOptions from "./pages/PaymentOptions.jsx";
+import HomePage from "./pages/HomePage.jsx";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           {/* Public Routes */}
 
           <Route path="/view-treatments" element={<ViewTreatments />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/booking" element={<Booking />} />

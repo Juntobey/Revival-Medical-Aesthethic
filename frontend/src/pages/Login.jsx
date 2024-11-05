@@ -1,41 +1,70 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import Footer from "../components/Includes/Footer"; // Import Footer
-import Header from "../components/Includes/Header"; // Import Header
-import { FaGoogle, FaFacebook } from "react-icons/fa";
+import React, { useState, useContext } from "react";
+import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import Footer from "../components/Includes/Footer";
+import Header from "../components/Includes/Header";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+const MySwal = withReactContent(Swal);
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize the navigate function
+  const { signIn, error } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const formData = { email, password };
 
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    const isSuccessful = await signIn(email, password);
+
+    if (isSuccessful.success) {
+      let timerInterval;
+
+      MySwal.fire({
+        title: "Login Successful!",
+        html: "Redirecting in <strong>5</strong> seconds.",
+        timer: 3000,
+        timerProgressBar: true,
+        customClass: {
+          popup: "bg-luxwhite text-darkgreen",
+          title: "text-3xl font-bold font-headers text-grey-600",
+          confirmButton:
+            "bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300",
         },
-        body: JSON.stringify(formData),
+        didOpen: () => {
+          const b = MySwal.getHtmlContainer().querySelector("strong");
+          timerInterval = setInterval(() => {
+            b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+          }, 1000);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+        // Redirect based on role
+        if (isSuccessful.role === "admin") {
+          navigate("/admin-dashboard");
+        } else if (isSuccessful.role === "doctor") {
+          navigate("/doctor-dashboard");
+        } else {
+          navigate("/dashboard");
+        }
       });
-
-      const result = await response.json();
-      if (response.ok) {
-        console.log(response); // @tafara you can see the data returned from the backend after success login ,this is where
-        // you can see data such as response.data.role then if admin navigate to admin dashboard etc
-        localStorage.setItem("token", result.token); // Store the token
-        navigate("/dashboard"); // Redirect to the dashboard or desired route
-      } else {
-        setError(result.error || "Login failed, please try again.");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
-      setError("Login failed, please try again.");
+    } else {
+      // Handle login failure (e.g., show an error message)
+      MySwal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error || "Login failed, please try again.",
+      });
     }
   };
 
@@ -47,63 +76,49 @@ const Login = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow flex">
-        {/* Left Section */}
-        <div className="flex-grow bg-[#C2A892] p-8 flex items-center justify-center">
-          <h2 className="text-[5rem] text-white font-cormorant leading-tight">
+        <div className="flex-grow bg-lightbrown p-8 flex items-center justify-center">
+          <h2 className="text-h1 text-luxwhite font-headers leading-tight">
             Natural beauty <br /> protected, <br /> Natural beauty <br />{" "}
             restored.
           </h2>
         </div>
-
-        {/* Right Section - Form */}
-        <div className="flex flex-col items-center justify-center w-1/2 py-12 px-16">
-          <h2 className="text-4xl font-bold mb-8 text-[#7A5547] font-cormorant">
+        <div className="flex flex-col items-center justify-center w-1/2 pb-12 pt-[50px] px-16">
+          <h2 className="text-h2 font-headers mb-8 text-[#7A5547] font-cormorant">
             Login
           </h2>
-          <form className="w-full max-w-md space-y-6" onSubmit={handleLogin}>
-            {/* Email Field */}
+          <form className="w-full max-w-md space-y-6" onSubmit={handleSubmit}>
             <div className="relative">
               <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border-[#7A5547] border-opacity-60 p-3 rounded-lg focus:border-opacity-100 focus:ring-[#7A5547] transition-opacity duration-300"
-                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }}
+                className="w-full border-b-2 border-[#7A5547] border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
               />
             </div>
-
-            {/* Password Field */}
             <div className="relative input-group">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border-[#7A5547] border-opacity-60 p-3 rounded-lg focus:border-opacity-100 focus:ring-[#7A5547] transition-opacity duration-300"
-                style={{ borderColor: "rgba(122, 85, 71, 0.5)" }}
+                className="w-full border-b-2 border-[#7A5547] border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
               />
               <span
                 onClick={togglePasswordVisibility}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-[#7A5547] opacity-70"
               >
-                {showPassword ? "👁️" : "🙈"}
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-
-            {/* Error Message */}
             {error && <p className="text-red-500">{error}</p>}
-
-            {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-[#E9DCD1] text-[#7A5547] py-3 rounded-lg hover:bg-opacity-80 active:bg-opacity-60 transition-all duration-300"
+              className="w-full font-cta font-semibold bg-[#E9DCD1] text-[#7A5547] py-3 rounded-lg hover:bg-opacity-80 active:bg-opacity-60 transition-all duration-300"
             >
               Log In
             </button>
           </form>
-
-          {/* Links */}
           <div className="flex justify-between w-full max-w-md mt-4">
             <a href="/register" className="text-[#7A5547] hover:underline">
               Don’t have an account?
@@ -115,21 +130,17 @@ const Login = () => {
               Forgot password?
             </a>
           </div>
-
-          {/* Divider */}
           <div className="flex items-center w-full max-w-md my-6">
             <hr className="flex-grow border-t border-[#7A5547] opacity-50" />
             <span className="px-2 text-[#7A5547]">Or</span>
             <hr className="flex-grow border-t border-[#7A5547] opacity-50" />
           </div>
-
-          {/* Social Login Buttons */}
           <div className="flex space-x-4 w-full max-w-md">
-            <button className="flex items-center justify-center py-3 px-4 border rounded-lg w-1/2 text-[#DB4437] border-[#DB4437] hover:bg-opacity-80 transition-all duration-300">
+            <button className="flex items-center justify-center py-3 px-4 border rounded-lg w-1/2 text-[#DB4437] border-[#DB4437] hover:bg-[#DB4437] hover:text-luxwhite hover:bg-opacity-80 transition-all duration-300">
               <FaGoogle className="mr-2" />
               Log In with Google
             </button>
-            <button className="flex items-center justify-center py-3 px-4 border rounded-lg w-1/2 text-[#1877F2] border-[#1877F2] hover:bg-opacity-80 transition-all duration-300">
+            <button className="flex items-center justify-center py-3 px-4 border rounded-lg w-1/2 text-[#1877F2] border-[#1877F2] hover:bg-opacity-80 hover:bg-[#1877F2] hover:text-luxwhite transition-all duration-300">
               <FaFacebook className="mr-2" />
               Log In with Facebook
             </button>

@@ -18,12 +18,12 @@ const HeroSection = () => {
 
       {/* Text Content */}
       <div className="relative z-10 text-darkgreen">
-        <h1 className="font-cormorant text-h1 font-bold">
+        <h1 className="font-headers text-h1 font-bold">
           Natural Beauty Protected,
           <br />
           Natural Beauty Restored
         </h1>
-        <p className="font-lato text-lg mt-4">
+        <p className="font-paragraph text-lg mt-4">
           Conservative aesthetic enhancements to honour and maintain the natural
           canvas
         </p>
@@ -31,7 +31,7 @@ const HeroSection = () => {
         {/* Book Now Button */}
         <Link
           to="/booking"
-          className="mt-8 bg-darkgreen text-white px-8 py-4 rounded-lg inline-block hover:bg-opacity-80 transition-all duration-300"
+          className="mt-8 bg-darkgreen text-white font-cta px-8 py-4 rounded-lg inline-block hover:bg-opacity-80 transition-all duration-300"
           style={{ marginTop: "20px", marginBottom: "40px" }}
         >
           Book Now

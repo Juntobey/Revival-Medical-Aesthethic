@@ -18,10 +18,10 @@ const TreatmentGallery = () => {
   return (
     <section className="py-16 px-8 bg-[#f5eadf] shadow-lg">
       <div className="text-center">
-        <h2 className="text-5xl font-bold font-cormorant text-darkgreen">
+        <h2 className="text-h2 font-headers text-darkgreen">
           Treatment Gallery
         </h2>
-        <p className="text-lg mt-2 font-lato text-gray-600">
+        <p className="text-p mt-2 font-paragraph text-darkgreen">
           Explore The Past Treatments
         </p>
       </div>
@@ -41,10 +41,10 @@ const TreatmentGallery = () => {
                   alt={`Before Treatment ${transformation.id}`}
                   className="w-full h-40 object-cover rounded-lg"
                 />
-                <h3 className="text-2xl font-bold font-cormorant text-darkgreen mt-4">
+                <h3 className="text-2xl font-bold font-headers text-darkgreen mt-4">
                   Before Treatment {transformation.id}
                 </h3>
-                <p className="text-gray-600 font-lato mt-2">
+                <p className="text-gray-600 font-paragraph mt-2">
                   Body text for whatever you'd like to say. Add main takeaway
                   points, quotes, anecdotes, or even a very short story.
                 </p>
@@ -57,10 +57,10 @@ const TreatmentGallery = () => {
                   alt={`After Treatment ${transformation.id}`}
                   className="w-full h-40 object-cover rounded-lg"
                 />
-                <h3 className="text-2xl font-bold font-cormorant text-darkgreen mt-4">
+                <h3 className="text-2xl font-bold font-headers text-darkgreen mt-4">
                   After Treatment {transformation.id}
                 </h3>
-                <p className="text-gray-600 font-lato mt-2">
+                <p className="text-gray-600 font-paragraph mt-2">
                   Body text for whatever you'd like to say. Add main takeaway
                   points, quotes, anecdotes, or even a very short story.
                 </p>
@@ -74,7 +74,7 @@ const TreatmentGallery = () => {
       <div className="text-center mt-12">
         <Link
           to="/view-treatments"
-          className="mt-6 bg-darkgreen text-white px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
+          className="mt-6 bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
         >
           View All Treatments
         </Link>

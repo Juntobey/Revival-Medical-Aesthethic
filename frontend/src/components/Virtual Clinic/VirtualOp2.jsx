@@ -17,18 +17,18 @@ const VirtualOp2 = () => {
           </div>
 
           {/* Right Side: Text Content */}
-          <div className="w-full lg:w-1/2 lg:pl-8">
-            <h2 className="text-h2 font-cormorant text-darkgreen mb-6">
+          <div className="w-full lg:w-1/2 lg:pl-8 justify-end">
+            <h2 className="text-h2 font-headers text-darkgreen mb-6">
               Horizontal Card
             </h2>
-            <p className="text-p font-lato text-gray-700 mb-6">
+            <p className="text-p font-paragraph text-gray-700 mb-6">
               Horizs cdc svsvrrhjuio m scsef sefefcc asas sc drgjukumuilkkxses v
               da wd dw wdx cerfcer fr acffrt gcfcrrr fref we ftyuus
             </p>
             {/* Call to Action Button */}
             <a
               href="/booking"
-              className="inline-block bg-[#88D5CB] text-luxwhite px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
+              className="inline-block bg-[#88D5CB] text-luxwhite font-cta px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
             >
               Book Now
             </a>

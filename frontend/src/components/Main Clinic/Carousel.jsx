@@ -29,14 +29,12 @@ const Carousel = () => {
   ];
 
   const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? items.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 1));
   };
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === items.length - 1 ? 0 : prevIndex + 1
+      prevIndex === items.length - 1 ? prevIndex : prevIndex + 1
     );
   };
 
@@ -47,24 +45,17 @@ const Carousel = () => {
         <br /> Tailored Just For You.
       </h2>
 
-      <div className="flex justify-center items-center space-x-4">
-        {/* Previous Arrow */}
-        <button
-          onClick={handlePrevClick}
-          className="absolute top-20 right-32 z-10 bg-transparent p-2 "
+      {/* Carousel Container */}
+      <div className="relative overflow-hidden max-w-[1295px] mx-auto">
+        <div
+          className="flex transition-transform duration-500 ease-in-out gap-4" // Added gap-4 for spacing
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          <FaArrowLeft className="text-darkgreen-500 text-2xl" />
-        </button>
-
-        {/* Carousel Items */}
-        <div className="flex justify-center space-x-8 relative">
           {items.map((item, index) => (
             <div
               key={index}
-              className={`transition-all duration-300 ease-in-out ${
-                index === currentIndex
-                  ? "opacity-100 transform translate-y-0 scale-105"
-                  : "opacity-50 transform translate-y-6"
+              className={`min-w-[80%] max-w-[350px] transition-opacity duration-300 ${
+                index === currentIndex ? "opacity-100" : "opacity-50"
               }`}
             >
               <div className="bg-lightbrown shadow-lg rounded-lg overflow-hidden p-4">
@@ -83,11 +74,26 @@ const Carousel = () => {
             </div>
           ))}
         </div>
+      </div>
 
-        {/* Next Arrow */}
+      {/* Previous and Next Arrows */}
+      <div className="absolute top-[-10px] right-[10px] flex items-center space-x-4">
+        <button
+          onClick={handlePrevClick}
+          disabled={currentIndex === 0}
+          className={`p-2 bg-transparent transition-opacity ${
+            currentIndex === 0 ? "opacity-50" : "opacity-100"
+          }`}
+        >
+          <FaArrowLeft className="text-darkgreen-500 text-2xl" />
+        </button>
+
         <button
           onClick={handleNextClick}
-          className="absolute top-20 right-16 z-10 bg-transparent p-2"
+          disabled={currentIndex === items.length - 1}
+          className={`p-2 bg-transparent transition-opacity ${
+            currentIndex === items.length - 1 ? "opacity-50" : "opacity-100"
+          }`}
         >
           <FaArrowRight className="text-darkgreen-500 text-2xl" />
         </button>
@@ -96,8 +102,8 @@ const Carousel = () => {
       {/* Learn More Button */}
       <div className="flex justify-center mt-12 pt-10">
         <Link
-          to="/more-information" // Assuming this is the route for the More Information page
-          className="bg-darkgreen text-luxwhite font-cta font-semibold  px-6 py-3 rounded-lg hover:bg-opacity-80 transition-all duration-300"
+          to="/more-information"
+          className="bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
         >
           Learn More
         </Link>

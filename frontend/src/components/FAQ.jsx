@@ -38,7 +38,7 @@ const FAQ = () => {
 
       {/* Content of FAQ (fully opaque) */}
       <div className="container mx-auto relative z-10">
-        <h2 className="text-center text-5xl font-bold text-darkgreen font-cormorant mb-12">
+        <h2 className="text-center text-h1 font-headers text-darkgreen mb-12">
           Frequently Asked Questions (FAQs)
         </h2>
 
@@ -51,7 +51,7 @@ const FAQ = () => {
             >
               <div className="flex justify-between items-center cursor-pointer p-4 rounded-lg bg-fafafa shadow-sm">
                 <h3
-                  className={`text-xl font-bold text-darkgreen font-cormorant ${
+                  className={`text-2xl font-headers text-darkgreen font-semibold ${
                     activeIndex === index ? "" : ""
                   }`}
                 >
@@ -67,7 +67,7 @@ const FAQ = () => {
               </div>
               {activeIndex === index && (
                 <div className="p-4">
-                  <p className="text-lg text-gray-600 font-lato">
+                  <p className="text-p font-paragraph  text-darkgreen">
                     {faq.answer}
                   </p>
                 </div>
