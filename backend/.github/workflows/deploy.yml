@@ -1,0 +1,35 @@
+name: Deploy Node.js App to VPS
+
+on:
+  push:
+    branches:
+      - main  # Trigger the action on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the latest code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up SSH for accessing the VPS
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # Step 3: Deploy to VPS
+    - name: Deploy Node.js App via SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+          cd ~/app/ehr/ehr-be-project
+
+          # Step 3.1: Pull the latest changes from GitHub
+          git pull origin main
+
+          # Step 3.2: Build and run the Docker container
+          docker-compose down
+          docker-compose up -d --build
+        EOF
