@@ -1,9 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const appointmentController = require("./services/controllers/appointmentController");
 const authController = require("./authentication/controllers/authController");
 const bookingController = require("./services/controllers/bookingController");
 const testimonialRoutes = require("./routes/testimonialRoutes");
+const appointmentRoutes = require("./routes/appointmentsRoutes");
+const patientRoutes = require("./routes/patientRoutes");
+const scheduleRoutes = require("./routes/scheduleRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const doctorAnalyticsRoutes = require("./routes/doctorAnalyticsRoutes");
 
 const cors = require("cors");
 
@@ -13,7 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3001",
-    methods: ["GET", "POST", "PUT", "PATCH"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
 
@@ -25,15 +29,23 @@ app.use(express.static("public"));
 app.post("/book", bookingController.createBooking);
 app.put("/:bookingId", bookingController.updateBooking);
 app.get("/:bookingId", bookingController.getBookingById);
-app.get("/", bookingController.listBookings);
+app.get("/bookings", bookingController.listBookings);
 app.delete("/:bookingId", bookingController.deleteBooking);
 
 // Appointments
-app.post("/", appointmentController.createAppointment);
-app.post("/appointment-types", appointmentController.createAppointmentType);
-app.put("/:appointment_id", appointmentController.updateAppointment);
-app.delete("/:appointment_id", appointmentController.deleteAppointment);
-app.get("/", appointmentController.listAppointments);
+app.use("/api/appointments", appointmentRoutes);
+
+// patients
+app.use('/api/patients', patientRoutes);
+
+// schedule
+app.use('/api/doctors',scheduleRoutes);
+
+// notification
+app.use('/api/notifications',notificationRoutes);
+
+// doctor analytics
+app.use('/api/analytics', doctorAnalyticsRoutes);
 
 // authentication
 app.post("/login", authController.login);

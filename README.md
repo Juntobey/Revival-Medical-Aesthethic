@@ -1,4 +1,4 @@
-# AlienMind_EHR_System
+# AlienMind_ERevival Medical Aesthethic
 
 
 to clone the repository: git clone "URL"

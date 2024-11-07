@@ -23,12 +23,21 @@ This document contains instructions on how to run the backend for the Medical Ap
    ```
 
 2. **Intialize local Database**  
-    Run the following command to install the necessary packages:
+    Run the following command to create tables in the database:
 
    ```bash
    npx sequelize-cli db:migrate
 
    ```
+
+2. **Add Default data**  
+    Run the following command to add data into tables:
+
+   ```bash
+   npx sequelize-cli db:seed:all
+
+   ```
+
 
 3. **Start the App**  
     Run the following command to install the necessary packages:

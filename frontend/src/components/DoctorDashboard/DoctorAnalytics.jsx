@@ -1,6 +1,7 @@
-// src/components/DoctorDashboard/DoctorAnalytics.jsx
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import Swal from "sweetalert2";
+import BASE_URL from "../../config"; // Assuming BASE_URL is defined
 
 const DoctorAnalytics = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -13,12 +14,19 @@ const DoctorAnalytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/doctor-analytics"
-        );
+        // Retrieve user id from localStorage
+        const user = JSON.parse(localStorage.getItem("user")); // Assuming 'user' is the key in localStorage
+        if (!user || !user.id) {
+          Swal.fire("Error", "User ID is not available.", "error");
+          return;
+        }
+
+        // Sending the user ID as a query parameter
+        const response = await fetch(`${BASE_URL}/analytics/doctor-analytics?doctorId=${user.id}`);
         const data = await response.json();
         setAnalyticsData(data);
       } catch (error) {
+        Swal.fire("Error", "Failed to fetch analytics data", "error");
         console.error("Error fetching analytics data:", error);
       }
     };

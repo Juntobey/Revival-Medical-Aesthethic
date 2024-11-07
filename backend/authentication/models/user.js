@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const Role = require("./role");
+const Medical_Record = require("../../services/models/medical_record");
 const sequelize = require("../../config/sequelize");
 
 const User = sequelize.define("User", {
@@ -28,5 +29,7 @@ const User = sequelize.define("User", {
 });
 
 User.belongsTo(Role, { foreignKey: "roleId" });
+User.hasMany(Medical_Record, { foreignKey: 'patient_id', as: 'MedicalRecords' }); // A user can have many medical records
+User.hasMany(Medical_Record, { foreignKey: 'created_by', as: 'CreatedRecords' });
 
 module.exports = User;

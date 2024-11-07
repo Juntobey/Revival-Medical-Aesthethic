@@ -32,4 +32,8 @@ const Appointment = sequelize.define("Appointment", {
   },
 });
 
+Appointment.associate = (models) => {
+  Appointment.belongsTo(models.Treatment, { foreignKey: 'treatment_id' });
+};
+
 module.exports = Appointment;
