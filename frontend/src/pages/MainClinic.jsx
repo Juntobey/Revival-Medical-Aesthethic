@@ -5,7 +5,8 @@ import HeroSection from "../components/Main Clinic/HeroSection.jsx";
 import FAQ from "../components/FAQ.jsx";
 import TreatmentGallery from "../components/TreatmentGallery";
 import DoctorIntro from "../components/Main Clinic/DoctorIntro.jsx";
-import Carousel from "../components/Main Clinic/Carousel.jsx";
+import { CarouselSection } from "../components/Main Clinic/CarouselSection.jsx";
+
 import BookingProcess from "../components/BookingProcess.jsx";
 import CTASection from "../components/CTASection.jsx";
 import MapSection from "../components/MapSection.jsx";
@@ -17,7 +18,7 @@ const MainClinic = () => {
       <div className="pt-19">
         <HeroSection />
         <DoctorIntro />
-        <Carousel />
+        <CarouselSection />
         <BookingProcess />
         <TreatmentGallery />
         <FAQ />

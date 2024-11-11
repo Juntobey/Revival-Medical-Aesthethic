@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import BASE_URL from "../../config";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -8,10 +9,10 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/testimonials"); // Replace with your actual API endpoint
+        const response = await fetch(`${BASE_URL}/testimonials`);
         if (!response.ok) throw new Error("Failed to fetch testimonials");
         const data = await response.json();
-        setTestimonials(data.slice(-2)); // Only keep the latest 2 testimonials
+        setTestimonials(data.slice(-2));
       } catch (error) {
         console.error("Error fetching testimonials:", error);
       } finally {
@@ -26,6 +27,10 @@ const Testimonials = () => {
     return <p>Loading testimonials...</p>;
   }
 
+  const stripApiFromUrl = (url) => {
+    return url.replace("/api", "");
+  };
+
   return (
     <section className="py-16 px-8 bg-gray-100">
       <h2 className="text-h2 font-headers text-darkgreen mb-6 text-center">
@@ -38,7 +43,7 @@ const Testimonials = () => {
             className="rounded-lg shadow-lg overflow-hidden bg-white"
           >
             <img
-              src={`http://localhost:3000/${testimonial.imagePath}`}
+              src={`${stripApiFromUrl(BASE_URL)}/${testimonial.imagePath}`}
               alt={`Testimonial ${index + 1}`}
               className="w-full h-[300px] object-cover"
             />

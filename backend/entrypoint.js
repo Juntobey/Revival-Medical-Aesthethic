@@ -8,6 +8,7 @@ const patientRoutes = require("./routes/patientRoutes");
 const scheduleRoutes = require("./routes/scheduleRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const doctorAnalyticsRoutes = require("./routes/doctorAnalyticsRoutes");
+const imageUploadsGalleryRoutes = require("./routes/imageUploadsRoutes");
 
 const cors = require("cors");
 
@@ -36,16 +37,19 @@ app.delete("/:bookingId", bookingController.deleteBooking);
 app.use("/api/appointments", appointmentRoutes);
 
 // patients
-app.use('/api/patients', patientRoutes);
+app.use("/api/patients", patientRoutes);
 
 // schedule
-app.use('/api/doctors',scheduleRoutes);
+app.use("/api/doctors", scheduleRoutes);
 
 // notification
-app.use('/api/notifications',notificationRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // doctor analytics
-app.use('/api/analytics', doctorAnalyticsRoutes);
+app.use("/api/analytics", doctorAnalyticsRoutes);
+
+// image analytics
+app.use("/api/image-uploads", imageUploadsGalleryRoutes);
 
 // authentication
 app.post("/login", authController.login);

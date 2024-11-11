@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('ImageGalleries', {
+    await queryInterface.createTable("ImageGalleries", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -11,10 +11,10 @@ module.exports = {
       userProfileId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'UserProfiles',
-          key: 'id',
+          model: "UserProfiles",
+          key: "id",
         },
-        allowNull: false,
+        allowNull: true,
       },
       beforeImagePath: {
         type: Sequelize.STRING,
@@ -36,6 +36,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ImageGalleries');
+    await queryInterface.dropTable("ImageGalleries");
   },
 };

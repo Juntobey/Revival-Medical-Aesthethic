@@ -3,9 +3,9 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Icons for expand
 
 const faqs = [
   {
-    question: "Header 1",
+    question: "What treatments do you offer?",
     answer:
-      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+      "We offer a variety of treatments including anti-aging solutions, Botox, PRP, and hair loss treatments. Each treatment is designed to address specific needs and enhance your natural beauty. For detailed information, please visit our treatment information page.",
   },
   {
     question: "Header 2",

@@ -6,8 +6,10 @@ import { AuthContext } from "../context/AuthContext";
 const AdminRoute = ({ children }) => {
   const { auth } = useContext(AuthContext);
 
+  console.log(auth.user.role);
+
   // If the user is authenticated and is an admin, render the children component
-  return auth.isAuthenticated && auth.role === "admin" ? (
+  return auth.isAuthenticated && auth.user.role === "admin" ? (
     children
   ) : (
     <Navigate to="/login" />

@@ -1,20 +1,32 @@
-// src/components/TreatmentGallery.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// Simulating uploaded transformation images (before and after images)
-const transformations = [
-  { id: 1, before: "/images/before1.jpg", after: "/images/after1.jpg" },
-  { id: 2, before: "/images/before2.jpg", after: "/images/after2.jpg" },
-  { id: 3, before: "/images/before3.jpg", after: "/images/after3.jpg" },
-  { id: 4, before: "/images/before4.jpg", after: "/images/after4.jpg" },
-  { id: 5, before: "/images/before5.jpg", after: "/images/after5.jpg" },
-];
-
-// Get the three most recent transformations
-const latestTransformations = transformations.slice(-3);
+import axios from "axios";
+import BASE_URL from "../config";
 
 const TreatmentGallery = () => {
+  const [transformations, setTransformations] = useState([]);
+
+  useEffect(() => {
+    // Fetch transformations from the API
+    const fetchTransformations = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/image-uploads/transformations`
+        );
+        setTransformations(response.data.slice(0, 3)); // Get the three latest transformations
+      } catch (error) {
+        console.error("Error fetching transformations:", error);
+      }
+    };
+
+    fetchTransformations();
+  }, []);
+
+  // Helper function to strip '/api' from the URL if it exists
+  const stripApiFromUrl = (url) => {
+    return url.replace("/api", "");
+  };
+
   return (
     <section className="py-16 px-8 bg-[#f5eadf] shadow-lg">
       <div className="text-center">
@@ -26,9 +38,9 @@ const TreatmentGallery = () => {
         </p>
       </div>
 
-      {/* Display the three latest transformations */}
+      {/* Display the fetched transformations */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-        {latestTransformations.map((transformation) => (
+        {transformations.map((transformation) => (
           <div
             key={transformation.id}
             className="bg-white rounded-lg shadow-lg p-6"
@@ -37,7 +49,7 @@ const TreatmentGallery = () => {
               {/* Before treatment */}
               <div className="border border-gray-200 rounded-lg p-4">
                 <img
-                  src={transformation.before}
+                  src={`${stripApiFromUrl(BASE_URL)}${transformation.before}`}
                   alt={`Before Treatment ${transformation.id}`}
                   className="w-full h-40 object-cover rounded-lg"
                 />
@@ -45,15 +57,14 @@ const TreatmentGallery = () => {
                   Before Treatment {transformation.id}
                 </h3>
                 <p className="text-gray-600 font-paragraph mt-2">
-                  Body text for whatever you'd like to say. Add main takeaway
-                  points, quotes, anecdotes, or even a very short story.
+                  Description or story related to the before treatment image.
                 </p>
               </div>
 
               {/* After treatment */}
               <div className="border border-gray-200 rounded-lg p-4">
                 <img
-                  src={transformation.after}
+                  src={`${stripApiFromUrl(BASE_URL)}${transformation.after}`}
                   alt={`After Treatment ${transformation.id}`}
                   className="w-full h-40 object-cover rounded-lg"
                 />
@@ -61,8 +72,7 @@ const TreatmentGallery = () => {
                   After Treatment {transformation.id}
                 </h3>
                 <p className="text-gray-600 font-paragraph mt-2">
-                  Body text for whatever you'd like to say. Add main takeaway
-                  points, quotes, anecdotes, or even a very short story.
+                  Description or story related to the after treatment image.
                 </p>
               </div>
             </div>

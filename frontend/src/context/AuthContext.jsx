@@ -1,4 +1,3 @@
-// src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,26 +10,29 @@ const AuthProvider = ({ children }) => {
     user: null,
     role: null,
   });
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); // Loading state to check auth status
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
-    const role = localStorage.getItem("role");
+    const verifyAuth = () => {
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const role = localStorage.getItem("role");
 
-    if (token && user && role) {
-      setAuth({
-        isAuthenticated: true,
-        user,
-        role,
-      });
-    } else {
-      localStorage.clear();
-      setAuth({ isAuthenticated: false, user: null, role: null });
-    }
+      if (token && user && role) {
+        setAuth({
+          isAuthenticated: true,
+          user,
+          role,
+        });
+      } else {
+        localStorage.clear();
+        setAuth({ isAuthenticated: false, user: null, role: null });
+      }
+      setLoading(false); // Set loading to false after verification
+    };
 
-    setLoading(false); // Set loading to false after verifying
+    verifyAuth();
   }, []);
 
   const signIn = async (email, password) => {
@@ -52,7 +54,7 @@ const AuthProvider = ({ children }) => {
           user: result.user,
           role: result.user.role,
         });
-
+        setError(null); // Clear any previous errors
         return { success: true, role: result.user.role };
       } else {
         setError(result.error || "Login failed, please try again.");
@@ -68,12 +70,12 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     setAuth({ isAuthenticated: false, user: null, role: null });
     localStorage.clear();
-    navigate("/");
+    navigate("/login"); // Navigate to login page upon sign out
   };
 
   return (
     <AuthContext.Provider value={{ auth, signIn, signOut, loading, error }}>
-      {children}
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };

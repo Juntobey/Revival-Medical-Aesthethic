@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Bar } from "react-chartjs-2";
 import Swal from "sweetalert2";
 import BASE_URL from "../../config"; // Assuming BASE_URL is defined
@@ -10,19 +10,20 @@ const DoctorAnalytics = () => {
     upcomingAppointments: 0,
     completedAppointments: 0,
   });
+  const chartRef = useRef(null); // Reference for the chart instance
 
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        // Retrieve user id from localStorage
-        const user = JSON.parse(localStorage.getItem("user")); // Assuming 'user' is the key in localStorage
+        const user = JSON.parse(localStorage.getItem("user"));
         if (!user || !user.id) {
           Swal.fire("Error", "User ID is not available.", "error");
           return;
         }
 
-        // Sending the user ID as a query parameter
-        const response = await fetch(`${BASE_URL}/analytics/doctor-analytics?doctorId=${user.id}`);
+        const response = await fetch(
+          `${BASE_URL}/analytics/doctor-analytics?doctorId=${user.id}`
+        );
         const data = await response.json();
         setAnalyticsData(data);
       } catch (error) {
@@ -50,13 +51,49 @@ const DoctorAnalytics = () => {
     ],
   };
 
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      // Custom plugin to set white background
+      background: {
+        beforeDraw: (chart) => {
+          const ctx = chart.canvas.getContext("2d");
+          ctx.save();
+          ctx.globalCompositeOperation = "destination-over";
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 0, chart.width, chart.height);
+          ctx.restore();
+        },
+      },
+    },
+  };
+
+  // Function to download the chart as an image
+  const downloadChart = () => {
+    const chartInstance = chartRef.current;
+    if (chartInstance) {
+      const base64Image = chartInstance.toBase64Image();
+      const link = document.createElement("a");
+      link.href = base64Image;
+      link.download = "doctor-analytics-chart.png";
+      link.click();
+    }
+  };
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-darkgreen mb-4">Analytics</h2>
-      <Bar
-        data={chartData}
-        options={{ responsive: true, plugins: { legend: { position: "top" } } }}
-      />
+      <Bar ref={chartRef} data={chartData} options={chartOptions} />
+
+      <button
+        onClick={downloadChart}
+        className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg"
+      >
+        Download Chart
+      </button>
     </div>
   );
 };

@@ -1,15 +1,16 @@
 const { DataTypes } = require("sequelize");
 const UserProfile = require("./userProfile");
-const sequelize = require("../../config/sequelize")
+const sequelize = require("../../config/sequelize");
 
 const ImageGallery = sequelize.define("ImageGallery", {
-  imageId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  profileId: {
+  userProfileId: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     references: {
       model: UserProfile,
       key: "id",
@@ -24,9 +25,5 @@ const ImageGallery = sequelize.define("ImageGallery", {
     allowNull: false,
   },
 });
-
-// Establish relationship
-ImageGallery.belongsTo(UserProfile, { foreignKey: "profileId" });
-UserProfile.hasMany(ImageGallery, { foreignKey: "profileId" });
 
 module.exports = ImageGallery;

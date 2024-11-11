@@ -1,21 +1,33 @@
-// src/pages/ViewTreatments.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
 import { Link } from "react-router-dom";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Icons for the toggle button
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import axios from "axios";
+import BASE_URL from "../config";
 
-// Simulating uploaded transformation images (before and after images)
-const transformations = [
-  { id: 1, before: "/images/before1.jpg", after: "/images/after1.jpg" },
-  { id: 2, before: "/images/before2.jpg", after: "/images/after2.jpg" },
-  { id: 3, before: "/images/before3.jpg", after: "/images/after3.jpg" },
-  { id: 4, before: "/images/before4.jpg", after: "/images/after4.jpg" },
-  { id: 5, before: "/images/before5.jpg", after: "/images/after5.jpg" },
-];
+// Helper function to strip '/api' from BASE_URL for image display
+const stripApiFromBaseUrl = (url) => url.replace("/api", "");
 
 const ViewTreatments = () => {
+  const [transformations, setTransformations] = useState([]);
   const [openIds, setOpenIds] = useState([]);
+
+  // Fetch transformations from the API
+  useEffect(() => {
+    const fetchTransformations = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/image-uploads/transformations`
+        );
+        setTransformations(response.data); // Set all transformations
+      } catch (error) {
+        console.error("Error fetching transformations:", error);
+      }
+    };
+
+    fetchTransformations();
+  }, []);
 
   // Toggle function for showing/hiding the "After" image section
   const toggleAfterImage = (id) => {
@@ -30,7 +42,6 @@ const ViewTreatments = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
 
-      {/* Main Content */}
       <main className="flex-grow py-16 px-8 bg-[#f5eadf] shadow-lg animate-fade-in pt-[120px]">
         <div className="text-center">
           <h2 className="text-h3 font-bold font-headers text-darkgreen">
@@ -41,7 +52,6 @@ const ViewTreatments = () => {
           </p>
         </div>
 
-        {/* Display all uploaded transformations */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {transformations.map((transformation) => (
             <div
@@ -49,10 +59,11 @@ const ViewTreatments = () => {
               className="bg-white rounded-lg shadow-lg p-6"
             >
               <div className="flex flex-col space-y-4">
-                {/* Before treatment */}
                 <div className="border border-gray-200 rounded-lg p-4">
                   <img
-                    src={transformation.before}
+                    src={`${stripApiFromBaseUrl(BASE_URL)}${
+                      transformation.before
+                    }`}
                     alt={`Before Treatment ${transformation.id}`}
                     className="w-full h-64 object-cover rounded-lg"
                   />
@@ -64,7 +75,6 @@ const ViewTreatments = () => {
                   </p>
                 </div>
 
-                {/* Toggle button for "After" section */}
                 <button
                   onClick={() => toggleAfterImage(transformation.id)}
                   className="mt-2 flex items-center justify-center text-darkgreen"
@@ -80,11 +90,12 @@ const ViewTreatments = () => {
                   )}
                 </button>
 
-                {/* After treatment (collapsible section) */}
                 {openIds.includes(transformation.id) && (
                   <div className="border border-gray-200 rounded-lg p-4 mt-4">
                     <img
-                      src={transformation.after}
+                      src={`${stripApiFromBaseUrl(BASE_URL)}${
+                        transformation.after
+                      }`}
                       alt={`After Treatment ${transformation.id}`}
                       className="w-full h-64 object-cover rounded-lg"
                     />
@@ -101,7 +112,6 @@ const ViewTreatments = () => {
           ))}
         </div>
 
-        {/* Call-to-Action Button */}
         <div className="text-center mt-12">
           <Link
             to="/booking"
