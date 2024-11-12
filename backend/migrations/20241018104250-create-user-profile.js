@@ -31,6 +31,11 @@ module.exports = {
       emergencyContactNumber: {
         type: Sequelize.STRING,
       },
+      meta: {
+        type: Sequelize.JSON,
+        allowNull: true,
+        defaultValue: {}, // Initialize with an empty object
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {

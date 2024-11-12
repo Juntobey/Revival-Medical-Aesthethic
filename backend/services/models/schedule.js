@@ -1,7 +1,8 @@
 // models/schedule.js
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/sequelize");
-const TimeSlot = require("./timeslot")
+const TimeSlot = require("./timeslot");
+const User = require("../../authentication/models/user");
 
 const Schedule = sequelize.define("Schedule", {
   doctor_id: { // Link schedule to the doctor (user with role_id 3)
@@ -25,5 +26,7 @@ const Schedule = sequelize.define("Schedule", {
 
 Schedule.hasMany(TimeSlot, { foreignKey: "schedule_id", onDelete: "CASCADE" });
 TimeSlot.belongsTo(Schedule, { foreignKey: "schedule_id" });
+// Schedule.belongsTo(User, { foreignKey: 'doctor_id' });
+
 
 module.exports = Schedule;

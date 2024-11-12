@@ -8,16 +8,17 @@ const secret = "your_jwt_secret";
 
 const register = async (req, res) => {
   const {
-    username,
+    username = `user${Date.now()}`,
     email,
     password,
-    firstName,
-    lastName,
-    nationality,
-    birthday,
-    gender,
-    emergencyContactName,
-    emergencyContactNumber,
+    firstName = "Anonymous",
+    lastName = "User",
+    nationality = "Not Specified",
+    birthday = null,
+    gender = "other",
+    emergencyContactName = "N/A",
+    emergencyContactNumber = "N/A",
+    ...additionalFields
   } = req.body;
 
   try {
@@ -31,7 +32,6 @@ const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    // Create UserProfile
     await UserProfile.create({
       firstName,
       lastName,
@@ -41,13 +41,16 @@ const register = async (req, res) => {
       emergencyContactName,
       emergencyContactNumber,
       userId: user.id,
+      meta: additionalFields, // Store additional fields in the meta JSON field
     });
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(400).json({ error: error.message });
   }
 };
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;

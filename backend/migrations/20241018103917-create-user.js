@@ -10,8 +10,7 @@ module.exports = {
       },
       username: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: true,
       },
       email: {
         type: Sequelize.STRING,
@@ -28,7 +27,12 @@ module.exports = {
           model: 'Roles',
           key: 'id',
         },
-        defaultValue: 2, // Default role (patient)
+        defaultValue: 2,
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       createdAt: {
         type: Sequelize.DATE,

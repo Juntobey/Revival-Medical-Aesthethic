@@ -1,4 +1,7 @@
 const Booking = require("../models/bookings");
+const Appointment = require("../models/appointments");
+const Billing = require("../models/billing");
+const Invoice = require("../models/invoice");
 
 // Create Booking
 const createBooking = async (req, res) => {
@@ -47,16 +50,6 @@ const getBookingById = async (req, res) => {
   }
 };
 
-// List Bookings
-const listBookings = async (req, res) => {
-  try {
-    const bookings = await Booking.findAll();
-    res.json(bookings);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
 // Delete Booking
 const deleteBooking = async (req, res) => {
   const { bookingId } = req.params;
@@ -72,10 +65,50 @@ const deleteBooking = async (req, res) => {
   }
 };
 
+
+// Fetch all bookings with their details
+const getAllBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.findAll({
+      include: [
+        { model: Appointment },
+        { 
+          model: Billing,
+          include: [{ model: Invoice }]
+        }
+      ],
+    });
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Update payment status
+const updatePaymentStatus = async (req, res) => {
+  const { billingId } = req.params;
+  const { amount_paid, payment_status } = req.body;
+
+  try {
+    const billing = await Billing.findByPk(billingId);
+    if (!billing) return res.status(404).json({ message: "Billing record not found" });
+
+    billing.amount_paid = amount_paid;
+    billing.payment_status = payment_status;
+    await billing.save();
+
+    res.status(200).json({ message: "Payment status updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
   createBooking,
   updateBooking,
   getBookingById,
-  listBookings,
+  getAllBookings,
   deleteBooking,
+  updatePaymentStatus
 };

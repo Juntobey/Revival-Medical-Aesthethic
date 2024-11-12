@@ -31,16 +31,21 @@ const UserProfile = sequelize.define("UserProfile", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  meta: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: {},
+  },
   userId: {
     type: DataTypes.INTEGER,
     references: {
       model: User,
       key: "id",
     },
+    allowNull: false,
   },
 });
 
-// Establish one-to-one relationship
 UserProfile.belongsTo(User, { foreignKey: "userId" });
 User.hasOne(UserProfile, { foreignKey: "userId" });
 

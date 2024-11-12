@@ -34,4 +34,7 @@ const Booking = sequelize.define("Booking", {
   },
 });
 
+Booking.hasMany(require("./appointments"), { foreignKey: "bookingId" });
+Booking.hasOne(require("./billing"), { foreignKey: "bookingId" });
+
 module.exports = Booking;

@@ -1,6 +1,7 @@
 // src/components/AdminDashboard/ManageUsers.jsx
 import React, { useState, useEffect } from "react";
 import UserProfile from "./UserProfile";
+import BASE_URL from "../../config";
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +11,7 @@ const ManageUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/users");
+        const response = await fetch(`${BASE_URL}/authentication/users`);
         const data = await response.json();
         setUsers(data);
       } catch (error) {

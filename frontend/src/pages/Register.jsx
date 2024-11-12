@@ -6,6 +6,7 @@ import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config";
 
 const MySwal = withReactContent(Swal);
 
@@ -150,7 +151,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch(`${BASE_URL}/authentication/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

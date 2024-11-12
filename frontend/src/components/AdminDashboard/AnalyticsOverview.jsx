@@ -10,25 +10,26 @@ import {
   Legend,
 } from "chart.js";
 import Popup from "../Popup";
+import BASE_URL from "../../config";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AnalyticsOverview = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [analyticsData, setAnalyticsData] = useState({
+    totalBookings: 0,
+    totalPayments: 0,
+    activeUsers: 0,
+    cancelledAppointments: 0,
+  });
 
-  const analyticsData = {
-    totalBookings: 120,
-    totalPayments: 75,
-    activeUsers: 40,
-    cancelledAppointments: 10,
-  };
+  useEffect(() => {
+    // Fetch the analytics data from backend
+    fetch(`${BASE_URL}/analytics/overview`)
+      .then(response => response.json())
+      .then(data => setAnalyticsData(data))
+      .catch(error => console.error("Error fetching analytics data:", error));
+  }, []);
 
   const chartData = {
     labels: ["Bookings", "Payments", "Active Users", "Cancellations"],

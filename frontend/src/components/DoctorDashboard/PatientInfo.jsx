@@ -23,11 +23,11 @@ const PatientInfo = () => {
       }
     };
 
-    if (searchTerm) {
-      fetchPatients();
-    }
+    // Fetch patients whenever searchTerm changes (or is cleared)
+    fetchPatients();
   }, [searchTerm]);
 
+  // Filtering patients based on name or medical record's diagnosis
   const filteredPatients = patients.filter((patient) => {
     const nameMatch = patient.name && patient.name.toLowerCase().includes(searchTerm.toLowerCase());
     const medicalRecordMatch = patient.medicalRecords.some((record) =>
@@ -91,6 +91,11 @@ const PatientInfo = () => {
     }
   };
 
+  const handleGoBack = () => {
+    setSelectedPatient(null); // Reset the selected patient to show the patient list again
+    setSelectedRecord(null); // Clear the selected record (if any)
+  };
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-darkgreen mb-4">Patient Information</h2>
@@ -104,25 +109,35 @@ const PatientInfo = () => {
 
       {selectedPatient ? (
         <div className="p-4">
+          <button
+            onClick={handleGoBack}
+            className="bg-gray-500 text-white py-2 px-4 rounded-lg mb-4"
+          >
+            Go Back to Patient List
+          </button>
           <h3 className="text-xl font-semibold">
             Editing {selectedPatient.name}
           </h3>
           <div className="mt-4">
             {/* Displaying and Editing Medical Records */}
             <h4 className="text-lg font-semibold mb-2">Medical Records</h4>
-            {selectedPatient.medicalRecords.map((record) => (
-              <div key={record.record_id} className="mb-2">
-                <p><strong>Diagnosis:</strong> {record.diagnosis}</p>
-                <p><strong>Treatment:</strong> {record.treatment}</p>
-                <p><strong>Prescription:</strong> {record.prescription}</p>
-                <button
-                  onClick={() => openRecordForEdit(record)}
-                  className="text-indigo-600 underline"
-                >
-                  <i className="fas fa-pencil-alt mr-2"></i>Edit Record
-                </button>
-              </div>
-            ))}
+            {selectedPatient.medicalRecords.length === 0 ? (
+              <p>No medical records available.</p>
+            ) : (
+              selectedPatient.medicalRecords.map((record) => (
+                <div key={record.record_id} className="mb-2">
+                  <p><strong>Diagnosis:</strong> {record.diagnosis}</p>
+                  <p><strong>Treatment:</strong> {record.treatment}</p>
+                  <p><strong>Prescription:</strong> {record.prescription}</p>
+                  <button
+                    onClick={() => openRecordForEdit(record)}
+                    className="text-indigo-600 underline"
+                  >
+                    <i className="fas fa-pencil-alt mr-2"></i>Edit Record
+                  </button>
+                </div>
+              ))
+            )}
             {/* Displaying form to edit selected record */}
             {selectedRecord && (
               <div className="mt-4">
@@ -169,19 +184,23 @@ const PatientInfo = () => {
       ) : (
         <div className="overflow-y-auto max-h-96">
           <ul>
-            {filteredPatients.map((patient) => (
-              <li key={patient.id} className="border-b py-2">
-                <p><strong>Name:</strong> {patient.name}</p>
-                <p><strong>Condition:</strong> {patient.medicalRecords[0]?.diagnosis || "No condition listed"}</p>
-                <p><strong>Notes:</strong> {patient.notes || "No notes available"}</p>
-                <button
-                  onClick={() => openPatientProfile(patient)}
-                  className="text-indigo-600 underline"
-                >
-                  View Medical records
-                </button>
-              </li>
-            ))}
+            {filteredPatients.length === 0 ? (
+              <li>No patients found matching your search criteria.</li>
+            ) : (
+              filteredPatients.map((patient) => (
+                <li key={patient.id} className="border-b py-2">
+                  <p><strong>Name:</strong> {patient.name}</p>
+                  <p><strong>Condition:</strong> {patient.medicalRecords[0]?.diagnosis || "No condition listed"}</p>
+                  <p><strong>Notes:</strong> {patient.notes || "No notes available"}</p>
+                  <button
+                    onClick={() => openPatientProfile(patient)}
+                    className="text-indigo-600 underline"
+                  >
+                    View Medical Records
+                  </button>
+                </li>
+              ))
+            )}
           </ul>
         </div>
       )}

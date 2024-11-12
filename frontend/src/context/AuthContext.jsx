@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../config";
 
 const AuthContext = createContext();
 
@@ -10,7 +11,7 @@ const AuthProvider = ({ children }) => {
     user: null,
     role: null,
   });
-  const [loading, setLoading] = useState(true); // Loading state to check auth status
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const AuthProvider = ({ children }) => {
         localStorage.clear();
         setAuth({ isAuthenticated: false, user: null, role: null });
       }
-      setLoading(false); // Set loading to false after verification
+      setLoading(false);
     };
 
     verifyAuth();
@@ -37,7 +38,7 @@ const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${BASE_URL}/authentication/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -54,7 +55,7 @@ const AuthProvider = ({ children }) => {
           user: result.user,
           role: result.user.role,
         });
-        setError(null); // Clear any previous errors
+        setError(null);
         return { success: true, role: result.user.role };
       } else {
         setError(result.error || "Login failed, please try again.");
@@ -70,7 +71,7 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     setAuth({ isAuthenticated: false, user: null, role: null });
     localStorage.clear();
-    navigate("/login"); // Navigate to login page upon sign out
+    navigate("/login"); 
   };
 
   return (

@@ -3,10 +3,11 @@ import React from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
 import ManageUsers from "../components/AdminDashboard/ManageUsers";
-import ManageNotifications from "../components/AdminDashboard/ManageNotifications";
 import ManageSchedule from "../components/AdminDashboard/ManageSchedule";
 import TreatmentGalleryManagement from "../components/AdminDashboard/TreatmentGalleryManagement";
 import AnalyticsOverview from "../components/AdminDashboard/AnalyticsOverview";
+import ManageBookings from "../components/AdminDashboard/ManageBookings";
+import Notifications from "../components/DoctorDashboard/Notifications";
 
 const AdminDashboard = () => {
   return (
@@ -19,9 +20,10 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnalyticsOverview />
           <ManageUsers />
-          <ManageNotifications />
+          <Notifications />
           <ManageSchedule />
           <TreatmentGalleryManagement />
+          <ManageBookings />
         </div>
       </main>
       <Footer />
