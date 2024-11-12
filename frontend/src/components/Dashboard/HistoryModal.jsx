@@ -1,7 +1,44 @@
-// src/components/Dashboard/HistoryModal.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BASE_URL from "../../config"; // Ensure your BASE_URL is correctly set up
 
-const HistoryModal = ({ onClose, historyData }) => {
+const HistoryModal = ({ onClose }) => {
+  const [historyData, setHistoryData] = useState([]);
+
+  // Fetch appointment history data from the backend
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user?.id;
+      try {
+        const response = await axios.get(`${BASE_URL}/appointments/user/${userId}`);
+        
+        // Check if the response is an array or a single object
+        if (Array.isArray(response.data)) {
+          setHistoryData(response.data);
+        } else if (response.data && typeof response.data === "object") {
+          // If it's a single object, convert it to an array
+          setHistoryData([response.data]);
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching appointment history:", error);
+      }
+    };
+
+    fetchHistory();
+  }, []);
+
+  // Filter appointments that have passed the due date and have a status of "canceled" or "completed"
+  const filteredHistory = historyData.filter((item) => {
+    const appointmentDate = new Date(item.appointmentDateTime);
+    const currentDate = new Date();
+
+    // Check if the appointment date is in the past and the status is either "canceled" or "completed"
+    return appointmentDate < currentDate && (item.status === "canceled" || item.status === "completed");
+  });
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg w-3/4 md:w-1/2 lg:w-1/3 shadow-lg relative">
@@ -13,17 +50,20 @@ const HistoryModal = ({ onClose, historyData }) => {
           &times;
         </button>
         <div className="mt-4 space-y-4">
-          {historyData && historyData.length > 0 ? (
-            historyData.map((item, index) => (
+          {filteredHistory && filteredHistory.length > 0 ? (
+            filteredHistory.map((item, index) => (
               <div key={index} className="border-b pb-2">
                 <p>
-                  <strong>Date:</strong> {item.date}
+                  <strong>Date:</strong> {new Date(item.appointmentDateTime).toLocaleString()}
                 </p>
                 <p>
-                  <strong>Type:</strong> {item.type}
+                  <strong>Type:</strong> {item.appointmentTypeId} {/* or any other field you need */}
                 </p>
                 <p>
-                  <strong>Details:</strong> {item.details}
+                  <strong>Status:</strong> {item.status}
+                </p>
+                <p>
+                  <strong>Details:</strong> {item.notes}
                 </p>
               </div>
             ))

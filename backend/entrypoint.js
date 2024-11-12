@@ -12,6 +12,8 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const adminScheduleRoutes = require("./routes/adminScheduleRoutes");
+const treatmentRoutes = require("./routes/treatmentRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const cors = require("cors");
 
@@ -29,6 +31,13 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
+
+
+// invoices
+app.use("/api/invoices", invoiceRoutes);
+
+// treatements
+app.use("/api/treatments", treatmentRoutes);
 
 // Bookings
 app.use("/api/bookings", bookingRoutes);

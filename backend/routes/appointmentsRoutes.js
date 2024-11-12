@@ -11,7 +11,7 @@ router.post("/appointment-types", appointmentController.createAppointmentType);
 router.put("/:appointment_id", appointmentController.updateAppointment);
 router.delete("/:appointment_id", appointmentController.deleteAppointment);
 router.get("/appointments", appointmentController.listAppointments);
-router.get('/appointments/user/:userId', appointmentController.getAppointmentByUserId);
+router.get('/user/:userId', appointmentController.getAppointmentByUserId);
 router.get("/doctor-appointments", appointmentController.getAppointmentsForDoctor);
 router.patch("/:appointmentId/complete", appointmentController.completeAppointment);
 

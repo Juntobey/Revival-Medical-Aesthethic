@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import BASE_URL from "../../config";
 
 const MySwal = withReactContent(Swal);
 
@@ -34,7 +35,7 @@ const TestimonialUpload = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/testimonials/upload",
+        `${BASE_URL}/testimonials/upload`,
         {
           method: "POST",
           body: formData,

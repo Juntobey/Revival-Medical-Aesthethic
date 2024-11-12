@@ -1,33 +1,49 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios";
+import BASE_URL from "../../config";
 
 const BookingSummary = ({ treatment, date, time }) => {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user")); // Get user data from local storage
+  const userId = user?.id; // Access userId
 
   const handleProceedToPayment = () => {
     if (!treatment || !date || !time) {
       Swal.fire({
         title: "Oops! Booking Incomplete",
-        text: "Please ensure you select a treatment, date and time before proceeding to payment.",
+        text: "Please ensure you select a treatment, date, and time before proceeding to payment.",
         icon: "warning",
         confirmButtonText: "Got it!",
-        confirmButtonColor: "#1B2E22", // Change to your preferred button color
-        background: "#F7F7F7", // Alert background color
-        color: "#333", // Text color
-        iconColor: "#FFC107", // Icon color (e.g., yellow for warning)
-        customClass: {
-          title: "text-3xl font-headers font-semibold text-darkgreen", // Custom CSS for title
-          text: "font-paragraph",
-          popup: "border border-gray-300 shadow-lg rounded-lg", // Custom CSS for popup box
-          confirmButton: "py-2 px-4 font-cta font-semibold rounded-full", // Custom CSS for confirm button
-        },
       });
       return;
     }
-
-    // Proceed to payment if all selections are made
-    navigate("/payment-options");
+  
+    const amount = treatment.price; // Get the price from the selected treatment
+    axios.post(`${BASE_URL}/invoices/invoice`, {
+      treatmentId: treatment.id,
+      doctorId: 2, // since we have one doctor right now
+      userId,
+      date,
+      time,
+      amount,
+    })
+      .then(response => {
+        Swal.fire({
+          title: "Booking Successful!",
+          // text: "Please choose a payment method.",
+          icon: "success",
+        });
+        navigate("/dashboard");
+      })
+      .catch(error => {
+        Swal.fire({
+          title: "Error",
+          text: "Failed to create invoice. Please try again.",
+          icon: "error",
+        });
+      });
   };
 
   return (
@@ -36,11 +52,13 @@ const BookingSummary = ({ treatment, date, time }) => {
         Booking Summary
       </h2>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Treatment:</strong> {treatment || "Not selected"}
+        <strong>Treatment:</strong> {treatment?.treatment_name || "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Date:</strong>{" "}
-        {date ? date.toLocaleDateString() : "Not selected"}
+        <strong>Price:</strong> R{treatment?.price || "Not available"}
+      </p>
+      <p className="text-gray-600 mb-2 font-paragraph">
+        <strong>Date:</strong> {date ? date.toLocaleDateString() : "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
         <strong>Time:</strong> {time || "Not selected"}
@@ -49,7 +67,7 @@ const BookingSummary = ({ treatment, date, time }) => {
         onClick={handleProceedToPayment}
         className="mt-4 bg-lightbrown text-luxwhite font-cta px-4 py-2 rounded-lg hover:bg-opacity-55 transition w-1/2"
       >
-        Confirm & Proceed to Payment
+        Confirm & Pay Later
       </button>
     </div>
   );

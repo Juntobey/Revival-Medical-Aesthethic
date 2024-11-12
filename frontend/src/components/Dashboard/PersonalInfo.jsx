@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../context/AuthContext";
+import BASE_URL from "../../config";
 
 const PersonalInfo = () => {
   // Get user data from AuthContext
@@ -32,7 +33,7 @@ const PersonalInfo = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/profile/${auth.user.id}`,
+        `${BASE_URL}/authentication/profile/${auth.user.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../config";
 
 const UpcomingAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -16,7 +17,7 @@ const UpcomingAppointments = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user?.id; 
       try {
-        const response = await axios.get(`/api/appointments/user/${userId}`);
+        const response = await axios.get(`${BASE_URL}/appointments/user/${userId}`);
         const upcomingAppointments = response.data.filter((appointment) => {
           const appointmentDate = new Date(appointment.appointmentDateTime);
           return appointmentDate > new Date();

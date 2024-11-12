@@ -1,9 +1,13 @@
 import React from "react";
 
-const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime }) => {
-  const availableTimes = selectedDate
-    ? ["10:00", "10:15", "10:30", "10:45", "11:00", "11:15"]
-    : [];
+const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime, availableDates }) => {
+  // Find the time slots for the selected date
+  const selectedDaySlots = availableDates.find(
+    (dateObj) => new Date(dateObj.date).toDateString() === new Date(selectedDate).toDateString()
+  );
+
+  // If slots are available for that date, extract them
+  const availableTimes = selectedDaySlots ? selectedDaySlots.timeslots : [];
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
@@ -12,19 +16,24 @@ const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime }) => {
       </h2>
       {selectedDate ? (
         <div className="grid grid-cols-2 gap-2">
-          {availableTimes.map((time, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedTime(time)}
-              className={`p-2 rounded-lg transition ${
-                selectedTime === time
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-indigo-100"
-              }`}
-            >
-              {time}
-            </button>
-          ))}
+          {availableTimes.length > 0 ? (
+            availableTimes.map((slot) => (
+              <button
+                key={slot.id}
+                onClick={() => setSelectedTime(slot)}  // Pass the entire slot object to setSelectedTime
+                className={`p-2 rounded-lg transition ${
+                  selectedTime && selectedTime.id === slot.id
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 text-gray-800 hover:bg-indigo-100"
+                }`}
+              >
+                {/* Render the start_time and end_time only */}
+                {slot.start_time} - {slot.end_time}
+              </button>
+            ))
+          ) : (
+            <p className="text-gray-600 font-paragraph">No available time slots for this date.</p>
+          )}
         </div>
       ) : (
         <p className="text-gray-600 font-paragraph">

@@ -83,7 +83,6 @@ const getAppointmentByUserId = async (req, res) => {
       include: [
         {
           model: User,
-          as: 'Doctor',
           attributes: ['username', 'email'],
         },
       ],

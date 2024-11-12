@@ -9,8 +9,11 @@ const {
   getDoctorsAppointments,
   addNewTimeSlot,
   createScheduleAndTimeSlot,
-  toggleTimeSlotAvailability
+  toggleTimeSlotAvailability,
+  getAvailableDates
 } = require('../services/controllers/scheduleController');
+
+router.get("/doctor/:doctorId/available-dates", getAvailableDates);
 
 // toggle timeslot availability
 router.patch("/timeslots/:id/toggle", toggleTimeSlotAvailability);

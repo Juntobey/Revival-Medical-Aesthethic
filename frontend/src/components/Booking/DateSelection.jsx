@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import BASE_URL from "../../config";
 
-const DateSelection = ({ selectedDate, setSelectedDate }) => {
+const DateSelection = ({ selectedDate, setSelectedDate, availableDates }) => {
   const tileDisabled = ({ date }) => {
-    const today = new Date();
-    return date < today.setHours(0, 0, 0, 0);
+    const isTaken = availableDates.some(d => new Date(d.date).toDateString() === date.toDateString());
+    return date < new Date() || !isTaken;
   };
 
   return (

@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/sequelize");
+const User = require("../../authentication/models/user");
 
 const Appointment = sequelize.define("Appointment", {
   appointment_id: {
@@ -35,5 +36,7 @@ const Appointment = sequelize.define("Appointment", {
 Appointment.associate = (models) => {
   Appointment.belongsTo(models.Treatment, { foreignKey: 'treatment_id' });
 };
+
+Appointment.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Appointment;

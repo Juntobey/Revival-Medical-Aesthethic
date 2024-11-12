@@ -1,15 +1,23 @@
-// src/components/Booking/BookingForm.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BookingHero from "./BookingHero";
 import TreatmentSelection from "./TreatmentSelection";
 import DateSelection from "./DateSelection";
 import TimeSlotSelection from "./TimeSlotSelection";
 import BookingSummary from "./BookingSummary";
+import axios from "axios";
+import BASE_URL from "../../config";  // Ensure the correct API base URL is imported
 
 const BookingForm = () => {
   const [selectedTreatment, setSelectedTreatment] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedTime, setSelectedTime] = useState(null);  // Initially set to null
+  const [availableDates, setAvailableDates] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/doctors/doctor/2/available-dates`)
+      .then(response => setAvailableDates(response.data))
+      .catch(error => console.error("Failed to fetch available dates", error));
+  }, []);
 
   return (
     <>
@@ -23,18 +31,20 @@ const BookingForm = () => {
           <DateSelection
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            availableDates={availableDates} // Pass availableDates to DateSelection
           />
           <TimeSlotSelection
             selectedDate={selectedDate}
-            selectedTime={selectedTime}
+            selectedTime={selectedTime}  // Pass selectedTime (which should be an object)
             setSelectedTime={setSelectedTime}
+            availableDates={availableDates} // Pass availableDates to TimeSlotSelection
           />
         </div>
 
         <BookingSummary
           treatment={selectedTreatment}
           date={selectedDate}
-          time={selectedTime}
+          time={selectedTime ? `${selectedTime.start_time} - ${selectedTime.end_time}` : "Not selected"}  // Render start_time and end_time
         />
       </section>
     </>

@@ -1,84 +1,17 @@
-import React, { useState } from "react";
-
-const treatments = [
-  {
-    category: "GP Consultation",
-    items: ["Weekdays 9am - 5pm", "Weekends 10am - 2pm"],
-  },
-  {
-    category: "Facial Rejuvenation",
-    items: [
-      "Vampire Facial (PRP)",
-      "Botox",
-      "Filler",
-      "Threads",
-      "PLLA (Sculptra) - Plejuv",
-      "Etrebelle 50",
-      "Etrebelle 200",
-    ],
-  },
-  {
-    category: "Hair Loss",
-    items: [
-      "PRP Therapy X1 session",
-      "PRP Therapy X3 sessions (Up front)",
-      "PRP Therapy X6 sessions (Up front)",
-      "Meso Therapy",
-      "Transplant FUE Consult",
-      "Transplant FUE Procedure",
-    ],
-  },
-  {
-    category: "Drips",
-    items: [
-      "The Boost",
-      "The Boost Rehydrate",
-      "The Energiser",
-      "The Energiser Rehydrate",
-      "The Flu Prevention",
-      "The Glow",
-      "The Back Ache",
-      "The Ultimate",
-    ],
-  },
-  {
-    category: "Add-ons",
-    items: [
-      "Immune Boost - Vitamin C",
-      "Cold and Flu Prevention - Heel Echinacea",
-      "Glow and Repair - Glutathione",
-      "Energy - NAD+",
-      "Nerve Pain - Pyridoxine (Vitamin B6)",
-      "Anti-Inflammatory - Xefo",
-    ],
-  },
-  {
-    category: "Injections",
-    items: [
-      "Voltaren (Anti-Inflammatory)",
-      "Celestone 2ml",
-      "Dexona 1ml",
-      "Back Pain Combo",
-    ],
-  },
-  {
-    category: "Repair P.R.P.",
-    items: ["X1 session", "X3 sessions (Up front)", "X6 sessions (Up front)"],
-  },
-  {
-    category: "Birth Control",
-    items: [
-      "Depo-Provera injection (3 Monthly)",
-      "Nur-isterate injection (2 Monthly)",
-      "Implant (3 Years)",
-      "Copper-T IUD (5 Years)",
-      "Hormonal IUD (5 Years)",
-    ],
-  },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import BASE_URL from "../../config";
 
 const TreatmentSelection = ({ selectedTreatment, setSelectedTreatment }) => {
+  const [treatments, setTreatments] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/treatments`)
+      .then(response => setTreatments(response.data))
+      .catch(error => console.error("Failed to fetch treatments", error));
+  }, []);
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
@@ -89,9 +22,7 @@ const TreatmentSelection = ({ selectedTreatment, setSelectedTreatment }) => {
         <div key={index} className="mb-4">
           <button
             className="w-full text-left p-2 font-semibold text-gray-700 border-b border-gray-300"
-            onClick={() =>
-              setOpenCategory(openCategory === index ? null : index)
-            }
+            onClick={() => setOpenCategory(openCategory === index ? null : index)}
           >
             {treatmentCategory.category}
           </button>
@@ -100,14 +31,14 @@ const TreatmentSelection = ({ selectedTreatment, setSelectedTreatment }) => {
               {treatmentCategory.items.map((item, idx) => (
                 <li key={idx} className="my-2">
                   <button
-                    onClick={() => setSelectedTreatment(item)}
+                    onClick={() => setSelectedTreatment({ treatment_name: item.treatment_name, price: item.price })}
                     className={`w-full text-left p-2 rounded-lg border ${
-                      selectedTreatment === item
+                      selectedTreatment?.treatment_name === item.treatment_name
                         ? "bg-indigo-600 text-white"
                         : "border-gray-300 text-gray-700 hover:bg-gray-100"
                     }`}
                   >
-                    {item}
+                    {item.treatment_name}
                   </button>
                 </li>
               ))}

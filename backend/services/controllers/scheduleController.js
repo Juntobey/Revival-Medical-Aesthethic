@@ -3,6 +3,7 @@ const Schedule = require('../models/schedule');
 const Appointment = require("../models/appointments");
 const TimeSlot = require("../models/timeslot");
 const sequelize = require("../../config/sequelize");
+const { Op } = require('sequelize');
 
 const getDoctorsAppointments = async (req, res) => {
   const { doctorId } = req.params;
@@ -158,6 +159,39 @@ const getAvailability = async (req, res) => {
   }
 };
 
+const getAvailableDates = async (req, res) => {
+  const doctorId = req.params.doctorId;
+  const today = new Date();
+
+  try {
+    const schedules = await Schedule.findAll({
+      where: {
+        doctor_id: doctorId,
+        date: {
+          [Op.gte]: today,
+        },
+        is_available: true,
+      },
+      include: {
+        model: TimeSlot,
+        where: {
+          is_available: true,
+        },
+      },
+    });
+
+    const availableDates = schedules.map(schedule => ({
+      date: schedule.date,
+      timeslots: schedule.TimeSlots,
+    }));
+
+    res.json(availableDates);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Failed to fetch available dates and slots", error });
+  }
+};
+
 
 
 const updateAvailability = async (req, res) => {
@@ -214,5 +248,6 @@ module.exports = {
   getDoctorsAppointments,
   addNewTimeSlot,
   createScheduleAndTimeSlot,
-  toggleTimeSlotAvailability
+  toggleTimeSlotAvailability,
+  getAvailableDates
 };
