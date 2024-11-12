@@ -61,26 +61,54 @@ const updateScheduleAvailability = async (req, res) => {
 };
 
 const addTimeSlot = async (req, res) => {
-  const { scheduleId, startTime, endTime } = req.body;
+  const { doctor_id, date, is_available, TimeSlots } = req.body;
+
+  if (!TimeSlots || TimeSlots.length === 0) {
+    return res.status(400).json({ error: "At least one time slot is required." });
+  }
 
   try {
-    const schedule = await Schedule.findByPk(scheduleId);
-    if (!schedule) {
-      return res.status(404).json({ error: "Schedule not found" });
-    }
-
-    const timeSlot = await TimeSlot.create({
-      schedule_id: scheduleId,
-      start_time: startTime,
-      end_time: endTime,
-      is_available: true,
+    // Check if a schedule already exists for this doctor and date
+    let schedule = await Schedule.findOne({
+      where: {
+        doctor_id,
+        date,
+      },
     });
 
-    res.status(201).json(timeSlot);
+    // If the schedule doesn’t exist, create a new one
+    if (!schedule) {
+      const note = "available";
+      schedule = await Schedule.create({
+        doctor_id,
+        date,
+        is_available,
+        note
+      });
+    }
+
+    // Iterate through the TimeSlots array and create each slot
+    const createdTimeSlots = await Promise.all(
+      TimeSlots.map(async (slot) => {
+        return await TimeSlot.create({
+          schedule_id: schedule.id,
+          start_time: slot.start_time,
+          end_time: slot.end_time,
+          is_available: true,
+        });
+      })
+    );
+
+    res.status(201).json({
+      message: "Schedule and time slots created successfully",
+      schedule,
+      createdTimeSlots,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Error creating time slot" });
+    res.status(500).json({ error: "Error creating schedule and time slots" });
   }
 };
+
 
 const cancelTimeSlot = async (req, res) => {
   const { timeSlotId } = req.params;
@@ -99,6 +127,7 @@ const cancelTimeSlot = async (req, res) => {
     res.status(500).json({ error: "Error canceling time slot" });
   }
 };
+
 
 const getDoctors = async (req, res) => {
   try {
@@ -122,6 +151,24 @@ const getDoctors = async (req, res) => {
   }
 };
 
+const deleteTimeSlot = async (req, res) => {
+  const { timeSlotId } = req.params;
+
+  try {
+    const timeSlot = await TimeSlot.findByPk(timeSlotId);
+    if (!timeSlot) {
+      return res.status(404).json({ error: "Time slot not found" });
+    }
+
+    // Permanently delete the time slot
+    await timeSlot.destroy();
+
+    res.status(200).json({ message: "Time slot deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting time slot" });
+  }
+};
+
 
 module.exports = {
   getSchedules,
@@ -129,5 +176,6 @@ module.exports = {
   updateScheduleAvailability,
   addTimeSlot,
   cancelTimeSlot,
-  getDoctors
+  getDoctors,
+  deleteTimeSlot
 };

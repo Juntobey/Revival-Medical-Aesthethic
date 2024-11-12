@@ -6,8 +6,9 @@ const scheduleController = require("../services/controllers/adminScheduleControl
 router.get("/doctor/:doctorId/schedules", scheduleController.getSchedules);
 router.post("/doctor/schedule", scheduleController.createSchedule);
 router.put("/schedule/:scheduleId", scheduleController.updateScheduleAvailability);
-router.post("/schedule/:scheduleId/time-slot", scheduleController.addTimeSlot);
+router.post("/schedule/:doctorId/time-slot", scheduleController.addTimeSlot);
 router.put("/timeslot/:timeSlotId/cancel", scheduleController.cancelTimeSlot);
+router.delete("/time-slot/:timeSlotId", scheduleController.deleteTimeSlot);
 router.get("/doctors", scheduleController.getDoctors);
 
 module.exports = router;
