@@ -12,7 +12,7 @@ const HistoryModal = ({ onClose }) => {
       const userId = user?.id;
       try {
         const response = await axios.get(`${BASE_URL}/appointments/user/${userId}`);
-        
+
         // Check if the response is an array or a single object
         if (Array.isArray(response.data)) {
           setHistoryData(response.data);
@@ -30,13 +30,20 @@ const HistoryModal = ({ onClose }) => {
     fetchHistory();
   }, []);
 
-  // Filter appointments that have passed the due date and have a status of "canceled" or "completed"
+  // Filter appointments based on conditions
   const filteredHistory = historyData.filter((item) => {
-    const appointmentDate = new Date(item.appointmentDateTime);
-    const currentDate = new Date();
+    console.log(item)
+    // If appointmentDateTime is available, check if it's in the past
+    if (item.appointmentDateTime) {
+      const appointmentDate = new Date(item.appointmentDateTime);
+      const currentDate = new Date();
 
-    // Check if the appointment date is in the past and the status is either "canceled" or "completed"
-    return appointmentDate < currentDate && (item.status === "canceled" || item.status === "completed");
+      // Only show appointments that are in the past and have a status of "canceled" or "completed"
+      return appointmentDate < currentDate && (item.status === "canceled" || item.status === "completed");
+    } else {
+      // If appointmentDateTime is null, show the appointment if status is not "scheduled"
+      return item.status !== "scheduled";
+    }
   });
 
   return (
@@ -54,7 +61,7 @@ const HistoryModal = ({ onClose }) => {
             filteredHistory.map((item, index) => (
               <div key={index} className="border-b pb-2">
                 <p>
-                  <strong>Date:</strong> {new Date(item.appointmentDateTime).toLocaleString()}
+                  <strong>Date:</strong> {item.appointmentDateTime ? new Date(item.appointmentDateTime).toLocaleString() : "N/A"}
                 </p>
                 <p>
                   <strong>Type:</strong> {item.appointmentTypeId} {/* or any other field you need */}
@@ -63,7 +70,7 @@ const HistoryModal = ({ onClose }) => {
                   <strong>Status:</strong> {item.status}
                 </p>
                 <p>
-                  <strong>Details:</strong> {item.notes}
+                  <strong>Details:</strong> {item.notes || "No details available"}
                 </p>
               </div>
             ))

@@ -1,4 +1,3 @@
-// src/components/Dashboard/UpcomingAppointments.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -18,10 +17,13 @@ const UpcomingAppointments = () => {
       const userId = user?.id; 
       try {
         const response = await axios.get(`${BASE_URL}/appointments/user/${userId}`);
+        
+        // Filter for upcoming appointments with status 'scheduled'
         const upcomingAppointments = response.data.filter((appointment) => {
           const appointmentDate = new Date(appointment.appointmentDateTime);
-          return appointmentDate > new Date();
+          return appointment.status === "scheduled";
         });
+        
         setAppointments(upcomingAppointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);

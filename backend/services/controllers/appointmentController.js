@@ -78,7 +78,8 @@ const getAppointmentByUserId = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const appointment = await Appointment.findOne({
+    // Use findAll to fetch all appointments for the given userId
+    const appointments = await Appointment.findAll({
       where: { userId },
       include: [
         {
@@ -88,16 +89,17 @@ const getAppointmentByUserId = async (req, res) => {
       ],
     });
 
-    if (!appointment) {
-      return res.status(404).json({ error: 'Appointment not found' });
+    if (appointments.length === 0) {
+      return res.status(404).json({ error: 'No appointments found for this user' });
     }
 
-    return res.json(appointment);
+    return res.json(appointments);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 const getAppointmentsForDoctor = async (req, res) => {
   try {
