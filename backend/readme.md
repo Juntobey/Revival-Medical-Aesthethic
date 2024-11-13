@@ -35,7 +35,6 @@ This document contains instructions on how to run the backend for the Medical Ap
 
    ```bash
    npx sequelize-cli db:seed:all
-
    ```
 
 

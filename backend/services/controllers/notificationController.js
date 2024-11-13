@@ -3,60 +3,62 @@ const User = require("../../authentication/models/user");
 const nodemailer = require('nodemailer');
 const { Op } = require('sequelize');
 
-// Create or send notifications
-exports.sendNotification = async (req, res) => {
-  const { message, schedule, userIds } = req.body;
-  const sendToAll = userIds.length === 0; // If no specific users, send to all
 
+// Create Notification
+exports.createNotification = async (req, res) => {
+  const { message, userIds, created_by } = req.body;
+  
   try {
-    // Save notification in the database
     const notification = await Notification.create({
       message,
-      schedule,
-      created_by: req.query.created_by, // Assuming user is authenticated
-      created_at: new Date(),
+      created_by,
+      targeted_user_ids: userIds.length > 0 ? userIds : null, // If empty, mark as global
     });
-
-    // Fetch users to send the notification
-    let usersToNotify = [];
-    if (sendToAll) {
-      usersToNotify = await User.findAll(); // Get all users
-    } else {
-      usersToNotify = await User.findAll({
-        where: {
-          user_id: {
-            [Op.in]: userIds
-          }
-        }
-      });
-    }
-
-    // Send email to each user
-    const transporter = nodemailer.createTransport({
-      service: 'gmail', // Can be replaced with another service
-      auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password',
-      },
-    });
-
-    usersToNotify.forEach(async (user) => {
-      const mailOptions = {
-        from: 'your-email@gmail.com',
-        to: user.email,
-        subject: 'New Notification',
-        text: message,
-      };
-
-      await transporter.sendMail(mailOptions);
-    });
-
-    return res.status(200).json({ message: 'Notification(s) sent successfully.' });
+    res.status(200).json(notification);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Failed to send notification.' });
+    console.log(error)
+    res.status(500).json({ error: "Failed to create notification." });
   }
 };
+
+
+// Get Notifications for User
+exports.getUserNotifications = async (req, res) => {
+  const userId = req.user?.id || req.headers['user-id']; // Fallback to header if not in req.user
+
+  try {
+    // Fetch all notifications
+    const notifications = await Notification.findAll();
+
+    // Manually filter the notifications
+    const filteredNotifications = notifications.filter(notification => {
+      const targetedUserIds = notification.targeted_user_ids || [];
+
+      // Check if notification is targeted to the user or is a global notification
+      return targetedUserIds.length === 0 || targetedUserIds.includes(userId);
+    });
+
+    res.status(200).json(filteredNotifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+// Mark Notification as Read
+exports.markAsRead = async (req, res) => {
+  try {
+    const notification = await Notification.update(
+      { status: "read" },
+      { where: { id: req.params.id } }
+    );
+    res.status(200).json(notification);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 // Search for users by name or email
 exports.searchUsers = async (req, res) => {

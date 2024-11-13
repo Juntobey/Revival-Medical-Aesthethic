@@ -174,7 +174,25 @@ const resetPassword = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.findAll({
-      include: { model: require("../models/role"), attributes: ["name"] },
+      include: [
+        {
+          model: require("../models/role"),
+          attributes: ["name"],
+        },
+        {
+          model: require("../models/userProfile"),
+          attributes: [
+            "firstName",
+            "lastName",
+            "nationality",
+            "birthday",
+            "gender",
+            "emergencyContactName",
+            "emergencyContactNumber",
+            "meta",
+          ],
+        },
+      ],
       attributes: ["id", "username", "email"],
     });
     res.json(users);
@@ -183,6 +201,7 @@ const getUsers = async (req, res) => {
     res.status(500).json({ error: "An error occurred while fetching users." });
   }
 };
+
 
 module.exports = {
   register,

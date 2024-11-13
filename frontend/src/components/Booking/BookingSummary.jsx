@@ -1,63 +1,75 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios";
+import BASE_URL from "../../config";
 
 const BookingSummary = ({ treatment, date, time }) => {
-  const handleBooking = (withPayment) => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user")); // Get user data from local storage
+  const userId = user?.id; // Access userId
+
+  const handleProceedToPayment = () => {
     if (!treatment || !date || !time) {
-      Swal.fire(
-        "Incomplete Booking",
-        "Please select a treatment, date, and time.",
-        "warning"
-      );
+      Swal.fire({
+        title: "Oops! Booking Incomplete",
+        text: "Please ensure you select a treatment, date, and time before proceeding to payment.",
+        icon: "warning",
+        confirmButtonText: "Got it!",
+      });
       return;
     }
-
-    const bookingMessage = withPayment
-      ? "Booking confirmed! Redirecting to payment..."
-      : "Booking confirmed! Check your email for details.";
-
-    Swal.fire({
-      icon: "success",
-      title: bookingMessage,
-      showConfirmButton: false,
-      timer: 2000,
-    });
+  
+    const amount = treatment.price;
+    const formattedDate = date.toISOString();
+    axios.post(`${BASE_URL}/invoices/invoice`, {
+      treatmentId: treatment.id,
+      doctorId: 2, // since we have one doctor right now
+      userId,
+      formattedDate,
+      time,
+      amount,
+    })
+      .then(response => {
+        Swal.fire({
+          title: "Booking Successful!",
+          // text: "Please choose a payment method.",
+          icon: "success",
+        });
+        navigate("/dashboard");
+      })
+      .catch(error => {
+        Swal.fire({
+          title: "Error",
+          text: "Failed to create invoice. Please try again.",
+          icon: "error",
+        });
+      });
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md text-center mt-6">
+    <div className="p-4 bg-gray-50 rounded-lg shadow-md text-center">
       <h2 className="text-2xl font-headers font-semibold text-gray-800 mb-4">
         Booking Summary
       </h2>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Treatment:</strong> {treatment?.name || "Not selected"}
+        <strong>Treatment:</strong> {treatment?.treatment_name || "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Price:</strong>{" "}
-        {treatment?.price ? `R${treatment.price}` : "N/A"}
+        <strong>Price:</strong> R{treatment?.price || "Not available"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Date:</strong>{" "}
-        {date ? date.toLocaleDateString() : "Not selected"}
+        <strong>Date:</strong> {date ? date.toLocaleDateString() : "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Time:</strong>{" "}
-        {time ? `${time.start_time} - ${time.end_time}` : "Not selected"}
+        <strong>Time:</strong> {time || "Not selected"}
       </p>
-      <div className="flex justify-center gap-4 mt-6">
-        <button
-          onClick={() => handleBooking(true)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
-        >
-          Book and Pay Now
-        </button>
-        <button
-          onClick={() => handleBooking(false)}
-          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
-        >
-          Just Book
-        </button>
-      </div>
+      <button
+        onClick={handleProceedToPayment}
+        className="mt-4 bg-lightbrown text-luxwhite font-cta px-4 py-2 rounded-lg hover:bg-opacity-55 transition w-1/2"
+      >
+        Confirm & Pay Later
+      </button>
     </div>
   );
 };

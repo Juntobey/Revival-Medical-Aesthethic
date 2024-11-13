@@ -1,18 +1,19 @@
 // src/components/AdminDashboard/UserProfile.jsx
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import BASE_URL from "../../config";
 
 const UserProfile = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
+    firstName: user.UserProfile.firstName || "",
+    lastName: user.UserProfile.lastName || "",
     email: user.email || "",
-    nationality: user.nationality || "",
-    birthday: user.birthday || "",
-    gender: user.gender || "",
-    emergencyContactName: user.emergencyContactName || "",
-    emergencyContactNumber: user.emergencyContactNumber || "",
-    roleId: user.roleId || 3, // Default to 'Patient'
+    nationality: user.UserProfile.nationality || "",
+    birthday: user.UserProfile.birthday || "",
+    gender: user.UserProfile.gender || "",
+    emergencyContactName: user.UserProfile.emergencyContactName || "",
+    emergencyContactNumber: user.UserProfile.emergencyContactNumber || "",
+    roleId: user.Role.name === "admin" ? 1 : user.Role.name === "doctor" ? 2 : 3, // Default to 'Patient'
   });
 
   const handleChange = (e) => {
@@ -22,9 +23,8 @@ const UserProfile = ({ user, onClose }) => {
 
   const handleUpdate = async () => {
     try {
-      // Update user profile details
       const profileResponse = await fetch(
-        `http://localhost:3000/profile/${user.id}`,
+        `${BASE_URL}/authentication/profile/${user.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -40,9 +40,8 @@ const UserProfile = ({ user, onClose }) => {
         }
       );
 
-      // Update user role
       const roleResponse = await fetch(
-        `http://localhost:3000/role/${user.id}`,
+        `${BASE_URL}/authentication/role/${user.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -52,7 +51,7 @@ const UserProfile = ({ user, onClose }) => {
 
       if (profileResponse.ok && roleResponse.ok) {
         Swal.fire("Updated!", "User profile updated successfully", "success");
-        onClose(); // Close the profile view after successful update
+        onClose();
       } else {
         Swal.fire("Error", "Failed to update user profile", "error");
       }
@@ -96,7 +95,7 @@ const UserProfile = ({ user, onClose }) => {
             value={formData.email}
             onChange={handleChange}
             className="w-full p-2 border rounded"
-            readOnly // Email is read-only here for security reasons
+            readOnly
           />
         </div>
         <div>
@@ -125,30 +124,6 @@ const UserProfile = ({ user, onClose }) => {
             type="text"
             name="gender"
             value={formData.gender}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700 font-bold">
-            Emergency Contact Name:
-          </label>
-          <input
-            type="text"
-            name="emergencyContactName"
-            value={formData.emergencyContactName}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700 font-bold">
-            Emergency Contact Number:
-          </label>
-          <input
-            type="text"
-            name="emergencyContactNumber"
-            value={formData.emergencyContactNumber}
             onChange={handleChange}
             className="w-full p-2 border rounded"
           />

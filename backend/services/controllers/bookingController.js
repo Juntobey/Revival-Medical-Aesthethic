@@ -6,12 +6,12 @@ const Invoice = require("../models/invoice");
 // Create Booking
 const createBooking = async (req, res) => {
   const { userId, bookingFor, bookingDate, contactNo, name, email } = req.body;
-
+  const formattedDate = new Date(bookingDate);
   try {
     const booking = await Booking.create({
       userId,
       bookingFor,
-      bookingDate,
+      formattedDate,
       contactNo,
       name,
       email,

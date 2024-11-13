@@ -22,66 +22,21 @@ const Notifications = () => {
       Swal.fire("Error", "Please write a message and select users.", "error");
       return;
     }
-
+  
     try {
-      const response = await axios.post(
-        `${BASE_URL}/notifications/send-notification`,
-        {
-          message,
-          schedule: null,
-          userIds: sendToAll ? [] : selectedUsers, // If sending to all, leave userIds empty
-          created_by: currentUserId, // Pass the current user's ID
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/notifications`, {
+        message,
+        userIds: sendToAll ? [] : selectedUsers,  // Empty array for global, selected users for targeted
+        created_by: currentUserId,
+      });
       if (response.status === 200) {
-        Swal.fire(
-          "Notification Sent",
-          "Your message has been sent.",
-          "success"
-        );
+        Swal.fire("Notification Sent", "Your message has been sent.", "success");
         setMessage("");
         setSelectedUsers([]);
         setSendToAll(false);
       }
     } catch (error) {
       Swal.fire("Error", "Failed to send notification.", "error");
-    }
-  };
-
-  // Function to handle scheduling notifications
-  const handleScheduleSend = async () => {
-    if (!message || !sendDate || (!sendToAll && selectedUsers.length === 0)) {
-      Swal.fire(
-        "Error",
-        "Please write a message, select a date, and choose users.",
-        "error"
-      );
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/notifications/send-notification`,
-        {
-          message,
-          schedule: sendDate,
-          userIds: sendToAll ? [] : selectedUsers, // If sending to all, leave userIds empty
-          created_by: currentUserId, // Pass the current user's ID
-        }
-      );
-      if (response.status === 200) {
-        Swal.fire(
-          "Notification Scheduled",
-          "Your message has been scheduled.",
-          "success"
-        );
-        setMessage("");
-        setSendDate(null);
-        setSelectedUsers([]);
-        setSendToAll(false);
-      }
-    } catch (error) {
-      Swal.fire("Error", "Failed to schedule notification.", "error");
     }
   };
 
@@ -165,7 +120,19 @@ const Notifications = () => {
         </div>
       )}
 
+      {/* Send Now Button (After Schedule) */}
+      <button
+        onClick={handleSendNow}
+        className="bg-green-500 text-luxwhite font-cta py-2 px-4 rounded-lg mt-4"
+        style={{marginBottom:"10px"}}
+      >
+        Send Now
+      </button>
+
       {/* Schedule Notification */}
+      <div className="mb-2 text-gray-500 font-semibold">
+        Coming soon
+      </div>
       <DatePicker
         selected={sendDate}
         onChange={(date) => setSendDate(date)}
@@ -173,21 +140,16 @@ const Notifications = () => {
         dateFormat="Pp"
         className="p-2 border rounded-lg mr-2"
         placeholderText="Select Date & Time"
+        disabled
       />
       <button
-        onClick={handleScheduleSend}
+        disabled
         className="bg-lightbrown text-luxwhite font-cta py-2 px-4 rounded-lg mr-[5px]"
       >
         Schedule
       </button>
 
-      {/* Send Now Button (After Schedule) */}
-      <button
-        onClick={handleSendNow}
-        className="bg-green-500 text-luxwhite font-cta py-2 px-4 rounded-lg mt-4"
-      >
-        Send Now
-      </button>
+      
     </div>
   );
 };

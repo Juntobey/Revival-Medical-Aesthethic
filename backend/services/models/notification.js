@@ -18,16 +18,12 @@ const Notification = sequelize.define("Notification", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
+  targeted_user_ids: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),  // Array of user IDs for targeted notifications
+    allowNull: true, // Null indicates a global notification
   },
+},{
+  timestamps: false, // Disable timestamps
 });
-
-// Associations
-Notification.associate = function (models) {
-  Notification.belongsTo(models.User, { foreignKey: "created_by" });
-};
 
 module.exports = Notification;
