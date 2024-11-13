@@ -11,6 +11,7 @@ import VirtualPrice3 from "../components/Virtual Clinic/VirtualPrice3";
 import FAQ from "../components/FAQ";
 import MapSection from "../components/MapSection";
 import CTASection from "../components/CTASection";
+import TreatmentGallery from "../components/TreatmentGallery";
 
 const VirtualClinic = () => {
   return (
@@ -24,6 +25,7 @@ const VirtualClinic = () => {
         <VirtualPrice1 />
         <VirtualPrice2 />
         <VirtualPrice3 />
+        <TreatmentGallery />
         <FAQ />
         <CTASection />
         <MapSection />

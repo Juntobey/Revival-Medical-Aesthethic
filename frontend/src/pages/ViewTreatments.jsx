@@ -56,7 +56,7 @@ const ViewTreatments = () => {
           {transformations.map((transformation) => (
             <div
               key={transformation.id}
-              className="bg-white rounded-lg shadow-lg p-6"
+              className="bg-luxwhite rounded-lg shadow-lg p-6"
             >
               <div className="flex flex-col space-y-4">
                 <div className="border border-gray-200 rounded-lg p-4">
@@ -115,7 +115,7 @@ const ViewTreatments = () => {
         <div className="text-center mt-12">
           <Link
             to="/booking"
-            className="bg-darkgreen text-white font-cta px-6 py-3 rounded-lg hover:bg-opacity-80 transition-all duration-300"
+            className="bg-darkgreen text-luxwhite font-cta px-6 py-3 rounded-lg hover:bg-opacity-80 transition-all duration-300"
           >
             Book Your Transformation
           </Link>

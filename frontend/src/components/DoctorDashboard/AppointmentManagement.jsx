@@ -8,7 +8,6 @@ const AppointmentManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-
   useEffect(() => {
     const fetchAppointments = async () => {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -18,9 +17,12 @@ const AppointmentManagement = () => {
       }
 
       try {
-        const response = await axios.get(`${BASE_URL}/appointments/doctor-appointments`, {
-          params: { id: user.id },
-        });
+        const response = await axios.get(
+          `${BASE_URL}/appointments/doctor-appointments`,
+          {
+            params: { id: user.id },
+          }
+        );
         setAppointments(response.data);
       } catch (error) {
         console.error("Error fetching appointments:", error);
@@ -42,7 +44,7 @@ const AppointmentManagement = () => {
       );
       setModalMessage("Appointment status updated successfully!");
       setShowModal(true);
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error("Error completing appointment:", error);
     }
@@ -57,8 +59,10 @@ const AppointmentManagement = () => {
   };
 
   return (
-    <div className="bg-white p-4 shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">Appointments</h2>
+    <div className="bg-luxwhite p-4 shadow-lg rounded-lg">
+      <h2 className="text-2xl font-bold text-darkgreen font-headers mb-4">
+        Appointments
+      </h2>
       {loading ? (
         <p>Loading appointments...</p>
       ) : (
@@ -70,7 +74,8 @@ const AppointmentManagement = () => {
                   <strong>Patient:</strong> {appointment.patientEmail}
                 </p>
                 <p>
-                  <strong>Date:</strong> {new Date(appointment.appointmentDateTime).toLocaleString()}
+                  <strong>Date:</strong>{" "}
+                  {new Date(appointment.appointmentDateTime).toLocaleString()}
                 </p>
                 <p>
                   <strong>Status:</strong> {appointment.status}
@@ -98,7 +103,7 @@ const AppointmentManagement = () => {
             <h3 className="text-lg font-bold text-green-500">{modalMessage}</h3>
             <button
               onClick={closeModal}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+              className="mt-4 px-4 py-2 bg-blue-500 text-luxwhite rounded-md"
             >
               Close
             </button>

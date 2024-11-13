@@ -13,9 +13,9 @@ const BookingProcess = () => {
         {/* Flex container for the booking steps */}
         <div className="flex justify-center space-x-8 flex-wrap">
           {/* Box 1 */}
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full sm:w-1/3 md:w-1/4 relative mb-8">
+          <div className="bg-luxwhite rounded-lg shadow-lg p-6 w-full sm:w-1/3 md:w-1/4 relative mb-8">
             <div className="bg-darkgreen w-12 h-12 rounded-md absolute -top-6 left-6 flex items-center justify-center">
-              <FaCheck className="text-white text-2xl" />
+              <FaCheck className="text-luxwhite text-2xl" />
             </div>
             <h3 className="text-2xl font-semibold font-headers text-darkgreen mt-8 font-cormorant">
               Choose Treatment
@@ -56,7 +56,7 @@ const BookingProcess = () => {
         <div className="flex justify-center mt-12">
           <Link
             to="/booking"
-            className="bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
+            className="bg-darkgreen text-almond font-cta py-2 px-6 rounded-md font-semibold font-raleway transition-opacity duration-300 hover:opacity-80 focus:outline-none"
           >
             Book Now
           </Link>

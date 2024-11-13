@@ -1,45 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime, availableDates }) => {
-  // Find the time slots for the selected date
-  const selectedDaySlots = availableDates.find(
-    (dateObj) => new Date(dateObj.date).toDateString() === new Date(selectedDate).toDateString()
-  );
+const TimeSlotSelection = ({
+  selectedDate,
+  selectedTime,
+  setSelectedTime,
+  onContinue,
+  onBack,
+}) => {
+  const [availableTimes, setAvailableTimes] = useState([]);
 
-  // If slots are available for that date, extract them
-  const availableTimes = selectedDaySlots ? selectedDaySlots.timeslots : [];
+  useEffect(() => {
+    if (selectedDate) {
+      axios
+        .get(
+          `https://your-backend-url.com/available-times?date=${selectedDate}`
+        )
+        .then((response) => setAvailableTimes(response.data))
+        .catch((error) => console.error("Failed to fetch times", error));
+    }
+  }, [selectedDate]);
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-3xl font-headers font-semibold text-gray-800 mb-4">
-        Select a Time Slot
-      </h2>
-      {selectedDate ? (
-        <div className="grid grid-cols-2 gap-2">
-          {availableTimes.length > 0 ? (
-            availableTimes.map((slot) => (
-              <button
-                key={slot.id}
-                onClick={() => setSelectedTime(slot)}  // Pass the entire slot object to setSelectedTime
-                className={`p-2 rounded-lg transition ${
-                  selectedTime && selectedTime.id === slot.id
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-800 hover:bg-indigo-100"
-                }`}
-              >
-                {/* Render the start_time and end_time only */}
-                {slot.start_time} - {slot.end_time}
-              </button>
-            ))
-          ) : (
-            <p className="text-gray-600 font-paragraph">No available time slots for this date.</p>
-          )}
-        </div>
-      ) : (
-        <p className="text-gray-600 font-paragraph">
-          Please select a date to view available time slots.
-        </p>
-      )}
+    <div className="time-slot-selection">
+      <h2>Select a Time Slot</h2>
+      <div className="time-options">
+        {availableTimes.map((time) => (
+          <button
+            key={time.id}
+            onClick={() => setSelectedTime(time)}
+            className={selectedTime?.id === time.id ? "selected" : ""}
+          >
+            {time.start} - {time.end}
+          </button>
+        ))}
+      </div>
+      <button onClick={onBack}>Back</button>
+      <button onClick={onContinue} disabled={!selectedTime}>
+        Continue
+      </button>
     </div>
   );
 };

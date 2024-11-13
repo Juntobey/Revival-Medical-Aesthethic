@@ -6,25 +6,25 @@ const Drips = () => {
       title: "The Boost",
       description:
         "A revitalizing infusion of essential vitamins to boost energy and refresh the body.",
-      imageUrl: `${process.env.PUBLIC_URL}/drip-boost.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/drip2.jpg`,
     },
     {
       title: "The Energiser",
       description:
         "An energizing drip containing NAD+ and vitamins, designed to rejuvenate cells and enhance vitality.",
-      imageUrl: `${process.env.PUBLIC_URL}/drip-energiser.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/drip4.jpg`,
     },
     {
       title: "The Flu Prevention",
       description:
         "A fortified blend to strengthen immunity, helping to protect against colds and flu.",
-      imageUrl: `${process.env.PUBLIC_URL}/drip-flu.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/drip3.jpg`,
     },
     {
       title: "The Ultimate",
       description:
         "A comprehensive drip combining multiple health-boosting ingredients for overall wellness support.",
-      imageUrl: `${process.env.PUBLIC_URL}/drip-ultimate.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/drip1.jpg`,
     },
   ];
 

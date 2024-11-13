@@ -15,7 +15,10 @@ const ManageSchedule = () => {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [loadingSchedules, setLoadingSchedules] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [newTimeSlot, setNewTimeSlot] = useState({ start_time: "", end_time: "" });
+  const [newTimeSlot, setNewTimeSlot] = useState({
+    start_time: "",
+    end_time: "",
+  });
 
   // Fetch doctors
   useEffect(() => {
@@ -59,15 +62,17 @@ const ManageSchedule = () => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-  
+
     // Filter schedules to get slots for the selected date
     const selectedSchedule = availableSlots.find(
-      (schedule) => new Date(schedule.date).toLocaleDateString() === date.toLocaleDateString()
+      (schedule) =>
+        new Date(schedule.date).toLocaleDateString() ===
+        date.toLocaleDateString()
     );
-  
+
     // If a schedule exists, get the `TimeSlots` array; otherwise, set an empty array
     const daySlots = selectedSchedule ? selectedSchedule.TimeSlots : [];
-  
+
     // Update state based on availability of slots
     setDaySlots(daySlots);
     if (daySlots.length > 0) {
@@ -77,7 +82,6 @@ const ManageSchedule = () => {
     }
     setIsPopupVisible(true);
   };
-  
 
   const handleTimeSlotChange = (e) => {
     const { name, value } = e.target;
@@ -89,51 +93,55 @@ const ManageSchedule = () => {
 
   const [note, setNote] = useState("");
 
-const handleAddTimeSlot = async () => {
-  const scheduleData = {
-    doctor_id: selectedDoctor.id,
-    date: selectedDate.toISOString().split("T")[0],
-    is_available: true,
-    note: note || undefined, // add note only if provided
-    TimeSlots: [
-      { start_time: newTimeSlot.start_time, end_time: newTimeSlot.end_time },
-    ],
+  const handleAddTimeSlot = async () => {
+    const scheduleData = {
+      doctor_id: selectedDoctor.id,
+      date: selectedDate.toISOString().split("T")[0],
+      is_available: true,
+      note: note || undefined, // add note only if provided
+      TimeSlots: [
+        { start_time: newTimeSlot.start_time, end_time: newTimeSlot.end_time },
+      ],
+    };
+    try {
+      const response = await fetch(
+        `${BASE_URL}/admin/schedule/${selectedDoctor.id}/time-slot`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(scheduleData),
+        }
+      );
+      if (!response.ok) throw new Error("Failed to add time slot");
+
+      setMessage("Time slot successfully added!");
+      setIsPopupVisible(false);
+      setNewTimeSlot({ start_time: "", end_time: "" });
+      setNote("");
+      await fetchSchedules(); // Refresh schedules
+    } catch (error) {
+      setErrorMessage("Error adding time slot: " + error.message);
+    }
   };
-  try {
-    const response = await fetch(`${BASE_URL}/admin/schedule/${selectedDoctor.id}/time-slot`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(scheduleData),
-    });
-    if (!response.ok) throw new Error("Failed to add time slot");
 
-    setMessage("Time slot successfully added!");
-    setIsPopupVisible(false);
-    setNewTimeSlot({ start_time: "", end_time: "" });
-    setNote("");
-    await fetchSchedules(); // Refresh schedules
-  } catch (error) {
-    setErrorMessage("Error adding time slot: " + error.message);
-  }
-};
+  const handleDeleteTimeSlot = async (slotId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/admin/time-slot/${slotId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error("Failed to delete time slot");
 
-const handleDeleteTimeSlot = async (slotId) => {
-  try {
-    const response = await fetch(`${BASE_URL}/admin/time-slot/${slotId}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Failed to delete time slot");
-
-    await fetchSchedules(); // Refresh after deletion
-  } catch (error) {
-    setErrorMessage("Error deleting time slot: " + error.message);
-  }
-};
-
+      await fetchSchedules(); // Refresh after deletion
+    } catch (error) {
+      setErrorMessage("Error deleting time slot: " + error.message);
+    }
+  };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">Manage Schedule</h2>
+    <div className="bg-luxwhite p-4 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-headers font-bold text-darkgreen mb-4">
+        Manage Schedule
+      </h2>
 
       {/* Doctor selection */}
       {loadingDoctors ? (
@@ -144,17 +152,21 @@ const handleDeleteTimeSlot = async (slotId) => {
         <p className="text-red-500">No doctors available.</p>
       ) : (
         <div className="mb-4">
-          <label htmlFor="doctorSelect" className="block mb-2">Select a Doctor</label>
+          <label htmlFor="doctorSelect" className="block mb-2 font-paragraph">
+            Select a Doctor
+          </label>
           <select
             id="doctorSelect"
             value={selectedDoctor?.id || ""}
             onChange={(e) => {
               const doctorId = e.target.value;
-              setSelectedDoctor(doctors.find((doctor) => doctor.id === parseInt(doctorId)));
+              setSelectedDoctor(
+                doctors.find((doctor) => doctor.id === parseInt(doctorId))
+              );
             }}
             className="p-2 border rounded w-full"
           >
-            <option value="">Select a Doctor</option>
+            <option value="">Click to select a Doctor</option>
             {doctors.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
                 {doctor.username}
@@ -176,7 +188,7 @@ const handleDeleteTimeSlot = async (slotId) => {
             const isAvailable = availableSlots.some(
               (slot) => new Date(slot.date).toLocaleDateString() === dateString
             );
-            return isAvailable ? 'available-slot' : '';
+            return isAvailable ? "available-slot" : "";
           }}
           tileContent={({ date }) => {
             const dateString = date.toLocaleDateString();
@@ -197,10 +209,8 @@ const handleDeleteTimeSlot = async (slotId) => {
         title="Manage Slots for Selected Date"
         message={message}
         onClose={() => setIsPopupVisible(false)}
-      >
-        
-      </Popup>
-      
+      ></Popup>
+
       {daySlots.length > 0 && (
         <div>
           <h3 className="text-lg font-semibold">Booked Time Slots</h3>
@@ -220,11 +230,16 @@ const handleDeleteTimeSlot = async (slotId) => {
         </div>
       )}
 
-      {message === `Doctor not booked for ${selectedDate.toLocaleDateString()}` && (
+      {message ===
+        `Doctor not booked for ${selectedDate.toLocaleDateString()}` && (
         <div>
-          <h3 className="text-lg font-semibold">Add a Time Slot</h3>
+          <h3 className="text-2xl font-semibold font-headers">
+            Add a Time Slot
+          </h3>
           <div className="mb-4">
-            <label htmlFor="start_time" className="block">Start Time</label>
+            <label htmlFor="start_time" className="block font-paragraph">
+              Start Time
+            </label>
             <input
               type="time"
               id="start_time"
@@ -235,7 +250,9 @@ const handleDeleteTimeSlot = async (slotId) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="end_time" className="block">End Time</label>
+            <label htmlFor="end_time" className="block font-paragraph">
+              End Time
+            </label>
             <input
               type="time"
               id="end_time"
@@ -246,7 +263,9 @@ const handleDeleteTimeSlot = async (slotId) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="note" className="block">Note</label>
+            <label htmlFor="note" className="block font-paragraph">
+              Note
+            </label>
             <input
               type="text"
               id="note"
@@ -257,13 +276,12 @@ const handleDeleteTimeSlot = async (slotId) => {
           </div>
           <button
             onClick={handleAddTimeSlot}
-            className="bg-blue-500 text-white py-2 px-4 rounded"
+            className="bg-lightbrown text-luxwhite font-cta py-2 px-4 rounded"
           >
             Add Time Slot
           </button>
         </div>
       )}
-
     </div>
   );
 };

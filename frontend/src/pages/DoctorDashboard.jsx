@@ -1,4 +1,3 @@
-// src/pages/DoctorDashboard.jsx
 import React, { useContext } from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
@@ -14,24 +13,22 @@ const DoctorDashboard = () => {
   const userName = auth.user ? auth.user.username : "User";
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <Header />
-      <main className="flex-grow p-8">
-        {/* Hero Section */}
-        <div className="bg-blue-50 rounded-lg shadow-lg p-8 mb-8">
-          <h1 className="text-4xl font-bold text-darkgreen">
+
+      <main className="container mx-auto px-4 p-8 lg:pt-[100px] min-h-screen bg-almond">
+        <section className="bg-brown-200 rounded-lg shadow-lg p-6 md:p-8 mb-6 lg:mb-8 text-center lg:text-left">
+          <h1 className=" md:text-3xl  lg:text-h2 font-bold font-headers text-darkgreen">
             Welcome, Dr. {userName}
           </h1>
-          <p className="mt-4 text-lg text-gray-700">
-            Your dashboard allows you to efficiently manage your schedule,
-            access patient information, and communicate with patients. Review
-            upcoming appointments, update patient records, and organize your
-            availability with ease.
+          <p className="mt-2 md:mt-4 text-base md:text-lg text-p text-gray-700">
+            Manage your schedule, access patient information, and communicate
+            with patients efficiently. Review upcoming appointments, update
+            records, and manage your availability.
           </p>
-        </div>
+        </section>
 
-        {/* Main Dashboard Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           <AppointmentManagement />
           <PatientInfo />
           <ScheduleManagement />
@@ -39,8 +36,9 @@ const DoctorDashboard = () => {
           <DoctorAnalytics />
         </div>
       </main>
+
       <Footer />
-    </div>
+    </>
   );
 };
 

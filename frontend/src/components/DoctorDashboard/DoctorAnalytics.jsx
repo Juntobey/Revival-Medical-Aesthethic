@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Bar } from "react-chartjs-2";
 import Swal from "sweetalert2";
-import BASE_URL from "../../config"; // Assuming BASE_URL is defined
+import BASE_URL from "../../config";
 
 const DoctorAnalytics = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -10,7 +10,7 @@ const DoctorAnalytics = () => {
     upcomingAppointments: 0,
     completedAppointments: 0,
   });
-  const chartRef = useRef(null); // Reference for the chart instance
+  const chartRef = useRef(null);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -46,7 +46,7 @@ const DoctorAnalytics = () => {
           analyticsData.upcomingAppointments,
           analyticsData.completedAppointments,
         ],
-        backgroundColor: ["#42a5f5", "#66bb6a", "#ffa726", "#ef5350"],
+        backgroundColor: ["#42a5f5", "#66bb6a", "#AF937B", "#470A12"],
       },
     ],
   };
@@ -57,7 +57,7 @@ const DoctorAnalytics = () => {
       legend: {
         position: "top",
       },
-      // Custom plugin to set white background
+
       background: {
         beforeDraw: (chart) => {
           const ctx = chart.canvas.getContext("2d");
@@ -78,19 +78,21 @@ const DoctorAnalytics = () => {
       const base64Image = chartInstance.toBase64Image();
       const link = document.createElement("a");
       link.href = base64Image;
-      link.download = "doctor-analytics-chart.png";
+      link.download = "rma-doctor-analytics-chart.png";
       link.click();
     }
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">Analytics</h2>
+    <div className="bg-luxwhite p-4 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold font-headers text-darkgreen mb-4">
+        Analytics
+      </h2>
       <Bar ref={chartRef} data={chartData} options={chartOptions} />
 
       <button
         onClick={downloadChart}
-        className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg"
+        className="mt-4 bg-lightbrown font-cta text-luxwhite py-2 px-4 rounded-lg"
       >
         Download Chart
       </button>

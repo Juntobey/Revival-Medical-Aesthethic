@@ -12,7 +12,6 @@ const MySwal = withReactContent(Swal);
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -23,10 +22,15 @@ const Register = () => {
       month: "",
       year: "",
     },
-    nationality: "",
     gender: "",
     emergencyContactName: "",
     emergencyContactNumber: "",
+    passportOrId: "",
+    medicalAid: {
+      name: "",
+      scheme: "",
+      number: "",
+    },
   });
 
   const { setAuth } = useContext(AuthContext);
@@ -80,6 +84,14 @@ const Register = () => {
     });
   };
 
+  const handleMedicalAidChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      medicalAid: { ...formData.medicalAid, [name]: value },
+    });
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -91,55 +103,31 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !formData.username ||
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword ||
-      !formData.birthday.day ||
-      !formData.birthday.month ||
-      !formData.birthday.year ||
-      !formData.nationality ||
-      !formData.gender ||
-      !formData.emergencyContactName ||
-      !formData.emergencyContactNumber
-    ) {
-      MySwal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please fill in all required fields.",
-        customClass: {
-          popup: "bg-gray-100 text-gray-800",
-          title: "text-lg font-bold text-red-500",
-          confirmButton:
-            "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
-        },
-      });
-      return;
-    }
+    const missingFields = [];
 
-    if (passwordError || !passwordsMatch) {
-      MySwal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please resolve the password errors.",
-        customClass: {
-          popup: "bg-gray-100 text-gray-800",
-          title: "text-lg font-bold text-red-500",
-          confirmButton:
-            "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
-        },
-      });
-      return;
-    }
+    if (!formData.firstName) missingFields.push("First Name");
+    if (!formData.lastName) missingFields.push("Last Name");
+    if (!formData.email) missingFields.push("Email");
+    if (!formData.password) missingFields.push("Password");
+    if (!formData.confirmPassword) missingFields.push("Confirm Password");
+    if (!formData.birthday.day) missingFields.push("Birthday Day");
+    if (!formData.birthday.month) missingFields.push("Birthday Month");
+    if (!formData.birthday.year) missingFields.push("Birthday Year");
+    if (!formData.gender) missingFields.push("Gender");
+    if (!formData.emergencyContactName)
+      missingFields.push("Emergency Contact Name");
+    if (!formData.emergencyContactNumber)
+      missingFields.push("Emergency Contact Number");
+    if (!formData.passportOrIdType) missingFields.push("Passport/ID Type");
+    if (!formData.passportOrIdNumber) missingFields.push("Passport/ID Number");
 
-    if (!acceptedTerms) {
+    if (missingFields.length > 0) {
       MySwal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Please accept the Terms and Conditions to register.",
+        text: `Please fill in the following required fields: ${missingFields.join(
+          ", "
+        )}`,
         customClass: {
           popup: "bg-gray-100 text-gray-800",
           title: "text-lg font-bold text-red-500",
@@ -162,11 +150,19 @@ const Register = () => {
           password: formData.password,
           firstName: formData.firstName,
           lastName: formData.lastName,
-          nationality: formData.nationality,
           birthday: `${formData.birthday.year}-${formData.birthday.month}-${formData.birthday.day}`,
           gender: formData.gender,
           emergencyContactName: formData.emergencyContactName,
           emergencyContactNumber: formData.emergencyContactNumber,
+          passportOrId: {
+            type: formData.passportOrIdType,
+            number: formData.passportOrIdNumber,
+          },
+          medicalAid: {
+            name: formData.medicalAid.name || null,
+            scheme: formData.medicalAid.scheme || null,
+            number: formData.medicalAid.number || null,
+          },
         }),
       });
 
@@ -226,17 +222,6 @@ const Register = () => {
         <div className="flex flex-col items-center justify-center w-1/2 pt-[120px] px-16 pb-[50px]">
           <h2 className="text-h1 font-headers mb-8 text-darkgreen">Register</h2>
           <form className="w-full max-w-md space-y-4" onSubmit={handleSubmit}>
-            {/* Username */}
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
-              required
-            />
-
             {/* First Name and Last Name */}
             <div className="flex space-x-4">
               <input
@@ -318,17 +303,6 @@ const Register = () => {
                 </p>
               )}
             </div>
-
-            {/* Nationality */}
-            <input
-              type="text"
-              name="nationality"
-              placeholder="Nationality"
-              value={formData.nationality}
-              onChange={handleChange}
-              className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
-              required
-            />
 
             {/* Birthday */}
             <label className="block text-sm text-gray-700 mt-4 mb-1">
@@ -422,6 +396,38 @@ const Register = () => {
               </label>
             </div>
 
+            {/* Passport or ID Selection */}
+            <div className="flex space-x-4 items-center">
+              <select
+                name="passportOrIdType"
+                value={formData.passportOrIdType}
+                onChange={handleChange}
+                className="w-1/4 border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                required
+              >
+                <option value="" disabled>
+                  Select ID Type
+                </option>
+                <option value="Passport">Passport</option>
+                <option value="ID Number">ID Number</option>
+              </select>
+
+              {/* ID Number Input */}
+              <input
+                type="text"
+                name="passportOrIdNumber"
+                placeholder={
+                  formData.passportOrIdType === "Passport"
+                    ? "Enter Passport Number"
+                    : "Enter ID Number"
+                }
+                value={formData.passportOrIdNumber}
+                onChange={handleChange}
+                className="w-3/4 border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+                required
+              />
+            </div>
+
             {/* Emergency Contact */}
             <input
               type="text"
@@ -442,8 +448,37 @@ const Register = () => {
               required
             />
 
+            {/* Optional Medical Aid Section */}
+            <h3 className="text-md font-semibold text-darkgreen pt-[15px]">
+              Medical Aid Information (Optional)
+            </h3>
+            <input
+              type="text"
+              name="name"
+              placeholder="Medical Aid Name"
+              value={formData.medicalAid.name}
+              onChange={handleMedicalAidChange}
+              className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+            />
+            <input
+              type="text"
+              name="scheme"
+              placeholder="Scheme Name"
+              value={formData.medicalAid.scheme}
+              onChange={handleMedicalAidChange}
+              className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+            />
+            <input
+              type="text"
+              name="number"
+              placeholder="Medical Aid Number"
+              value={formData.medicalAid.number}
+              onChange={handleMedicalAidChange}
+              className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
+            />
+
             {/* Terms and Conditions */}
-            <div className="flex items-center">
+            <div className="flex items-center text-center">
               <input
                 type="checkbox"
                 id="acceptTerms"
@@ -456,7 +491,7 @@ const Register = () => {
                 <a href="/terms" className="underline">
                   Terms
                 </a>
-                . Learn how we use, collect, and share your data in our{" "}
+                ,{" "}
                 <a href="/data-policy" className="underline">
                   Data Policy
                 </a>{" "}
@@ -471,7 +506,7 @@ const Register = () => {
             {/* Register Button */}
             <button
               type="submit"
-              className="w-full bg-[#1B2E22] text-white py-3 rounded-lg"
+              className="w-full bg-darkgreen font-cta text-luxwhite py-3 rounded-lg"
             >
               Register
             </button>

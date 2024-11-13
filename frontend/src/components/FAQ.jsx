@@ -3,24 +3,30 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Icons for expand
 
 const faqs = [
   {
-    question: "What treatments do you offer?",
+    question: "What is aesthetics?",
     answer:
-      "We offer a variety of treatments including anti-aging solutions, Botox, PRP, and hair loss treatments. Each treatment is designed to address specific needs and enhance your natural beauty. For detailed information, please visit our treatment information page.",
+      "Aesthetics focuses on enhancing appearance through minimally invasive procedures that improve skin, facial features, and overall body confidence.",
   },
   {
-    question: "Header 2",
+    question: "How does aesthetics better your life?",
     answer:
-      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+      "Aesthetic treatments boost self-confidence, address cosmetic concerns, and support mental well-being by helping you feel comfortable and positive about your appearance.",
   },
   {
-    question: "Header 3",
+    question: "What are common aesthetic procedures?",
     answer:
-      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+      "Common procedures include Botox, dermal fillers, PRP (Platelet-Rich Plasma) for hair and skin, vampire facials and skin tightening treatments.",
   },
   {
-    question: "Header 4",
+    question: "What is the recovery time?",
     answer:
-      "This is an answer to a frequently asked question. filler words/letters zcnscewnueurnchreit cscnroirnitutnvs odsntcuiuernijnmsocisrutn sc nijfvnv",
+      "Recovery time varies by treatment; many are minimally invasive with little to no downtime. Some, like PRP, allow you to resume daily activities immediately, while others, like fillers, may require a day or two of rest.",
+  },
+  {
+    question:
+      "What are the benefits of drips? (Vitamin B and C, Echinacea, NAD, and Glutathione)",
+    answer:
+      "These drips support immune function, boost energy, improve skin health, reduce inflammation, and aid in cellular repair, contributing to overall wellness and vitality.",
   },
 ];
 

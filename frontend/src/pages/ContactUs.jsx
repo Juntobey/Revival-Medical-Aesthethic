@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const ContactUs = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,24 +12,49 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted", { firstName, lastName, email, message });
+
+    // Show success notification
+    Swal.fire({
+      title: "Message Sent!",
+      text: "Your message has been successfully sent. We will get back to you shortly.",
+      icon: "success",
+      confirmButtonText: "OK",
+      timer: 3000,
+    });
+
+    // Clear form fields after submission
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setMessage("");
   };
 
   return (
     <>
       <Header />
       {/* Main Section */}
-      <div
-        className="relative flex flex-col justify-center items-center min-h-screen bg-cover bg-center pt-24" // Added pt-24 for padding from top
-        style={{
-          backgroundImage: `url('${process.env.PUBLIC_URL}/contact-form.jg')`,
-        }}
-      >
-        {/* Background Overlay */}
-        <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="relative flex flex-col justify-center items-center min-h-screen bg-almond pt-24 pb-24">
+        {/* Contact Details Section */}
+        <div className="text-center mb-8">
+          <h2 className="text-h2 font-headers text-darkgreen">Get in Touch</h2>
+          <p className="text-lg font-paragraph text-gray-700 mt-2">
+            We'd love to hear from you. Reach out to us through any of the
+            following contact details:
+          </p>
+          <div className="mt-4 space-y-2">
+            <p className="text-gray-600 font-paragraph">
+              📍 Second floor Room B3, Health and Wellness Center, 353 Rivonia
+              Blvd, Rivonia, Sandton, 2191
+            </p>
+            <p className="text-gray-600 font-paragraph">📞 +27 73 354 5232</p>
+            <p className="text-gray-600 font-paragraph">
+              📧 revivalsandton@icloud.com
+            </p>
+          </div>
+        </div>
 
-        {/* Contact Form with Image */}
-        <div className="relative z-10 bg-white max-w-6xl w-full flex rounded-lg shadow-lg overflow-hidden h-[500px]">
-          {/* Left Section - Image */}
+        {/* Contact Form Section */}
+        <div className="bg-white max-w-6xl w-full flex rounded-lg shadow-lg overflow-hidden h-[500px]">
           <div className="w-1/2 hidden lg:block">
             <img
               src={`${process.env.PUBLIC_URL}/contact-form.jpg`} // Replace with the actual image path
@@ -40,7 +66,7 @@ const ContactUs = () => {
           {/* Right Section - Contact Form */}
           <div className="w-full lg:w-1/2 p-12 flex flex-col justify-center">
             <h2 className="text-h2 font-headers text-center mb-8 text-[#123524]">
-              Contact Us
+              Send Us a Message
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="flex space-x-4">
@@ -49,7 +75,7 @@ const ContactUs = () => {
                     type="text"
                     className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
                     value={firstName}
-                    placeholder="First Name" // Placeholder inside the field
+                    placeholder="First Name"
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
@@ -59,7 +85,7 @@ const ContactUs = () => {
                     type="text"
                     className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
                     value={lastName}
-                    placeholder="Last Name" // Placeholder inside the field
+                    placeholder="Last Name"
                     onChange={(e) => setLastName(e.target.value)}
                     required
                   />
@@ -71,7 +97,7 @@ const ContactUs = () => {
                   type="email"
                   className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
                   value={email}
-                  placeholder="Email" // Placeholder inside the field
+                  placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
@@ -81,7 +107,7 @@ const ContactUs = () => {
                 <textarea
                   className="w-full border-b-2 border-darkgreen border-opacity-50 p-3 focus:outline-none focus:border-b-3 transition-all duration-300"
                   value={message}
-                  placeholder="Message" // Placeholder inside the field
+                  placeholder="Message"
                   onChange={(e) => setMessage(e.target.value)}
                   required
                 />

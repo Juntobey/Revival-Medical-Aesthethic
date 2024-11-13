@@ -6,19 +6,19 @@ const PRPTreatments = () => {
       title: "Repair PRP",
       description:
         "PRP injections designed to support muscle and joint recovery through the body’s natural healing process.",
-      imageUrl: `${process.env.PUBLIC_URL}/repair-prp.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/prp4.jpg`,
     },
     {
       title: "P-Shot (Priapus Shot)",
       description:
         "Enhances blood flow and tissue growth for improved vitality and performance.",
-      imageUrl: `${process.env.PUBLIC_URL}/pshot.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/prp3.jpeg`,
     },
     {
       title: "Aesthetic PRP",
       description:
         "PRP therapy aimed at revitalizing the skin and reducing signs of aging, using your body’s own healing properties.",
-      imageUrl: `${process.env.PUBLIC_URL}/aesthetic-prp.jpg`,
+      imageUrl: `${process.env.PUBLIC_URL}/prp1.jpeg`,
     },
   ];
 

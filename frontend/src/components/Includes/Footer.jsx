@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa"; // Importi
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1B2E22] text-[#EDE1D2] py-4">
+    <footer className="bg-darkgreen text-almond py-4">
       <div className="container mx-auto text-center">
         {/* Social Icons Section */}
         <div className="flex justify-center space-x-6 mb-2">
@@ -13,8 +13,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300"
           >
-            <FaFacebookF size={20} className="text-[#4267B2]" />{" "}
-            {/* Facebook Blue */}
+            <FaFacebookF size={20} className="text-[#1656d6]" />{" "}
           </a>
           <a
             href="https://www.instagram.com"
@@ -23,7 +22,6 @@ const Footer = () => {
             className="hover:text-white transition duration-300"
           >
             <FaInstagram size={20} className="text-[#C13584]" />{" "}
-            {/* Instagram Pink */}
           </a>
           <a
             href="https://www.twitter.com"
@@ -32,7 +30,6 @@ const Footer = () => {
             className="hover:text-white transition duration-300"
           >
             <FaTwitter size={20} className="text-[#1DA1F2]" />{" "}
-            {/* Twitter Blue */}
           </a>
         </div>
 

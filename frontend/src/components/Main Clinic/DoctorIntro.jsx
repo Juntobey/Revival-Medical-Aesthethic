@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const DoctorIntro = () => {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   const handleBookingClick = () => {
-    navigate("/booking"); // Navigate to booking page
+    navigate("/booking");
   };
 
   return (
@@ -14,25 +14,28 @@ const DoctorIntro = () => {
         {/* Left (Image) */}
         <div className="md:w-1/2 w-full flex justify-center">
           <img
-            src={`${process.env.PUBLIC_URL}/doctor-image.jpg`} // Replace this with the correct image path
+            src={`${process.env.PUBLIC_URL}/doctor-image.jpg`}
             alt="Doctor Performing Treatment"
-            className="w-[600px] h-[600px] object-cover rounded-xl" // Adjust the width and height if necessary
+            className="w-[600px] h-[600px] object-cover rounded-xl"
           />
         </div>
 
         {/* Right (Text and Button) */}
         <div className="mt-8 md:mt-0 md:w-1/2 text-center md:text-left md:pl-12">
           <h1 className="text-h1 font-headers text-darkgreen lg:text-[60px] xl:text-[65px] leading-tight mb-4">
-            Dr Azhar
+            Dr Azhar Valiallah
           </h1>
-          <p className="text-p font-paragraph text-darkgreen lg:text-[18px] mb-8">
-            Doctors intro instilling trust and introducing time stamps,
-            conversational section image and text to be provided.
+
+          <p className="text-p font-paragraph text-darkgreen lg:text-[18px]">
+            Rediscover yourself: where beauty meets precision.
+          </p>
+          <p className="text-p font-paragraph text-gray-600 mb-8">
+            MBBCh (WITS)
           </p>
 
           {/* Button */}
           <button
-            onClick={handleBookingClick} // Trigger navigation on click
+            onClick={handleBookingClick}
             className="bg-darkgreen text-almond font-cta py-2 px-6 rounded-md font-semibold font-raleway transition-opacity duration-300 hover:opacity-80 focus:outline-none"
           >
             Book Now

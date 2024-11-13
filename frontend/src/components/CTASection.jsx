@@ -31,7 +31,7 @@ const HeroSection = () => {
         {/* Book Now Button */}
         <Link
           to="/booking"
-          className="mt-8 bg-darkgreen text-white font-cta px-8 py-4 rounded-lg inline-block hover:bg-opacity-80 transition-all duration-300"
+          className="mt-8 bg-darkgreen text-almond font-cta px-6 py-2 font-semibold rounded-lg inline-block hover:bg-opacity-80 transition-all duration-300"
           style={{ marginTop: "20px", marginBottom: "40px" }}
         >
           Book Now

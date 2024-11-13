@@ -26,7 +26,7 @@ const Login = () => {
 
       MySwal.fire({
         title: "Login Successful!",
-        html: "Redirecting in <strong>5</strong> seconds.",
+        html: "Redirecting in <strong>3</strong> seconds.",
         timer: 3000,
         timerProgressBar: true,
         customClass: {
@@ -37,19 +37,20 @@ const Login = () => {
         },
         didOpen: () => {
           const b = MySwal.getHtmlContainer().querySelector("strong");
-          timerInterval = setInterval(() => {
-            b.textContent = Math.floor(Swal.getTimerLeft() / 1000);
+          let remainingTime = 3;
+          const timerInterval = setInterval(() => {
+            remainingTime -= 1;
+            b.textContent = remainingTime;
           }, 1000);
         },
         willClose: () => {
           clearInterval(timerInterval);
         },
       }).then((result) => {
-        /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           console.log("I was closed by the timer");
         }
-        // Redirect based on role
+
         if (isSuccessful.role === "admin") {
           navigate("/admin-dashboard");
         } else if (isSuccessful.role === "doctor") {
@@ -59,7 +60,7 @@ const Login = () => {
         }
       });
     } else {
-      // Handle login failure (e.g., show an error message)
+      // Handle login failure (show an error message)
       MySwal.fire({
         icon: "error",
         title: "Oops...",

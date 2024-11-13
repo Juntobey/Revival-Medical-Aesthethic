@@ -34,7 +34,9 @@ const ManageUsers = () => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">Manage Users</h2>
+      <h2 className="text-2xl font-headers font-bold text-darkgreen mb-4">
+        Manage Users
+      </h2>
       <input
         type="text"
         placeholder="Search by name or email"
@@ -61,7 +63,7 @@ const ManageUsers = () => {
                 </p>
                 <button
                   onClick={() => openUserProfile(user)}
-                  className="text-indigo-600 underline"
+                  className="text-blue-500 font-cta underline"
                 >
                   View Profile
                 </button>

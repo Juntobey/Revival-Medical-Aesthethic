@@ -10,29 +10,31 @@ import TestimonialUpload from "../components/Dashboard/TestimonialUpload";
 import { AuthContext } from "../context/AuthContext";
 
 const Dashboard = () => {
-  const { auth } = useContext(AuthContext); // Accessing the auth context
-  const userName = auth.user ? auth.user.username : "User"; // Display first name or "User"
+  const { auth } = useContext(AuthContext);
+  const userName = auth.user ? auth.user.username : "User";
 
   return (
     <>
       <Header />
 
-      {/* Main Content Area with Top Padding */}
-      <section className="container mx-auto p-6 pt-[120px] bg-almond">
-        <h1 className="text-h2 font-headers font-bold mb-6 pb-[50px]">
-          Welcome to Your Dashboard, {userName}
-        </h1>
+      <main className="container mx-auto px-4 p-8 lg:pt-[100px] min-h-screen bg-almond">
+        {/* Hero Section */}
+        <section className="bg-luxwhite rounded-lg shadow-lg p-6 md:p-8 mb-6 lg:mb-8 text-center lg:text-left">
+          <h1 className="text-2xl font-headers md:text-3xl lg:text-4xl font-bold">
+            Welcome to Your Dashboard, {userName}
+          </h1>
+        </section>
 
-        {/* Grid Layout for Dashboard Sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Main Dashboard Sections */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           <QuickActions />
           <Notifications />
           <UpcomingAppointments />
           <PersonalInfo />
           <Schedule />
-          <TestimonialUpload /> {/* Add Testimonial Upload */}
+          <TestimonialUpload />
         </div>
-      </section>
+      </main>
 
       <Footer />
     </>

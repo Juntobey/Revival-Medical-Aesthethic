@@ -1,4 +1,3 @@
-// src/pages/AdminDashboard.jsx
 import React from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
@@ -11,13 +10,19 @@ import Notifications from "../components/DoctorDashboard/Notifications";
 
 const AdminDashboard = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <Header />
-      <main className="flex-grow p-4 md:p-8">
-        <h1 className="text-4xl font-bold text-darkgreen mb-8">
-          Admin Dashboard
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <main className="container mx-auto px-4 p-8 lg:pt-[100px] min-h-screen bg-almond">
+        {/* Hero Section */}
+        <section className="bg-brown-200 rounded-lg shadow-lg p-6 md:p-8 mb-6 lg:mb-8 text-center lg:text-left">
+          <h1 className="md:text-3xl  lg:text-h2 font-bold font-headers text-darkgreen">
+            Welcome to the Admin Dashboard
+          </h1>
+        </section>
+
+        {/* Main Dashboard Sections */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           <AnalyticsOverview />
           <ManageUsers />
           <Notifications />
@@ -26,8 +31,9 @@ const AdminDashboard = () => {
           <ManageBookings />
         </div>
       </main>
+
       <Footer />
-    </div>
+    </>
   );
 };
 

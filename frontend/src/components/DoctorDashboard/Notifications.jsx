@@ -24,14 +24,21 @@ const Notifications = () => {
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/notifications/send-notification`, {
-        message,
-        schedule: null,
-        userIds: sendToAll ? [] : selectedUsers,  // If sending to all, leave userIds empty
-        created_by: currentUserId, // Pass the current user's ID
-      });
+      const response = await axios.post(
+        `${BASE_URL}/notifications/send-notification`,
+        {
+          message,
+          schedule: null,
+          userIds: sendToAll ? [] : selectedUsers, // If sending to all, leave userIds empty
+          created_by: currentUserId, // Pass the current user's ID
+        }
+      );
       if (response.status === 200) {
-        Swal.fire("Notification Sent", "Your message has been sent.", "success");
+        Swal.fire(
+          "Notification Sent",
+          "Your message has been sent.",
+          "success"
+        );
         setMessage("");
         setSelectedUsers([]);
         setSendToAll(false);
@@ -44,19 +51,30 @@ const Notifications = () => {
   // Function to handle scheduling notifications
   const handleScheduleSend = async () => {
     if (!message || !sendDate || (!sendToAll && selectedUsers.length === 0)) {
-      Swal.fire("Error", "Please write a message, select a date, and choose users.", "error");
+      Swal.fire(
+        "Error",
+        "Please write a message, select a date, and choose users.",
+        "error"
+      );
       return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/notifications/send-notification`, {
-        message,
-        schedule: sendDate,
-        userIds: sendToAll ? [] : selectedUsers,  // If sending to all, leave userIds empty
-        created_by: currentUserId, // Pass the current user's ID
-      });
+      const response = await axios.post(
+        `${BASE_URL}/notifications/send-notification`,
+        {
+          message,
+          schedule: sendDate,
+          userIds: sendToAll ? [] : selectedUsers, // If sending to all, leave userIds empty
+          created_by: currentUserId, // Pass the current user's ID
+        }
+      );
       if (response.status === 200) {
-        Swal.fire("Notification Scheduled", "Your message has been scheduled.", "success");
+        Swal.fire(
+          "Notification Scheduled",
+          "Your message has been scheduled.",
+          "success"
+        );
         setMessage("");
         setSendDate(null);
         setSelectedUsers([]);
@@ -71,7 +89,9 @@ const Notifications = () => {
   const handleUserSearch = async () => {
     if (userSearch) {
       try {
-        const response = await axios.get(`${BASE_URL}/notifications/users?search=${userSearch}`);
+        const response = await axios.get(
+          `${BASE_URL}/notifications/users?search=${userSearch}`
+        );
         setUsers(response.data);
       } catch (error) {
         console.error("Error searching for users:", error);
@@ -80,8 +100,10 @@ const Notifications = () => {
   };
 
   return (
-    <div className="bg-white p-4 shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">Notifications</h2>
+    <div className="bg-luxwhite p-4 shadow-lg rounded-lg">
+      <h2 className="text-2xl font-bold font-headers text-darkgreen mb-4">
+        Notifications
+      </h2>
 
       <textarea
         value={message}
@@ -93,13 +115,13 @@ const Notifications = () => {
 
       {/* Option to send to all users */}
       <div className="mb-4">
-        <label className="mr-2">Send to All Users</label>
+        <label className="mr-2 font-paragraph">Send to All Users</label>
         <input
           type="checkbox"
           checked={sendToAll}
           onChange={(e) => {
             setSendToAll(e.target.checked);
-            setSelectedUsers([]); // Clear selected users if sending to all
+            setSelectedUsers([]);
           }}
         />
       </div>
@@ -114,7 +136,10 @@ const Notifications = () => {
             placeholder="Search for users"
             className="w-full p-2 mb-2 border rounded-lg"
           />
-          <button onClick={handleUserSearch} className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+          <button
+            onClick={handleUserSearch}
+            className="bg-lightbrown font-cta text-luxwhite py-2 px-4 rounded-lg"
+          >
             Search
           </button>
           <div>
@@ -127,7 +152,9 @@ const Notifications = () => {
                     if (e.target.checked) {
                       setSelectedUsers((prev) => [...prev, user.id]);
                     } else {
-                      setSelectedUsers((prev) => prev.filter((id) => id !== user.id));
+                      setSelectedUsers((prev) =>
+                        prev.filter((id) => id !== user.id)
+                      );
                     }
                   }}
                 />
@@ -147,12 +174,18 @@ const Notifications = () => {
         className="p-2 border rounded-lg mr-2"
         placeholderText="Select Date & Time"
       />
-      <button onClick={handleScheduleSend} className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+      <button
+        onClick={handleScheduleSend}
+        className="bg-lightbrown text-luxwhite font-cta py-2 px-4 rounded-lg mr-[5px]"
+      >
         Schedule
       </button>
 
       {/* Send Now Button (After Schedule) */}
-      <button onClick={handleSendNow} className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4">
+      <button
+        onClick={handleSendNow}
+        className="bg-green-500 text-luxwhite font-cta py-2 px-4 rounded-lg mt-4"
+      >
         Send Now
       </button>
     </div>

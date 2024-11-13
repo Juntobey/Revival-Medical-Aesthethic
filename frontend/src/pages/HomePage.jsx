@@ -10,7 +10,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-0">
-      {/* Left Section with Model Image */}
+      {/* Left Image Section */}
       <div
         className="relative bg-cover bg-center h-screen"
         style={{
@@ -18,9 +18,9 @@ const HomePage = () => {
         }}
       ></div>
 
-      {/* Right Section */}
+      {/* Right Content Section */}
       <div className="grid grid-rows-2 gap-0 h-screen">
-        {/* Top Silk Image with Overlay Text */}
+        {/* Top Section with Title */}
         <div
           className="relative bg-cover bg-center h-full"
           style={{
@@ -39,22 +39,24 @@ const HomePage = () => {
 
         {/* Bottom Section with Three Images */}
         <div className="grid grid-cols-3 h-full">
-          {/* Virtual Clinic */}
+          {/* Virtual Clinic image */}
           <div
-            onClick={() => handleNavigate("/virtual-clinic")}
             className="relative bg-cover bg-center cursor-pointer"
             style={{
               backgroundImage: `url('${process.env.PUBLIC_URL}/v-clinic.jpg')`,
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              <button className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black">
+              <button
+                onClick={() => handleNavigate("/virtual-clinic")}
+                className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
+              >
                 VIRTUAL CLINIC
               </button>
             </div>
           </div>
 
-          {/* Coming Soon */}
+          {/* 2nd Bottom Image */}
           <div
             className="relative bg-cover bg-center"
             style={{
@@ -62,16 +64,18 @@ const HomePage = () => {
             }}
           ></div>
 
-          {/* Aesthetics Clinic */}
+          {/* Aesthetics Clinic Image */}
           <div
-            onClick={() => handleNavigate("/aesthetics-clinic")}
             className="relative bg-cover bg-center cursor-pointer"
             style={{
               backgroundImage: `url('${process.env.PUBLIC_URL}/middle.jpeg')`,
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              <button className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black">
+              <button
+                onClick={() => handleNavigate("/aesthetics-clinic")}
+                className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
+              >
                 AESTHETICS CLINIC
               </button>
             </div>

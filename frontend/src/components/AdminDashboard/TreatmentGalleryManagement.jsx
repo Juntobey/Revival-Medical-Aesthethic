@@ -49,12 +49,12 @@ const TreatmentGalleryManagement = ({ profileId }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-darkgreen mb-4">
+    <div className="bg-luxwhite p-4 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-headers font-bold text-darkgreen mb-4">
         Treatment Gallery Management
       </h2>
 
-      <label className="block text-darkgreen font-semibold mb-2">
+      <label className="block text-darkgreen font-paragraph font-semibold mb-2">
         Upload Before Image
       </label>
       <input
@@ -64,7 +64,7 @@ const TreatmentGalleryManagement = ({ profileId }) => {
         className="mb-4"
       />
 
-      <label className="block text-darkgreen font-semibold mb-2">
+      <label className="block text-darkgreen font-paragraph font-semibold mb-2">
         Upload After Image
       </label>
       <input
@@ -76,13 +76,13 @@ const TreatmentGalleryManagement = ({ profileId }) => {
 
       <button
         onClick={handlePreview}
-        className="bg-indigo-600 text-white py-2 px-4 rounded-lg mr-4"
+        className="bg-lightbrown text-luxwhite font-cta py-2 px-4 rounded-lg mr-4"
       >
         Preview
       </button>
       <button
         onClick={handleSubmit}
-        className="bg-green-600 text-white py-2 px-4 rounded-lg"
+        className="bg-green-500 font-cta text-luxwhite py-2 px-4 rounded-lg"
       >
         Submit
       </button>

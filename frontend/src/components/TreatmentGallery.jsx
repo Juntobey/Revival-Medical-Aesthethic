@@ -7,7 +7,6 @@ const TreatmentGallery = () => {
   const [transformations, setTransformations] = useState([]);
 
   useEffect(() => {
-    // Fetch transformations from the API
     const fetchTransformations = async () => {
       try {
         const response = await axios.get(
@@ -22,7 +21,6 @@ const TreatmentGallery = () => {
     fetchTransformations();
   }, []);
 
-  // Helper function to strip '/api' from the URL if it exists
   const stripApiFromUrl = (url) => {
     return url.replace("/api", "");
   };
@@ -33,7 +31,7 @@ const TreatmentGallery = () => {
         <h2 className="text-h2 font-headers text-darkgreen">
           Treatment Gallery
         </h2>
-        <p className="text-p mt-2 font-paragraph text-darkgreen">
+        <p className="font-paragraph text-xl font-semibold text-darkgreen">
           Explore The Past Treatments
         </p>
       </div>
@@ -84,7 +82,7 @@ const TreatmentGallery = () => {
       <div className="text-center mt-12">
         <Link
           to="/view-treatments"
-          className="mt-6 bg-darkgreen font-cta text-luxwhite px-6 py-3 rounded-lg hover:bg-opacity-80 inline-block transition-all duration-300"
+          className="bg-darkgreen text-almond font-cta py-2 px-6 rounded-md font-semibold transition-opacity duration-300 hover:opacity-80 focus:outline-none"
         >
           View All Treatments
         </Link>
