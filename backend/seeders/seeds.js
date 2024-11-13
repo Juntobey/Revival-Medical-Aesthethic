@@ -1,5 +1,5 @@
 "use strict";
-const Appointment = require('../services/models/appointments');
+const Appointment = require("../services/models/appointments");
 const AppointmentType = require('../services/models/appointmentType');
 const Billing = require('../services/models/billing');
 const Booking = require('../services/models/bookings');
