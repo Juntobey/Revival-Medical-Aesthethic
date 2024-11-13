@@ -1,5 +1,14 @@
 import React from "react";
 
+const BulletItem = ({ text }) => (
+  <div className="flex items-center mb-2">
+    {/* Custom Bullet */}
+    <span className="w-3 h-3 bg-lightbrown rounded-full mr-4"></span>
+    {/* List Text */}
+    <p className="text-p font-paragraph text-gray-700">{text}</p>
+  </div>
+);
+
 const VirtualOp1 = () => {
   return (
     <section className="w-full pt-19 pb-0">
@@ -10,12 +19,21 @@ const VirtualOp1 = () => {
           {/* Left Side: Text Content */}
           <div className="w-full lg:w-1/2 lg:pr-8">
             <h2 className="text-h2 font-headers text-darkgreen mb-6">
-              Horizontal Card
+              Platelet Rich Plasma
             </h2>
             <p className="text-p font-paragraph text-gray-700 mb-6">
-              Horizs cdc svsvrrhjuio m scsef sefefcc asas sc drgjukumuilkkxses v
-              da wd dw wdx cerfcer fr acffrt gcfcrrr fref we ftyuus
+              Experience the transformative power of PRP Hair Restoration -
+              nature's luxury solution for achieving the vibrant, fuller hair
+              you deserve. PRPoptions we offer:
             </p>
+
+            {/* List of Expertise */}
+            <div className="grid grid-cols-2 gap-y-2 mb-6">
+              <BulletItem text="Repair PRP" />
+              <BulletItem text="P-Shot (Priapus Shot)" />
+              <BulletItem text="Aesthetic PRP" />
+            </div>
+
             {/* Call to Action Button */}
             <a
               href="/booking"

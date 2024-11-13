@@ -17,16 +17,6 @@ const GPTreatments = () => {
       description: "Regular health assessments.",
       icon: "🩺",
     },
-    {
-      title: "Birth Control Options",
-      description: "Injections, implants, and IUDs.",
-      icon: "⚕️",
-    },
-    {
-      title: "Repair PRP",
-      description: "PRP injections for muscular recovery.",
-      icon: "💪",
-    },
   ];
 
   return (

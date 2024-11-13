@@ -1,6 +1,6 @@
 import React from "react";
 
-const VirtualPrice1 = () => {
+const VirtualPrice2 = () => {
   return (
     <section className="w-full py-0 bg-beige justify-end">
       {/* Content Container */}
@@ -8,30 +8,42 @@ const VirtualPrice1 = () => {
         {/* Flex container for text and image */}
         <div className="flex flex-col lg:flex-row items-center justify-between">
           {/* Left Side: Text Content */}
-          <div className="w-full pl-16 lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 flex flex-col justify-center items-center">
+          <div className="w-full pl-16 lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 flex flex-col justify-center items-center text-center">
             <h2 className="text-h2 font-headers text-darkgreen mb-6">
-              Booking Options
+              Comprehensive Virtual Consultation
             </h2>
             <div className="mt-8 text-center">
-              <h3 className="text-h3 font-headers text-darkgreen mb-4">
-                Option Name/Description
-              </h3>
-              <p className="text-p font-paragraph text-gray-700 mb-4">
-                Paragraph text about the option, service description, or other
-                details you want to provide about this virtual clinic booking
-                option.
-              </p>
+              <div className="text-p font-paragraph text-gray-700 mb-4 text-center">
+                <ul className="list-disc text-left space-y-2 text-paragraph">
+                  <li>
+                    15-minute focused telehealth consultation with the Doctor
+                  </li>
+                  <li>Prescription provided if medically necessary</li>
+                  <li>One complimentary follow-up appointment</li>
+                  <li>Blood work analysis included</li>
+                  <li>Referral letter provided if required</li>
+                </ul>
+                <div className="mt-4 text-sm text-gray-600">
+                  <p className="italic">Package Includes Essential Services:</p>
+                  <ul className="list-disc text-left text-p pl-4 space-y-1 mt-2">
+                    <li>Follow-up appointments</li>
+                    <li>Laboratory tests</li>
+                    <li>Referral documentation</li>
+                    <li>WhatsApp communication</li>
+                  </ul>
+                </div>
+              </div>
               <p className="text-xl font-bold text-darkgreen mb-6">
-                Price:R---
+                Price: R1050
               </p>
-              {/* Call to Action Button */}
-              <a
-                href="/booking"
-                className="inline-block bg-darkgreen text-luxwhite font-cta  px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
-              >
-                Schedule A Consultation
-              </a>
             </div>
+            {/* Call to Action Button */}
+            <a
+              href="/booking"
+              className="inline-block bg-darkgreen text-luxwhite font-cta px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
+            >
+              Schedule A Consultation
+            </a>
           </div>
 
           {/* Right Side: Image */}
@@ -49,4 +61,4 @@ const VirtualPrice1 = () => {
   );
 };
 
-export default VirtualPrice1;
+export default VirtualPrice2;

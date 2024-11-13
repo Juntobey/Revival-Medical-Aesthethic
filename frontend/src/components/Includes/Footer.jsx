@@ -29,7 +29,11 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300"
           >
-            <FaTwitter size={20} className="text-[#1DA1F2]" />{" "}
+            <img
+              src={`${process.env.PUBLIC_URL}/logo-white.png`}
+              alt="X"
+              className="w-5 h-5"
+            />
           </a>
         </div>
 

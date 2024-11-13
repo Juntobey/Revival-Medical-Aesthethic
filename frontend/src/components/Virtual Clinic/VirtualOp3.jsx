@@ -10,11 +10,13 @@ const VirtualOp3 = () => {
           {/* Left Side: Text Content */}
           <div className="w-full lg:w-1/2 lg:pr-8">
             <h2 className="text-h2 font-headers text-darkgreen mb-6">
-              Horizontal Card
+              Radiant Skin Awaits
             </h2>
             <p className="text-p font-paragraph text-gray-700 mb-6">
-              Horizs cdc svsvrrhjuio m scsef sefefcc asas sc drgjukumuilkkxses v
-              da wd dw wdx cerfcer fr acffrt gcfcrrr fref we ftyuus
+              Indulge in bespoke skincare treatments crafted to rejuvenate and
+              restore your natural glow. Experience luxurious, personalized care
+              that nurtures and revitalizes, leaving your skin radiant,
+              refreshed, and beautifully renewed.
             </p>
             {/* Call to Action Button */}
             <a

@@ -19,11 +19,11 @@ const VirtualOp2 = () => {
           {/* Right Side: Text Content */}
           <div className="w-full lg:w-1/2 lg:pl-8 justify-end">
             <h2 className="text-h2 font-headers text-darkgreen mb-6">
-              Horizontal Card
+              Thorough Wellness Assessments
             </h2>
             <p className="text-p font-paragraph text-gray-700 mb-6">
-              Horizs cdc svsvrrhjuio m scsef sefefcc asas sc drgjukumuilkkxses v
-              da wd dw wdx cerfcer fr acffrt gcfcrrr fref we ftyuus
+              Stay proactive about your health with regular, in-depth wellness
+              checks tailored to support your ongoing well-being.
             </p>
             {/* Call to Action Button */}
             <a
