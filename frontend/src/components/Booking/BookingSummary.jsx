@@ -49,7 +49,7 @@ const BookingSummary = ({ treatment, date, time }) => {
   };
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-md text-center my-[50px] mx-[75px] ">
+    <div className="p-4 bg-almond rounded-lg shadow-md text-center my-[50px] mx-[75px] ">
       <h2 className="text-2xl font-headers font-semibold text-gray-800 mb-4">
         Booking Summary
       </h2>

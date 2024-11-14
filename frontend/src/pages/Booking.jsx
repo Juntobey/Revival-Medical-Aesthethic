@@ -35,7 +35,7 @@ const Booking = () => {
   return (
     <>
       <Header />
-      <main className="bg-almond">
+      <main>
         <BookingHero />
 
         {!auth.isAuthenticated && (

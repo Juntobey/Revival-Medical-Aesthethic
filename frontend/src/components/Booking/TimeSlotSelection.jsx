@@ -1,16 +1,23 @@
 import React from "react";
 
-const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime, availableDates = [] }) => {
+const TimeSlotSelection = ({
+  selectedDate,
+  selectedTime,
+  setSelectedTime,
+  availableDates = [],
+}) => {
   // Find the time slots for the selected date
   const selectedDaySlots = availableDates.find(
-    (dateObj) => new Date(dateObj.date).toDateString() === new Date(selectedDate).toDateString()
+    (dateObj) =>
+      new Date(dateObj.date).toDateString() ===
+      new Date(selectedDate).toDateString()
   );
 
   // If slots are available for that date, extract them
   const availableTimes = selectedDaySlots ? selectedDaySlots.timeslots : [];
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-almond rounded-lg shadow-md">
       <h2 className="text-3xl font-headers font-semibold text-gray-800 mb-4">
         Select a Time Slot
       </h2>
@@ -20,7 +27,7 @@ const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime, availa
             availableTimes.map((slot) => (
               <button
                 key={slot.id}
-                onClick={() => setSelectedTime(slot)}  // Pass the entire slot object to setSelectedTime
+                onClick={() => setSelectedTime(slot)} // Pass the entire slot object to setSelectedTime
                 className={`p-2 rounded-lg transition ${
                   selectedTime && selectedTime.id === slot.id
                     ? "bg-indigo-600 text-white"
@@ -32,7 +39,9 @@ const TimeSlotSelection = ({ selectedDate, selectedTime, setSelectedTime, availa
               </button>
             ))
           ) : (
-            <p className="text-gray-600 font-paragraph">No available time slots for this date.</p>
+            <p className="text-gray-600 font-paragraph">
+              No available time slots for this date.
+            </p>
           )}
         </div>
       ) : (
