@@ -44,7 +44,7 @@ const FAQ = () => {
 
       {/* Content of FAQ (fully opaque) */}
       <div className="container mx-auto relative z-10">
-        <h2 className="text-center text-h1 font-headers text-darkgreen mb-12">
+        <h2 className="text-center md:text-h1 text-[30px] font-bold font-headers text-darkgreen mb-12">
           Frequently Asked Questions (FAQs)
         </h2>
 
@@ -57,7 +57,7 @@ const FAQ = () => {
             >
               <div className="flex justify-between items-center cursor-pointer p-4 rounded-lg bg-fafafa shadow-sm">
                 <h3
-                  className={`text-2xl font-headers text-darkgreen font-semibold ${
+                  className={`md:text-2xl text-[22px] font-headers text-darkgreen font-semibold ${
                     activeIndex === index ? "" : ""
                   }`}
                 >
@@ -65,9 +65,9 @@ const FAQ = () => {
                 </h3>
                 <span>
                   {activeIndex === index ? (
-                    <FaChevronUp className="text-darkgreen text-2xl" />
+                    <FaChevronUp className="text-darkgreen md:text-2xl text-[20px]" />
                   ) : (
-                    <FaChevronDown className="text-darkgreen text-2xl" />
+                    <FaChevronDown className="text-darkgreen md:text-2xl text-[20px]" />
                   )}
                 </span>
               </div>

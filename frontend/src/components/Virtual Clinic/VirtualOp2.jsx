@@ -2,7 +2,7 @@ import React from "react";
 
 const VirtualOp2 = () => {
   return (
-    <section className="w-full pt-0">
+    <section className="w-full pt-0 md:pb-0 pb-[50px]">
       {/* Content Container */}
       <div className="max-w-[1295px] mx-auto w-full px-4">
         {/* Section Content */}
@@ -12,13 +12,13 @@ const VirtualOp2 = () => {
             <img
               src={`${process.env.PUBLIC_URL}/option2-image.jpg`}
               alt="Virtual Clinic Option 2"
-              className="w-[660px] h-[800px] object-cover"
+              className="md:w-[630px] md:h-[800px] w-full h-[400px] object-cover"
             />
           </div>
 
           {/* Right Side: Text Content */}
           <div className="w-full lg:w-1/2 lg:pl-8 justify-end">
-            <h2 className="text-h2 font-headers text-darkgreen mb-6">
+            <h2 className="md:text-h2 text-[30px] font-bold text-center md:text-left font-headers text-darkgreen mb-6">
               Thorough Wellness Assessments
             </h2>
             <p className="text-p font-paragraph text-gray-700 mb-6">

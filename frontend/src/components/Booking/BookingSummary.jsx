@@ -19,26 +19,27 @@ const BookingSummary = ({ treatment, date, time }) => {
       });
       return;
     }
-  
+
     const amount = treatment.price;
     const formattedDate = date.toISOString();
-    axios.post(`${BASE_URL}/invoices/invoice`, {
-      treatmentId: treatment.id,
-      doctorId: 2, // since we have one doctor right now
-      userId,
-      formattedDate,
-      time,
-      amount,
-    })
-      .then(response => {
+    axios
+      .post(`${BASE_URL}/invoices/invoice`, {
+        treatmentId: treatment.id,
+        doctorId: 2, // since we have one doctor right now
+        userId,
+        formattedDate,
+        time,
+        amount,
+      })
+      .then((response) => {
         Swal.fire({
           title: "Booking Successful!",
           // text: "Please choose a payment method.",
           icon: "success",
         });
-        navigate("/dashboard");
+        navigate("/booking");
       })
-      .catch(error => {
+      .catch((error) => {
         Swal.fire({
           title: "Error",
           text: "Failed to create invoice. Please try again.",
@@ -48,18 +49,20 @@ const BookingSummary = ({ treatment, date, time }) => {
   };
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-md text-center">
+    <div className="p-4 bg-gray-50 rounded-lg shadow-md text-center my-[50px] mx-[75px] ">
       <h2 className="text-2xl font-headers font-semibold text-gray-800 mb-4">
         Booking Summary
       </h2>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Treatment:</strong> {treatment?.treatment_name || "Not selected"}
+        <strong>Treatment:</strong>{" "}
+        {treatment?.treatment_name || "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
         <strong>Price:</strong> R{treatment?.price || "Not available"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
-        <strong>Date:</strong> {date ? date.toLocaleDateString() : "Not selected"}
+        <strong>Date:</strong>{" "}
+        {date ? date.toLocaleDateString() : "Not selected"}
       </p>
       <p className="text-gray-600 mb-2 font-paragraph">
         <strong>Time:</strong> {time || "Not selected"}

@@ -8,7 +8,7 @@ const Footer = () => {
         {/* Social Icons Section */}
         <div className="flex justify-center space-x-6 mb-2">
           <a
-            href="https://www.facebook.com"
+            href="https://www.facebook.com/profile.php?id=61568681667901&mibextid=LQQJ4d"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300"
@@ -16,7 +16,7 @@ const Footer = () => {
             <FaFacebookF size={20} className="text-[#1656d6]" />{" "}
           </a>
           <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/revival_medicalaesthetics?igsh=MWdxODA4Y2d3ZmZkMg=="
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300"
@@ -24,7 +24,7 @@ const Footer = () => {
             <FaInstagram size={20} className="text-[#C13584]" />{" "}
           </a>
           <a
-            href="https://www.twitter.com"
+            href="https://x.com/revival_medical?s=11"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white transition duration-300"

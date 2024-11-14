@@ -33,7 +33,7 @@ const Testimonials = () => {
 
   return (
     <section className="py-16 px-8 bg-gray-100">
-      <h2 className="text-h2 font-headers text-darkgreen mb-6 text-center">
+      <h2 className="md:text-h2 text-[35px] font-bold font-headers text-darkgreen mb-6 text-center">
         Success Stories
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -45,7 +45,7 @@ const Testimonials = () => {
             <img
               src={`${stripApiFromUrl(BASE_URL)}/${testimonial.imagePath}`}
               alt={`Testimonial ${index + 1}`}
-              className="w-full h-[300px] object-cover"
+              className="w-full h-[200px] md:h-[300px] object-cover"
             />
             <div className="p-4">
               <p className="text-h3 font-headers text-darkgreen mb-2">

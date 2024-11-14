@@ -31,17 +31,17 @@ const BirthControl = () => {
 
   return (
     <section className="py-16 px-8 bg-gray-50 animate-fade-in">
-      <h2 className="text-h2 font-headers text-darkbrown mb-6 text-center">
+      <h2 className="md:text-h2 text-[30px] font-bold font-headers text-darkbrown mb-6 text-center">
         Birth Control Options
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
         {options.map((option, index) => (
           <div
             key={index}
-            className="text-center p-6 bg-white rounded-lg shadow-lg transform transition hover:scale-105"
+            className="text-center p-6 bg-luxwhite rounded-lg shadow-lg transform transition hover:scale-105"
           >
             <div className="text-5xl mb-4">{option.icon}</div>
-            <h3 className="text-3xl font-semibold text-darkbrown font-headers mb-2">
+            <h3 className="md:text-3xl text-[25px] font-semibold text-darkbrown font-headers mb-2">
               {option.title}
             </h3>
             <p className="text-gray-600 font-paragraph">{option.description}</p>

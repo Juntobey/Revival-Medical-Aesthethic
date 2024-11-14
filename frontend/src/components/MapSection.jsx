@@ -2,8 +2,8 @@ import React from "react";
 
 const MapSection = () => {
   return (
-    <section className="py-16 px-8">
-      <h2 className="text-h2 font-bold text-darkgreen font-headers mb-8 text-center">
+    <section className="py-16 px-8 bg-almond">
+      <h2 className="md:text-h2 text-[30px] font-bold text-darkgreen font-headers mb-8 text-center">
         Find Us Here
       </h2>
       <div className="max-w-[1295px] mx-auto w-full h-64 sm:h-80 lg:h-96 xl:h-[500px] overflow-hidden rounded-lg shadow-lg">

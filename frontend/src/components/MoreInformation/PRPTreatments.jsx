@@ -27,7 +27,7 @@ const PRPTreatments = () => {
       className="py-16 px-8 animate-fade-in bg-almond"
       id="prp-treatments"
     >
-      <h2 className="text-h2 font-headers text-darkgreen mb-6 text-center">
+      <h2 className="md:text-h2 text-[30px] font-bold font-headers text-darkgreen mb-6 text-center">
         PRP Treatments
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
@@ -42,7 +42,7 @@ const PRPTreatments = () => {
               className="w-full h-[300px] object-cover"
             />
             <div className="p-4">
-              <h3 className="text-3xl font-semibold font-headers text-darkgreen mb-2">
+              <h3 className="md:text-3xl text-[25px] font-semibold font-headers text-darkgreen mb-2">
                 {treatment.title}
               </h3>
               <p className="text-gray-600 mb-4 font-paragraph">

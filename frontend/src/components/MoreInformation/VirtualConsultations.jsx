@@ -6,7 +6,7 @@ const VirtualConsultations = () => {
       <div className="flex flex-col lg:flex-row items-center">
         {/* Left Side: Text */}
         <div className="w-full lg:w-1/2 lg:pr-8">
-          <h2 className="text-h2 font-headers text-darkgreen mb-6">
+          <h2 className="md:text-h2 text-[35px] font-bold font-headers text-darkgreen mb-6">
             Virtual Consultations
           </h2>
           <p className="text-p font-paragraph text-gray-600 mb-6">

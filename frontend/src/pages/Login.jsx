@@ -77,13 +77,16 @@ const Login = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <div className="flex-grow flex">
-        <div className="flex-grow bg-lightbrown p-8 flex items-center justify-center">
+        {/* Left section with text (hidden on small screens) */}
+        <div className="hidden md:flex md:flex-grow bg-lightbrown p-8 items-center justify-center">
           <h2 className="text-h1 text-luxwhite font-headers leading-tight">
             Natural beauty <br /> protected, <br /> Natural beauty <br />{" "}
             restored.
           </h2>
         </div>
-        <div className="flex flex-col items-center justify-center w-1/2 pb-12 pt-[50px] px-16">
+
+        {/* Right section with login form (full width on small screens) */}
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2 pb-12 pt-[50px] px-6 md:px-16">
           <h2 className="text-h2 font-headers mb-8 text-[#7A5547] font-cormorant">
             Login
           </h2>

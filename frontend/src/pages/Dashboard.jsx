@@ -17,9 +17,9 @@ const Dashboard = () => {
     <>
       <Header />
 
-      <main className="container mx-auto px-4 p-8 lg:pt-[100px] min-h-screen bg-almond">
+      <main className="container mx-auto px-4 p-8 md:pt-[100px] pt-[60px] min-h-screen bg-almond">
         {/* Hero Section */}
-        <section className="bg-luxwhite rounded-lg shadow-lg p-6 md:p-8 mb-6 lg:mb-8 text-center lg:text-left">
+        <section className="bg-brown-200 rounded-lg shadow-lg p-6 md:p-8 mb-6 lg:mb-8 text-center lg:text-left">
           <h1 className="text-2xl font-headers md:text-3xl lg:text-4xl font-bold">
             Welcome to Your Dashboard, {userName}
           </h1>

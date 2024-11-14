@@ -212,14 +212,14 @@ const Register = () => {
     <div className="flex flex-col min-h-screen pt-15">
       <Header />
       <div className="flex-grow flex">
-        <div className="flex-grow bg-[#1B2E22] p-8 flex items-center justify-center">
+        <div className="hidden md:flex md:flex-grow bg-[#1B2E22] p-8 items-center justify-center">
           <h2 className="text-h1 text-luxwhite font-headers leading-tight">
             Natural beauty <br /> protected, <br /> Natural beauty <br />{" "}
             restored.
           </h2>
         </div>
 
-        <div className="flex flex-col items-center justify-center w-1/2 pt-[120px] px-16 pb-[50px]">
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2 pt-[120px] px-6 md:px-16 pb-[50px]">
           <h2 className="text-h1 font-headers mb-8 text-darkgreen">Register</h2>
           <form className="w-full max-w-md space-y-4" onSubmit={handleSubmit}>
             {/* First Name and Last Name */}

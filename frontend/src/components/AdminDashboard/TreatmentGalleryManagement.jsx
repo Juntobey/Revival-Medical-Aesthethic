@@ -25,7 +25,7 @@ const TreatmentGalleryManagement = ({ profileId }) => {
     }
 
     const formData = new FormData();
-    formData.append("profileId", profileId); // Send profile ID
+    formData.append("profileId", profileId);
     formData.append("before", beforeImage);
     formData.append("after", afterImage);
 
@@ -91,16 +91,20 @@ const TreatmentGalleryManagement = ({ profileId }) => {
         isVisible={isPopupVisible}
         title="Preview Before and After Images"
         message={
-          <div>
+          <div className="flex flex-col items-center max-h-[80vh] overflow-auto">
             {beforePreview && (
               <img
                 src={beforePreview}
                 alt="Before Preview"
-                className="w-full mb-4"
+                className="w-full max-w-xs md:max-w-md lg:max-w-lg object-contain mb-4"
               />
             )}
             {afterPreview && (
-              <img src={afterPreview} alt="After Preview" className="w-full" />
+              <img
+                src={afterPreview}
+                alt="After Preview"
+                className="w-full max-w-xs md:max-w-md lg:max-w-lg object-contain"
+              />
             )}
           </div>
         }

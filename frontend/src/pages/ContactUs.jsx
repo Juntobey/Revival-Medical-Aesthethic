@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Includes/Header";
 import Footer from "../components/Includes/Footer";
 import Swal from "sweetalert2"; // Import SweetAlert2
+import MapSection from "../components/MapSection";
 
 const ContactUs = () => {
   const [firstName, setFirstName] = useState("");
@@ -42,10 +43,6 @@ const ContactUs = () => {
             following contact details:
           </p>
           <div className="mt-4 space-y-2">
-            <p className="text-gray-600 font-paragraph">
-              📍 Second floor Room B3, Health and Wellness Center, 353 Rivonia
-              Blvd, Rivonia, Sandton, 2191
-            </p>
             <p className="text-gray-600 font-paragraph">📞 +27 73 354 5232</p>
             <p className="text-gray-600 font-paragraph">
               📧 revivalsandton@icloud.com
@@ -125,6 +122,7 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+      <MapSection />
       <Footer />
     </>
   );

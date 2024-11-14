@@ -18,12 +18,12 @@ const HeroSection = () => {
 
       {/* Text Content */}
       <div className="relative z-10 text-darkgreen">
-        <h1 className="font-headers text-h1 font-bold">
+        <h1 className="font-headers md:text-h1 text-[35px] font-bold">
           Natural Beauty Protected,
           <br />
           Natural Beauty Restored
         </h1>
-        <p className="font-paragraph text-lg mt-4">
+        <p className="font-paragraph md:text-lg text-[17px] mt-4">
           Conservative aesthetic enhancements to honour and maintain the natural
           canvas
         </p>

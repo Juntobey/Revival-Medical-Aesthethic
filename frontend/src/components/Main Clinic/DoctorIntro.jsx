@@ -22,7 +22,7 @@ const DoctorIntro = () => {
 
         {/* Right (Text and Button) */}
         <div className="mt-8 md:mt-0 md:w-1/2 text-center md:text-left md:pl-12">
-          <h1 className="text-h1 font-headers text-darkgreen lg:text-[60px] xl:text-[65px] leading-tight mb-4">
+          <h1 className=" font-headers text-darkgreen lg:text-h1 xl:text-h1 md:text-h1 text-[40px] font-bold leading-tight mb-4">
             Dr Azhar Valiallah
           </h1>
 

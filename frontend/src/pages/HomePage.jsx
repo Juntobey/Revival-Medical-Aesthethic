@@ -12,14 +12,14 @@ const HomePage = () => {
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-0">
       {/* Left Image Section */}
       <div
-        className="relative bg-cover bg-center h-screen"
+        className="relative bg-cover bg-center h-screen hidden md:block"
         style={{
           backgroundImage: `url('${process.env.PUBLIC_URL}/model-image.jpeg')`,
         }}
       ></div>
 
       {/* Right Content Section */}
-      <div className="grid grid-rows-2 gap-0 h-screen">
+      <div className="grid grid-rows-2 gap-0 h-screen md:px-0">
         {/* Top Section with Title */}
         <div
           className="relative bg-cover bg-center h-full"
@@ -28,7 +28,7 @@ const HomePage = () => {
           }}
         >
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 gap-1">
-            <h1 className="text-almond text-[170px] font-headers font-bold ">
+            <h1 className="text-almond md:text-[170px] text-[150px] font-headers font-bold ">
               revival
             </h1>
             <p className="text-almond text-[20px] font-headers font-semibold mt-0 tracking-wide leading-relaxed">
@@ -49,7 +49,7 @@ const HomePage = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <button
                 onClick={() => handleNavigate("/virtual-clinic")}
-                className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
+                className=" ml-[10px] px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
               >
                 VIRTUAL CLINIC
               </button>
@@ -74,7 +74,7 @@ const HomePage = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <button
                 onClick={() => handleNavigate("/aesthetics-clinic")}
-                className="px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
+                className="mr-[10px] px-4 py-2 bg-black text-almond font-cta rounded-full shadow-md hover:bg-almond hover:text-black animate-bounce"
               >
                 AESTHETICS CLINIC
               </button>

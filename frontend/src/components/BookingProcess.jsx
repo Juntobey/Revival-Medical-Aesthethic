@@ -6,7 +6,7 @@ const BookingProcess = () => {
   return (
     <section className="py-16 max-w-[1440px] mx-auto">
       <div className="container mx-auto max-w-[1295px] px-4">
-        <h2 className="text-h1 font-headers text-darkgreen text-center font-cormorant mb-[100PX]">
+        <h2 className="md:text-h1 text-[30px] font-bold font-headers text-darkgreen text-center font-cormorant mb-[100PX]">
           Booking Process
         </h2>
 
@@ -44,10 +44,11 @@ const BookingProcess = () => {
               <FaCreditCard className="text-white text-2xl" />
             </div>
             <h3 className="text-2xl font-headers font-semibold text-darkgreen mt-8 ">
-              Confirm Payment
+              Confirm Booking
             </h3>
             <p className="mt-4 text-p text-darkgreen font-paragraph">
-              Proceed with secure payment to confirm your booking.
+              Proceed with the booking confirmation and either pay when you book
+              or pay later.
             </p>
           </div>
         </div>

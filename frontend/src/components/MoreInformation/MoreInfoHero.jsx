@@ -13,10 +13,10 @@ const MoreInfoHero = () => {
     >
       <div className="absolute inset-0 bg-darkgreen opacity-60"></div>
       <div className="relative z-10 text-almond">
-        <h1 className="text-h1 font-headers mb-4">
+        <h1 className="md:text-h1 text-[30px] font-bold font-headers mb-4">
           Learn More About Our Treatments
         </h1>
-        <p className="text-lg font-paragraph">
+        <p className="md:text-lg  text-[14px] font-paragraph">
           Discover the services we offer and how they can improve your health
           and well-being.
         </p>

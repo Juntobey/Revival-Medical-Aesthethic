@@ -42,9 +42,9 @@ export function CarouselSection() {
   }, [currentIndex]);
 
   return (
-    <section className="py-10 pb-[64px] shadow-lg">
+    <section className="py-10 pb-[64px] md:px-0 px-[10px] shadow-lg">
       {/* Section Header */}
-      <h2 className="text-center text-h2 font-bold font-headers text-darkgreen mb-[15px]">
+      <h2 className="text-center md:text-h2 text-[30px] font-bold font-headers text-darkgreen mb-[15px]">
         Explore Our Range of Services
       </h2>
       <p className="text-center font-paragraph text-xl font-semibold text-darkgreen mb-[150px]">

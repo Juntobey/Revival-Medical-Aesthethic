@@ -11,14 +11,14 @@ const BulletItem = ({ text }) => (
 
 const VirtualOp1 = () => {
   return (
-    <section className="w-full pt-19 pb-0">
+    <section className="w-full md:pt-[60px] pt-[60px] md:pb-0 pb-[50px]">
       {/* Content Container */}
       <div className="max-w-[1295px] mx-auto w-full px-4">
         {/* Section Content */}
-        <div className="flex flex-col lg:flex-row items-center">
+        <div className="flex flex-col-reverse lg:flex-row   items-center">
           {/* Left Side: Text Content */}
-          <div className="w-full lg:w-1/2 lg:pr-8">
-            <h2 className="text-h2 font-headers text-darkgreen mb-6">
+          <div className="w-full lg:w-1/2 lg:pr-8 ">
+            <h2 className="md:text-h2 text-[30px] font-bold text-center md:text-left font-headers text-darkgreen mb-6">
               Platelet Rich Plasma
             </h2>
             <p className="text-p font-paragraph text-gray-700 mb-6">
@@ -37,7 +37,7 @@ const VirtualOp1 = () => {
             {/* Call to Action Button */}
             <a
               href="/booking"
-              className="inline-block bg-lightbrown text-luxwhite font-cta px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300"
+              className="inline-block bg-lightbrown text-luxwhite font-cta px-6 py-3 rounded-lg text-lg hover:bg-opacity-80 transition duration-300 "
             >
               Book Now
             </a>
@@ -48,7 +48,7 @@ const VirtualOp1 = () => {
             <img
               src={`${process.env.PUBLIC_URL}/option1-image.jpg`}
               alt="Virtual Clinic Option 1"
-              className="w-[630px] h-[800px] object-cover"
+              className="md:w-[630px] md:h-[800px] w-full h-[400px] object-cover"
             />
           </div>
         </div>

@@ -9,7 +9,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="py-16 px-8 pt-19 h-screen flex justify-center items-center mt-12">
+    <section className="md:py-16 md:px-8 mb-[64px] py-20 px-8 pt-[200px] md:pt-[90px] h-screen flex justify-center items-center mt-12">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Left: Image */}
         <div className="md:w-1/2 w-full flex justify-center">
@@ -21,8 +21,8 @@ const HeroSection = () => {
         </div>
 
         {/* Right: Text and Button */}
-        <div className="mt-8 md:mt-0 md:w-1/2 text-center md:text-left md:pl-12">
-          <h1 className="text-h1 font-headers text-darkgreen lg:text-[65px] xl:text-[70px] font-bold leading-tight mb-4">
+        <div className="mt-8 md:mt-19 md:w-1/2 text-center md:text-left md:pl-12">
+          <h1 className="font-headers text-darkgreen lg:text-h1 xl:text-h1 text-[40px] font-bold leading-tight mb-4">
             Natural beauty <br />
             protected, <br />
             Natural beauty <br /> restored.

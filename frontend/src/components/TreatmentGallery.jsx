@@ -28,10 +28,10 @@ const TreatmentGallery = () => {
   return (
     <section className="py-16 px-8 bg-[#f5eadf] shadow-lg">
       <div className="text-center">
-        <h2 className="text-h2 font-headers text-darkgreen">
+        <h2 className="md:text-h2 text-[30px] font-bold font-headers text-darkgreen">
           Treatment Gallery
         </h2>
-        <p className="font-paragraph text-xl font-semibold text-darkgreen">
+        <p className="font-paragraph md:text-xl text-[15px] font-semibold text-darkgreen">
           Explore The Past Treatments
         </p>
       </div>
