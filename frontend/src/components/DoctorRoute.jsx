@@ -6,11 +6,16 @@ import { AuthContext } from "../context/AuthContext";
 const DoctorRoute = ({ children }) => {
   const { auth, loading } = useContext(AuthContext);
 
-  // Delay rendering until loading is complete
-  if (loading) return null; // Optionally, display a loading spinner here
+  // Show loading spinner while verifying auth state
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
 
-  return auth.isAuthenticated &&
-    (auth.role === "doctor" || auth.role === "admin") ? (
+  // Allow access only for authenticated doctors
+  return auth.isAuthenticated && auth.role === "doctor" ? (
     children
   ) : (
     <Navigate to="/login" />

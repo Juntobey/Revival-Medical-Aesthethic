@@ -14,6 +14,7 @@ const analyticsRoutes = require("./routes/analyticsRoutes");
 const adminScheduleRoutes = require("./routes/adminScheduleRoutes");
 const treatmentRoutes = require("./routes/treatmentRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
 
 const cors = require("cors");
 
@@ -22,16 +23,20 @@ const app = express();
 // allowed origins adjust according to frontend port
 app.use(
   cors({
-    origin: ["http://localhost:3001", "http://31.187.72.135", "https://31.187.72.135"],
+    origin: [
+      "http://localhost:3001",
+      "http://31.187.72.135",
+      "https://31.187.72.135",
+    ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
-;
-
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
 
+// maintenance routes
+app.use("/api/maintenance", maintenanceRoutes);
 
 // invoices
 app.use("/api/invoices", invoiceRoutes);

@@ -121,7 +121,13 @@ const Header = () => {
               {auth.user.role === "admin" && (
                 <NavLink
                   to="/admin-dashboard"
-                  className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                  className={({ isActive }) =>
+                    `text-[#1B2E22] transition-all duration-300 transform ${
+                      isActive
+                        ? "opacity-100 font-semibold translate-y-[-2px]"
+                        : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+                    }`
+                  }
                   onClick={scrollToTop}
                 >
                   Admin Dashboard
@@ -130,16 +136,28 @@ const Header = () => {
               {auth.user.role === "doctor" && (
                 <NavLink
                   to="/doctor-dashboard"
-                  className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                  className={({ isActive }) =>
+                    `text-[#1B2E22] transition-all duration-300 transform ${
+                      isActive
+                        ? "opacity-100 font-semibold translate-y-[-2px]"
+                        : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+                    }`
+                  }
                   onClick={scrollToTop}
                 >
                   Doctor's Dashboard
                 </NavLink>
               )}
-              {auth.user.role === "user" && (
+              {auth.user.role === "patient" && (
                 <NavLink
                   to="/dashboard"
-                  className="text-[#1B2E22] opacity-50 hover:opacity-100 transition-opacity duration-300"
+                  className={({ isActive }) =>
+                    `text-[#1B2E22] transition-all duration-300 transform ${
+                      isActive
+                        ? "opacity-100 font-semibold translate-y-[-2px]"
+                        : "opacity-50 hover:opacity-100 hover:translate-y-[-2px]"
+                    }`
+                  }
                   onClick={scrollToTop}
                 >
                   Dashboard
@@ -259,7 +277,7 @@ const Header = () => {
                     Doctor's Dashboard
                   </NavLink>
                 )}
-                {auth.user.role === "user" && (
+                {auth.user.role === "patient" && (
                   <NavLink
                     to="/dashboard"
                     className="text-[#1B2E22] transition-all duration-300 transform"

@@ -18,7 +18,7 @@ const VirtualPrice3 = () => {
           </div>
           {/* Left Side: Text Content */}
           <div className="w-full md:pl-16 lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 flex flex-col justify-center items-center text-center">
-            <h2 className="text-h2 font-headers text-darkgreen mb-6">
+            <h2 className="md:text-h2 text-[30px] text-bold font-headers text-darkgreen mb-6">
               Premium Care Package
             </h2>
             <div className="mt-8 text-center">

@@ -7,6 +7,7 @@ import TreatmentGalleryManagement from "../components/AdminDashboard/TreatmentGa
 import AnalyticsOverview from "../components/AdminDashboard/AnalyticsOverview";
 import ManageBookings from "../components/AdminDashboard/ManageBookings";
 import Notifications from "../components/DoctorDashboard/Notifications";
+import WebsiteSettings from "../components/AdminDashboard/WebsiteSettings";
 
 const AdminDashboard = () => {
   return (
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
           <ManageSchedule />
           <TreatmentGalleryManagement />
           <ManageBookings />
+          <WebsiteSettings />
         </div>
       </main>
 

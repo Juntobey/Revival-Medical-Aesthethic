@@ -29,16 +29,6 @@ const PatientInfo = () => {
     fetchPatients();
   }, [searchTerm]);
 
-  const filteredPatients = patients.filter((patient) => {
-    const nameMatch =
-      patient.name &&
-      patient.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const medicalRecordMatch = patient.medicalRecords.some((record) =>
-      record.diagnosis.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    return nameMatch || medicalRecordMatch;
-  });
-
   const openPatientProfile = (patient) => {
     setSelectedPatient(patient);
     setSelectedRecord(null);
@@ -214,10 +204,10 @@ const PatientInfo = () => {
       ) : (
         <div className="overflow-y-auto max-h-96">
           <ul>
-            {filteredPatients.length === 0 ? (
+            {patients.length === 0 ? (
               <li>No patients found matching your search criteria.</li>
             ) : (
-              filteredPatients.map((patient) => (
+              patients.map((patient) => (
                 <li key={patient.id} className="border-b py-2">
                   <p>
                     <strong>Name:</strong> {patient.name}

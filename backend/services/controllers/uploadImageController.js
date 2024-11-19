@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const ImageGallery = require("../../authentication/models/ImageGallery");
+const ImageGallery = require("../../authentication/models/imageGallery");
 
 exports.uploadTransformation = async (req, res) => {
   try {
