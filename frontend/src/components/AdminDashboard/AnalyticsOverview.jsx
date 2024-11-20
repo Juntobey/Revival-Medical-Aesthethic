@@ -29,16 +29,44 @@ const AnalyticsOverview = () => {
     activeUsers: 0,
     cancelledAppointments: 0,
   });
+  const [selectedRange, setSelectedRange] = useState("all"); // Default range: all records
+  const [customRange, setCustomRange] = useState({
+    startDate: "",
+    endDate: "",
+  });
 
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Fetch the analytics data from backend
-    fetch(`${BASE_URL}/analytics/overview`)
-      .then((response) => response.json())
-      .then((data) => setAnalyticsData(data))
-      .catch((error) => console.error("Error fetching analytics data:", error));
-  }, []);
+    const fetchAnalytics = async () => {
+      try {
+        let url = `${BASE_URL}/analytics/overview`;
+
+        // Add query parameters based on the selected range
+        if (selectedRange === "day") {
+          url += "?range=day";
+        } else if (selectedRange === "week") {
+          url += "?range=week";
+        } else if (selectedRange === "month") {
+          url += "?range=month";
+        } else if (selectedRange === "custom") {
+          url += `?startDate=${customRange.startDate}&endDate=${customRange.endDate}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+        setAnalyticsData(data);
+      } catch (error) {
+        console.error("Error fetching analytics data:", error);
+      }
+    };
+
+    fetchAnalytics();
+  }, [selectedRange, customRange]);
+
+  const handleDateChange = (e) => {
+    setCustomRange({ ...customRange, [e.target.name]: e.target.value });
+  };
 
   const chartData = {
     labels: ["Bookings", "Payments", "Active Users", "Cancellations"],
@@ -65,7 +93,6 @@ const AnalyticsOverview = () => {
     },
   };
 
-  // Function to download the chart as an image
   const downloadChart = () => {
     if (chartRef.current) {
       const base64Image = chartRef.current.toBase64Image();
@@ -85,6 +112,49 @@ const AnalyticsOverview = () => {
       <h2 className="text-2xl font-headers font-bold text-darkgreen mb-4">
         Analytics Overview
       </h2>
+
+      {/* Dropdown for predefined ranges */}
+      <div className="flex items-center mb-4">
+        <label className="mr-2 font-bold">Filter by:</label>
+        <select
+          value={selectedRange}
+          onChange={(e) => setSelectedRange(e.target.value)}
+          className="border border-gray-300 rounded-lg py-2 px-4"
+        >
+          <option value="all">All Records</option>
+          <option value="day">Today</option>
+          <option value="week">Last Week</option>
+          <option value="month">Last Month</option>
+          <option value="custom">Custom Range</option>
+        </select>
+      </div>
+
+      {/* Custom Range Picker */}
+      {selectedRange === "custom" && (
+        <div className="flex items-center gap-4 mb-4">
+          <div>
+            <label className="block font-bold mb-1">Start Date:</label>
+            <input
+              type="date"
+              name="startDate"
+              value={customRange.startDate}
+              onChange={handleDateChange}
+              className="border border-gray-300 rounded-lg py-2 px-4"
+            />
+          </div>
+          <div>
+            <label className="block font-bold mb-1">End Date:</label>
+            <input
+              type="date"
+              name="endDate"
+              value={customRange.endDate}
+              onChange={handleDateChange}
+              className="border border-gray-300 rounded-lg py-2 px-4"
+            />
+          </div>
+        </div>
+      )}
+
       <Bar ref={chartRef} data={chartData} options={chartOptions} />
 
       <div className="flex space-x-4 mt-4">

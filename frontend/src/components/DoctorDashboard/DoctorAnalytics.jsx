@@ -10,6 +10,11 @@ const DoctorAnalytics = () => {
     upcomingAppointments: 0,
     completedAppointments: 0,
   });
+  const [selectedRange, setSelectedRange] = useState("all"); // Default range: all records
+  const [customRange, setCustomRange] = useState({
+    startDate: "",
+    endDate: "",
+  });
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -21,9 +26,20 @@ const DoctorAnalytics = () => {
           return;
         }
 
-        const response = await fetch(
-          `${BASE_URL}/analytics/doctor-analytics?doctorId=${user.id}`
-        );
+        let url = `${BASE_URL}/analytics/doctor-analytics?doctorId=${user.id}`;
+
+        // Add query parameters based on the selected range
+        if (selectedRange === "day") {
+          url += "&range=day";
+        } else if (selectedRange === "week") {
+          url += "&range=week";
+        } else if (selectedRange === "month") {
+          url += "&range=month";
+        } else if (selectedRange === "custom") {
+          url += `&startDate=${customRange.startDate}&endDate=${customRange.endDate}`;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
         setAnalyticsData(data);
       } catch (error) {
@@ -33,7 +49,11 @@ const DoctorAnalytics = () => {
     };
 
     fetchAnalytics();
-  }, []);
+  }, [selectedRange, customRange]);
+
+  const handleDateChange = (e) => {
+    setCustomRange({ ...customRange, [e.target.name]: e.target.value });
+  };
 
   const chartData = {
     labels: ["Total Patients", "Total Appointments", "Upcoming", "Completed"],
@@ -57,21 +77,9 @@ const DoctorAnalytics = () => {
       legend: {
         position: "top",
       },
-
-      background: {
-        beforeDraw: (chart) => {
-          const ctx = chart.canvas.getContext("2d");
-          ctx.save();
-          ctx.globalCompositeOperation = "destination-over";
-          ctx.fillStyle = "white";
-          ctx.fillRect(0, 0, chart.width, chart.height);
-          ctx.restore();
-        },
-      },
     },
   };
 
-  // Function to download the chart as an image
   const downloadChart = () => {
     const chartInstance = chartRef.current;
     if (chartInstance) {
@@ -88,8 +96,53 @@ const DoctorAnalytics = () => {
       <h2 className="text-2xl font-bold font-headers text-darkgreen mb-4">
         Analytics
       </h2>
+
+      {/* Dropdown for predefined ranges */}
+      <div className="flex items-center mb-4">
+        <label className="mr-2 font-bold">Filter by:</label>
+        <select
+          value={selectedRange}
+          onChange={(e) => setSelectedRange(e.target.value)}
+          className="border border-gray-300 rounded-lg py-2 px-4"
+        >
+          <option value="all">All Records</option>
+          <option value="day">Today</option>
+          <option value="week">Last Week</option>
+          <option value="month">Last Month</option>
+          <option value="custom">Custom Range</option>
+        </select>
+      </div>
+
+      {/* Custom Range Picker */}
+      {selectedRange === "custom" && (
+        <div className="flex items-center gap-4 mb-4">
+          <div>
+            <label className="block font-bold mb-1">Start Date:</label>
+            <input
+              type="date"
+              name="startDate"
+              value={customRange.startDate}
+              onChange={handleDateChange}
+              className="border border-gray-300 rounded-lg py-2 px-4"
+            />
+          </div>
+          <div>
+            <label className="block font-bold mb-1">End Date:</label>
+            <input
+              type="date"
+              name="endDate"
+              value={customRange.endDate}
+              onChange={handleDateChange}
+              className="border border-gray-300 rounded-lg py-2 px-4"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Chart Display */}
       <Bar ref={chartRef} data={chartData} options={chartOptions} />
 
+      {/* Download Button */}
       <button
         onClick={downloadChart}
         className="mt-4 bg-lightbrown font-cta text-luxwhite py-2 px-4 rounded-lg"

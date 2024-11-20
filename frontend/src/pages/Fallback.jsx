@@ -1,4 +1,3 @@
-// src/pages/Fallback.jsx
 import React from "react";
 
 const Fallback = () => {

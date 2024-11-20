@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -23,7 +23,8 @@ import Fallback from "./pages/Fallback";
 import BASE_URL from "./config.js";
 
 const App = () => {
-  const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [fullMaintenanceMode, setFullMaintenanceMode] = useState(false);
+  const [halfMaintenanceMode, setHalfMaintenanceMode] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,7 +32,8 @@ const App = () => {
       try {
         const response = await fetch(`${BASE_URL}/maintenance`);
         const data = await response.json();
-        setMaintenanceMode(data.is_active);
+        setFullMaintenanceMode(data.full_maintenance);
+        setHalfMaintenanceMode(data.half_maintenance);
       } catch (error) {
         console.error("Error fetching maintenance mode:", error);
       } finally {
@@ -44,88 +46,112 @@ const App = () => {
 
   if (loading) return <div>Loading...</div>;
 
-  if (maintenanceMode) {
-    return <Fallback />;
-  }
-
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          {/* Public Routes */}
+          {/* Full Maintenance Mode */}
+          {fullMaintenanceMode ? (
+            <>
+              {/* Only Admin Dashboard is accessible */}
+              <Route
+                path="/admin-dashboard"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              />
+              <Route path="*" element={<Fallback />} />
+            </>
+          ) : (
+            <>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/view-treatments" element={<ViewTreatments />} />
+              <Route path="/booking" element={<Booking />} />
+              <Route path="/payment-options" element={<PaymentOptions />} />
+              <Route
+                path="/aesthetics-clinic"
+                element={
+                  <BackgroundWrapper>
+                    <MainClinic />
+                  </BackgroundWrapper>
+                }
+              />
+              <Route
+                path="/virtual-clinic"
+                element={
+                  <BackgroundWrapper>
+                    <VirtualClinic />
+                  </BackgroundWrapper>
+                }
+              />
+              <Route path="/more-information" element={<MoreInformation />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route
+                path="/forgot-password"
+                element={
+                  <BackgroundWrapper>
+                    <ForgotPassword />
+                  </BackgroundWrapper>
+                }
+              />
 
-          <Route path="/view-treatments" element={<ViewTreatments />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/payment-options" element={<PaymentOptions />} />
-          <Route path="*" element={<Fallback />} />
+              {/* Half Maintenance Mode */}
+              {halfMaintenanceMode ? (
+                <>
+                  {/* Restrict patient and doctor dashboards */}
+                  <Route path="/dashboard" element={<Fallback />} />
+                  <Route path="/doctor-dashboard" element={<Fallback />} />
 
-          <Route
-            path="/aesthetics-clinic"
-            element={
-              <BackgroundWrapper>
-                <MainClinic />
-              </BackgroundWrapper>
-            }
-          />
-          <Route
-            path="/virtual-clinic"
-            element={
-              <BackgroundWrapper>
-                <VirtualClinic />
-              </BackgroundWrapper>
-            }
-          />
-          <Route path="/more-information" element={<MoreInformation />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route
-            path="/forgot-password"
-            element={
-              <BackgroundWrapper>
-                <ForgotPassword />
-              </BackgroundWrapper>
-            }
-          />
+                  {/* Admin Dashboard remains accessible */}
+                  <Route
+                    path="/admin-dashboard"
+                    element={
+                      <AdminRoute>
+                        <AdminDashboard />
+                      </AdminRoute>
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  {/* Protected Routes */}
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <PrivateRoute>
+                        <Dashboard />
+                      </PrivateRoute>
+                    }
+                  />
 
-          {/* Protected Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
+                  {/* Admin Routes */}
+                  <Route
+                    path="/admin-dashboard"
+                    element={
+                      <AdminRoute>
+                        <AdminDashboard />
+                      </AdminRoute>
+                    }
+                  />
 
-          {/* Admin Routes */}
-          <Route
-            path="/admin-dashboard"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          />
-
-          {/* Doctor Routes (Includes Admin Dashboard for Doctor Access) */}
-          <Route
-            path="/doctor-dashboard"
-            element={
-              <DoctorRoute>
-                <DoctorDashboard />
-              </DoctorRoute>
-            }
-          />
-          <Route
-            path="/admin-dashboard"
-            element={
-              <DoctorRoute>
-                <AdminDashboard />
-              </DoctorRoute>
-            }
-          />
+                  {/* Doctor Routes */}
+                  <Route
+                    path="/doctor-dashboard"
+                    element={
+                      <DoctorRoute>
+                        <DoctorDashboard />
+                      </DoctorRoute>
+                    }
+                  />
+                </>
+              )}
+            </>
+          )}
         </Routes>
       </AuthProvider>
     </Router>
